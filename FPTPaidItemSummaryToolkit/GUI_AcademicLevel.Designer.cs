@@ -82,6 +82,7 @@
             this.btnAdd.TabIndex = 37;
             this.btnAdd.Text = "Thêm";
             this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // label1
             // 
@@ -151,6 +152,7 @@
             this.Controls.Add(this.btnExit);
             this.Name = "GUI_AcademicLevel";
             this.Text = "GUI_AcademicLevel";
+            this.Load += new System.EventHandler(this.GUI_AcademicLevel_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
