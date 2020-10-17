@@ -76,8 +76,9 @@
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.closeToolStripMenuItem.Text = "Đóng";
+            this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
             // mniManage
             // 
@@ -101,6 +102,7 @@
             this.mnsAcademic.Name = "mnsAcademic";
             this.mnsAcademic.Size = new System.Drawing.Size(281, 22);
             this.mnsAcademic.Text = "Hệ đào tạo";
+            this.mnsAcademic.Click += new System.EventHandler(this.mnsAcademic_Click);
             // 
             // summaryToolStripMenuItem
             // 

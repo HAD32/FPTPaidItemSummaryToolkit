@@ -10,11 +10,29 @@ using System.Windows.Forms;
 
 namespace FPTPaidItemSummaryToolkit
 {
+    
     public partial class GUI_Login : Form
     {
+        private bool confirm { get; set; }
         public GUI_Login()
         {
             InitializeComponent();
+            confirm = false;
+        }
+
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
+            confirm = true;
+            GUI_Container fcon = new GUI_Container();
+
+            this.Hide();
+            fcon.ShowDialog();
+            this.Close();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }
