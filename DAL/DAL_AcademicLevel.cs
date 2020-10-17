@@ -58,15 +58,25 @@ namespace DAL
 
         public bool Insert(List<AcademicLevel> list, string code, string name, string description)
         {
-
-            for (int i = 0; i < list.Count; i++)
+            try
             {
-                if (checkCode(list, code) != -1)
-                    return false;
-            }
+                for (int i = 0; i < list.Count; i++)
+                {
+                    if (checkCode(list, code) != -1)
+                        return false;
+                }
 
-            list.Add(new AcademicLevel(code, name, description));
-            return true;
+                list.Add(new AcademicLevel(code, name, description));
+                DAL_DataSerializer.Instance.BinarySerialize(list, "AcademicLevels.sf");
+                return true;
+            }
+            catch (NullReferenceException e)
+            {
+                list = new List<AcademicLevel>();
+                list.Add(new AcademicLevel(code, name, description));
+                DAL_DataSerializer.Instance.BinarySerialize(list, "AcademicLevels.sf");
+                return true;
+            }
         }
 
         public bool Update(List<AcademicLevel> list, string code, string name, string description)

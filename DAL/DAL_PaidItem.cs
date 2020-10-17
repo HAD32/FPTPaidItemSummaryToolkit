@@ -47,7 +47,7 @@ namespace DAL
                 {
                     foreach (Object obj in filterList)
                     {
-                        if (obj.GetType().Name.Equals("PaidItems"))
+                        if (obj.GetType().Name.Equals("PaidItem"))
                         {
                             DataRow row = dt.NewRow();
                             PaidItem p = (PaidItem)obj;
@@ -77,6 +77,9 @@ namespace DAL
                 dt.Columns.Add("Loại định mức");
 
             }
+
+
+
             return dt;
         }
 
@@ -85,7 +88,7 @@ namespace DAL
             List<Object> filterListbyPaidItemType = new List<Object>();
             foreach (Object obj in paidItemsList)
             {
-                if (obj.GetType().Name.Equals("PaidItems"))
+                if (obj.GetType().Name.Equals("PaidItem"))
                 {
                     PaidItem p = (PaidItem)obj;
                     if (p.TypeId == paidItemType)
@@ -108,7 +111,7 @@ namespace DAL
             {
                 for (int i = 0; i < paidItemsList.Count; i++)
                 {
-                    if (paidItemsList.ElementAt(i).GetType().Name.Equals("PaidItems"))
+                    if (paidItemsList.ElementAt(i).GetType().Name.Equals("PaidItem"))
                     {
                         PaidItem item = (PaidItem)paidItemsList.ElementAt(i);
                         listID.Add(item.Id);
@@ -152,7 +155,7 @@ namespace DAL
             list = paidItemsList;
             for (int i = 0; i < list.Count; i++)
             {
-                if (list.ElementAt(i).GetType().Name.Equals("PaidItems"))
+                if (list.ElementAt(i).GetType().Name.Equals("PaidItem"))
                 {
                     PaidItem item = (PaidItem)list.ElementAt(i);
                     if (item.Id.Equals(id))
@@ -236,7 +239,7 @@ namespace DAL
             PaidItem pItem = new PaidItem();
             foreach (Object obj in paidItemsList)
             {
-                if (obj.GetType().Name.Equals("PaidItems"))
+                if (obj.GetType().Name.Equals("PaidItem"))
                 {
                     PaidItem pI = (PaidItem)obj;
                     if (pI.Id.Equals(id))

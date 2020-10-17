@@ -116,6 +116,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(885, 485);
             this.Controls.Add(this.mnAll);
+            this.IsMdiContainer = true;
             this.Name = "GUI_Container";
             this.Text = "FPT Paid Item Summary Toolkit";
             this.mnAll.ResumeLayout(false);

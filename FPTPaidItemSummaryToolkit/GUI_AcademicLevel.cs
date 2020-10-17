@@ -23,12 +23,10 @@ namespace FPTPaidItemSummaryToolkit
 
         void Reload()
         {
-            academicList.Clear();
             academicList = (List<AcademicLevel>)DAL_DataSerializer.Instance.BinaryDeserialize("AcademicLevels.sf");
-            cbbAcaLevel.DataSource = academicList;
-            cbbAcaLevel.ValueMember = "Code";
-            cbbAcaLevel.DisplayMember = "Code";
-            txtDetail.Text = "";
+            listBox1.DataSource = academicList;
+            listBox1.ValueMember = "Code";
+            listBox1.DisplayMember = "Code";
         }
 
         private void GUI_AcademicLevel_Load(object sender, EventArgs e)
@@ -50,7 +48,7 @@ namespace FPTPaidItemSummaryToolkit
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            AcademicLevel acLv = DAL_AcademicLevel.Instance.GetOneAcaLevelByCode(cbbAcaLevel.SelectedValue.ToString(), academicList);
+            AcademicLevel acLv = DAL_AcademicLevel.Instance.GetOneAcaLevelByCode(listBox1.SelectedValue.ToString(), academicList);
             GUI_UpdateForm frmUp = new GUI_UpdateForm(academicList, acLv.Code, acLv.Name, acLv.Description);
             frmUp.FormClosed += Reload;
             frmUp.ShowDialog();
@@ -58,8 +56,8 @@ namespace FPTPaidItemSummaryToolkit
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            AcademicLevel acLv = DAL_AcademicLevel.Instance.GetOneAcaLevelByCode(cbbAcaLevel.SelectedValue.ToString(), academicList);
-            DialogResult result = MessageBox.Show("Do you want to delete " + cbbAcaLevel.SelectedValue.ToString() + "?",
+            AcademicLevel acLv = DAL_AcademicLevel.Instance.GetOneAcaLevelByCode(listBox1.SelectedValue.ToString(), academicList);
+            DialogResult result = MessageBox.Show("Do you want to delete " + listBox1.SelectedValue.ToString() + "?",
                                                 "Confirmation Box", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
             {
@@ -73,6 +71,32 @@ namespace FPTPaidItemSummaryToolkit
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void cbbAcaLevel_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selectedAcLevel = cbbAcaLevel.SelectedValue.ToString();
+            foreach (AcademicLevel aclv in academicList)
+            {
+                if (aclv.Code.Equals(selectedAcLevel))
+                {
+                    txtDetail.Text = "Mã hệ đào tạo: " + aclv.Code + "\r\nTên hệ đào tạo: " + aclv.Name + "\r\nMô tả: " + aclv.Description;
+                    break;
+                }
+            }
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selectedAcLevel = listBox1.SelectedValue.ToString();
+            foreach (AcademicLevel aclv in academicList)
+            {
+                if (aclv.Code.Equals(selectedAcLevel))
+                {
+                    txtDetail.Text = "Mã hệ đào tạo: " + aclv.Code + "\r\nTên hệ đào tạo: " + aclv.Name + "\r\nMô tả: " + aclv.Description;
+                    break;
+                }
+            }
         }
     }
 }

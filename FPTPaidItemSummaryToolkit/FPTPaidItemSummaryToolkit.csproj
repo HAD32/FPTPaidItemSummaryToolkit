@@ -46,14 +46,62 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="GUI_AcademicLevel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="GUI_AcademicLevel.Designer.cs">
+      <DependentUpon>GUI_AcademicLevel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI_Container.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI_Container.Designer.cs">
+      <DependentUpon>GUI_Container.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI_InsertForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI_InsertForm.Designer.cs">
+      <DependentUpon>GUI_InsertForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI_Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI_Login.Designer.cs">
+      <DependentUpon>GUI_Login.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI_PaidItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI_PaidItem.Designer.cs">
+      <DependentUpon>GUI_PaidItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI_UpdateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI_UpdateForm.Designer.cs">
+      <DependentUpon>GUI_UpdateForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="GUI_AcademicLevel.resx">
+      <DependentUpon>GUI_AcademicLevel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI_Container.resx">
+      <DependentUpon>GUI_Container.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI_InsertForm.resx">
+      <DependentUpon>GUI_InsertForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI_Login.resx">
+      <DependentUpon>GUI_Login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI_PaidItem.resx">
+      <DependentUpon>GUI_PaidItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI_UpdateForm.resx">
+      <DependentUpon>GUI_UpdateForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -75,6 +123,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{f9f3f0fb-abdc-41eb-ae43-f6cf66fb06e6}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DTO\DTO.csproj">
+      <Project>{6419ffe7-8861-43d3-816e-d2af570fbae3}</Project>
+      <Name>DTO</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

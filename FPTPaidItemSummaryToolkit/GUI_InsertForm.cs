@@ -34,7 +34,7 @@ namespace FPTPaidItemSummaryToolkit
             {
                 if (DAL_AcademicLevel.Instance.Insert(academicLevelsList, txtCode.Text, txtName.Text, txtDescription.Text))
                 {
-                    DAL_DataSerializer.Instance.BinarySerialize(academicLevelsList, "AcademicLevels.sf");
+                    
                     MessageBox.Show("Thêm thành công!");
 
                     this.Close();
