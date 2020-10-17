@@ -49,6 +49,7 @@
             this.btnUpdate.TabIndex = 38;
             this.btnUpdate.Text = "Sửa";
             this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
             // btnDelete
             // 
@@ -60,6 +61,7 @@
             this.btnDelete.TabIndex = 39;
             this.btnDelete.Text = "Xóa";
             this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // label3
             // 
@@ -135,6 +137,7 @@
             this.btnExit.TabIndex = 34;
             this.btnExit.Text = "Đóng";
             this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // GUI_AcademicLevel
             // 

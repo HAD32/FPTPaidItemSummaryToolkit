@@ -47,5 +47,32 @@ namespace FPTPaidItemSummaryToolkit
             insertForm.FormClosed += Reload;
             insertForm.ShowDialog();
         }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            AcademicLevel acLv = DAL_AcademicLevel.Instance.GetOneAcaLevelByCode(cbbAcaLevel.SelectedValue.ToString(), academicList);
+            GUI_UpdateForm frmUp = new GUI_UpdateForm(academicList, acLv.Code, acLv.Name, acLv.Description);
+            frmUp.FormClosed += Reload;
+            frmUp.ShowDialog();
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            AcademicLevel acLv = DAL_AcademicLevel.Instance.GetOneAcaLevelByCode(cbbAcaLevel.SelectedValue.ToString(), academicList);
+            DialogResult result = MessageBox.Show("Do you want to delete " + cbbAcaLevel.SelectedValue.ToString() + "?",
+                                                "Confirmation Box", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+                DAL_AcademicLevel.Instance.Delete(academicList, acLv.Code);
+
+            }
+            DAL_DataSerializer.Instance.BinarySerialize(academicList, "AcademicLevels.sf");
+            Reload();
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

@@ -8,7 +8,7 @@ using DTO;
 
 namespace DAL
 {
-    class DAL_PaidItem
+    public class DAL_PaidItem
     {
         private static DAL_PaidItem instance;
 
