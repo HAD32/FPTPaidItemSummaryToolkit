@@ -42,6 +42,7 @@ namespace FPTPaidItemSummaryToolkit
             load();
         }
 
+        //load function
         void loadHeader()
         {
             try
@@ -88,25 +89,41 @@ namespace FPTPaidItemSummaryToolkit
 
         }
 
+        //Add, Edit, Delete
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            float hourRate = float.Parse(txtHourRate.Text);
-            float unitValue = float.Parse(txtUnitValue.Text);
-            string id = DAL_PaidItem.Instance.GetAutoIncrementID(cbbAcaLevel.SelectedValue.ToString());
-            string acalv = cbbAcaLevel.SelectedValue.ToString();
-            int paidItemType = Int32.Parse(cbbPaidItemType.SelectedValue.ToString());
-            if (!txtName.Text.Trim().Equals(""))
+            errorProvider1.Clear();
+            if (txtHourRate.Text.Equals("") )
             {
-                if (DAL_PaidItem.Instance.Insert(id, txtName.Text, hourRate, unitValue, paidItemType, acalv, staffCode))
-                {
-                    MessageBox.Show("Thêm thành công!");
-                }
-                else
-                {
-                    MessageBox.Show("Lỗi! Định mức bị trùng ID! Vui lòng nhập lại");
-                }
+                errorProvider1.SetError(txtHourRate, "Không được để trống định mức giờ giảng");
+                txtHourRate.Focus();
             }
-            load();
+            else if (txtUnitValue.Text.Equals(""))
+            {
+                errorProvider1.SetError(txtUnitValue, "Không được để trống đơn giá");
+                txtHourRate.Focus();
+            }
+            else
+            {
+                float hourRate = float.Parse(txtHourRate.Text);
+                float unitValue = float.Parse(txtUnitValue.Text);
+                string id = DAL_PaidItem.Instance.GetAutoIncrementID(cbbAcaLevel.SelectedValue.ToString());
+                string acalv = cbbAcaLevel.SelectedValue.ToString();
+                int paidItemType = Int32.Parse(cbbPaidItemType.SelectedValue.ToString());
+                if (!txtName.Text.Trim().Equals(""))
+                {
+                    if (DAL_PaidItem.Instance.Insert(id, txtName.Text, hourRate, unitValue, paidItemType, acalv, staffCode))
+                    {
+                        MessageBox.Show("Thêm thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Lỗi! Định mức bị trùng ID! Vui lòng nhập lại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                load();
+            }
+            
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
@@ -117,11 +134,11 @@ namespace FPTPaidItemSummaryToolkit
             if (DAL_PaidItem.Instance.Update(txtID.Text, txtName.Text, hourRate, unitValue,
                         Int32.Parse(cbbPaidItemType.SelectedValue.ToString()), cbbAcaLevel.SelectedValue.ToString()))
             {
-                MessageBox.Show("Sửa thành công!");
+                MessageBox.Show("Sửa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                MessageBox.Show("Không sửa được");
+                MessageBox.Show("Không sửa được", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             load();
         }
@@ -134,16 +151,17 @@ namespace FPTPaidItemSummaryToolkit
             {
                 if (DAL_PaidItem.Instance.Delete(txtID.Text, cbbAcaLevel.SelectedValue.ToString()))
                 {
-                    MessageBox.Show("Xóa thành công");
+                    MessageBox.Show("Xóa thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    MessageBox.Show("Xóa không thành công");
+                    MessageBox.Show("Xóa không thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             load();
         }
 
+        //load data grid view
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex == -1) return;
@@ -168,6 +186,7 @@ namespace FPTPaidItemSummaryToolkit
             this.Close();
         }
 
+        //Combobox Change
         private void cbbAcaLevel_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbbAcaLevel.Items.Count > 0 && cbbPaidItemType.Items.Count > 0)
@@ -217,6 +236,11 @@ namespace FPTPaidItemSummaryToolkit
         }
 
         private void txtHourRate_TextChanged(object sender, EventArgs e)
+        {
+            btnAdd.Enabled = true;
+        }
+
+        private void txtName_TextChanged(object sender, EventArgs e)
         {
             btnAdd.Enabled = true;
         }
