@@ -172,13 +172,13 @@ namespace DAL
             return (PaidItemHeader)paidItemsList.ElementAt(0);
         }
 
-        public bool Insert(string id, string name, float rate, float unitValue, int typeId, string acaLevelCode)
+        public bool Insert(string id, string name, float rate, float unitValue, int typeId, string acaLevelCode, string creatorCode)
         {
             List<Object> testList;
             try
             {
                 testList = new List<Object>();
-                PaidItemHeader pih = new PaidItemHeader("dongnp", DateTime.Now, acaLevelCode, DateTime.Now, "ABC/31T", "");
+                PaidItemHeader pih = new PaidItemHeader(creatorCode, DateTime.Now, acaLevelCode, DateTime.Now, "ABC/31T", "");
                 testList = (List<Object>)DAL_DataSerializer.Instance.BinaryDeserialize(acaLevelCode + "PaidItem.sf");
                 testList.RemoveAt(0);
                 testList.Insert(0, pih);
@@ -188,7 +188,7 @@ namespace DAL
             catch (Exception ex)
             {
                 testList = new List<Object>();
-                PaidItemHeader pih = new PaidItemHeader("dongnp", DateTime.Now, acaLevelCode, DateTime.Now, "ABC/31T", "");
+                PaidItemHeader pih = new PaidItemHeader(creatorCode, DateTime.Now, acaLevelCode, DateTime.Now, "ABC/31T", "");
                 testList.Add(pih);
                 testList.Add(new PaidItem(id, name, rate, unitValue, typeId, acaLevelCode));
                 DAL_DataSerializer.Instance.BinarySerialize(testList, acaLevelCode + "PaidItem.sf");

@@ -16,9 +16,11 @@ namespace FPTPaidItemSummaryToolkit
     {
         List<AcademicLevel> academicList = new List<AcademicLevel>();
 
-        public GUI_PaidItem()
+        public string staffCode = "";
+        public GUI_PaidItem(string staffCode)
         {
             InitializeComponent();
+            this.staffCode = staffCode;
             cbbPaidItemType.Items.Clear();
             List<PaitItemType> list = new List<PaitItemType>();
             PaitItemType p1 = new PaitItemType("1", "Giờ giảng");
@@ -65,24 +67,24 @@ namespace FPTPaidItemSummaryToolkit
             txtName.Text = "";
             txtHourRate.Text = "";
             txtUnitValue.Text = "";
-            if (cbbPaidItemType.SelectedItem.ToString().Equals("1") || cbbPaidItemType.SelectedItem.ToString().Equals("3"))
+            if ((cbbPaidItemType.SelectedIndex +1).ToString().Equals("1") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("3"))
             {
                 txtUnitValue.Text = "1";
             }
-            if (cbbPaidItemType.SelectedItem.ToString().Equals("2"))
+            if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("2"))
             {
                 txtHourRate.Text = "1";
             }
             btnAdd.Enabled = false;
             btnUpdate.Enabled = false;
             btnDelete.Enabled = false;
-            loadHeader();
             if (cbbAcaLevel.Items.Count > 0 && cbbPaidItemType.Items.Count > 0)
             {
                 string acalv = cbbAcaLevel.SelectedValue.ToString();
                 int paidItemType = Int32.Parse(cbbPaidItemType.SelectedValue.ToString());
                 dataGridView1.DataSource = DAL_PaidItem.Instance.LoadDataGridView(acalv, paidItemType);
             }
+            loadHeader();
 
         }
 
@@ -95,7 +97,7 @@ namespace FPTPaidItemSummaryToolkit
             int paidItemType = Int32.Parse(cbbPaidItemType.SelectedValue.ToString());
             if (!txtName.Text.Trim().Equals(""))
             {
-                if (DAL_PaidItem.Instance.Insert(id, txtName.Text, hourRate, unitValue, paidItemType, acalv))
+                if (DAL_PaidItem.Instance.Insert(id, txtName.Text, hourRate, unitValue, paidItemType, acalv, staffCode))
                 {
                     MessageBox.Show("Thêm thành công!");
                 }
@@ -186,7 +188,7 @@ namespace FPTPaidItemSummaryToolkit
                 dataGridView1.DataSource = DAL_PaidItem.Instance.LoadDataGridView(acaLv,
                     Int32.Parse(paidItemType));
             }
-            if (cbbPaidItemType.SelectedItem.ToString().Equals("1") || cbbPaidItemType.SelectedItem.ToString().Equals("3"))
+            if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("1") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("3"))
             {
                 txtUnitValue.Text = "1";
                 txtUnitValue.ReadOnly = true;
@@ -197,7 +199,7 @@ namespace FPTPaidItemSummaryToolkit
                 txtUnitValue.ReadOnly = false;
             }
 
-            if (cbbPaidItemType.SelectedItem.ToString().Equals("2"))
+            if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("2"))
             {
                 txtHourRate.Text = "1";
                 txtHourRate.ReadOnly = true;

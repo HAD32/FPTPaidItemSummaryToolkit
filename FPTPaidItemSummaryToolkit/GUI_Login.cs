@@ -13,6 +13,7 @@ namespace FPTPaidItemSummaryToolkit
     
     public partial class GUI_Login : Form
     {
+ 
         private bool confirm { get; set; }
         public GUI_Login()
         {
@@ -23,7 +24,7 @@ namespace FPTPaidItemSummaryToolkit
         private void btnLogin_Click(object sender, EventArgs e)
         {
             confirm = true;
-            GUI_Container fcon = new GUI_Container();
+            GUI_Container fcon = new GUI_Container(txtCode.Text);
 
             this.Hide();
             fcon.ShowDialog();

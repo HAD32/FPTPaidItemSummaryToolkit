@@ -13,12 +13,20 @@ namespace FPTPaidItemSummaryToolkit
     public partial class GUI_Container : Form
     {
         private int childFormNumber = 0;
+        public string staffCode = "";
+        public GUI_Container(string staffCode)
+        {
+            InitializeComponent();
+            this.staffCode = staffCode;
+
+        }
         public GUI_Container()
         {
             InitializeComponent();
+
         }
 
-        public void ShowNewForm(object sender, EventArgs e)
+        private void ShowNewForm(object sender, EventArgs e)
         {
 
             Form childForm = new Form();
@@ -31,23 +39,13 @@ namespace FPTPaidItemSummaryToolkit
 
         private void managePaidItemsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //GUI_PaidItem frmPaidItem = new GUI_PaidItem();
-            //frmPaidItem.MdiParent = this;
-            //frmPaidItem.Show();
-            //frmPaidItem.Top = 0;
-            //frmPaidItem.Left = 0;
-            Form guiContainer = GUI_Container.ActiveForm;
-            foreach (Form f in guiContainer.MdiChildren)
-            {
-                if (f.Name == "GUI_PaidItem")
-                {
-                    f.Activate();
-                    return;
-                }
-            }
-            GUI_PaidItem guiPaidItem = new GUI_PaidItem();
-            guiPaidItem.MdiParent = this;
-            guiPaidItem.Show();
+            
+            GUI_PaidItem smform = new GUI_PaidItem(staffCode);
+            smform.MdiParent = this;
+
+            smform.FormBorderStyle = FormBorderStyle.None;
+            smform.Dock = DockStyle.Fill;
+            smform.Show();
         }
 
         private void mnsAcademic_Click(object sender, EventArgs e)
