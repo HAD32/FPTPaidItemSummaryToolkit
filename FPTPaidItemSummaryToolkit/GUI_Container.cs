@@ -72,5 +72,7 @@ namespace FPTPaidItemSummaryToolkit
         {
             this.Close();
         }
+
+        
     }
 }

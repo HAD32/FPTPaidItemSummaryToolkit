@@ -40,9 +40,9 @@ namespace FPTPaidItemSummaryToolkit
             academicList = (List<AcademicLevel>)DAL_DataSerializer.Instance.BinaryDeserialize("AcademicLevels.sf");
 
             cbbAcaLevel.ValueMember = "Code";
-            cbbAcaLevel.DisplayMember = "Code";
+            cbbAcaLevel.DisplayMember = "Name";
             cbbAcaLevel.DataSource = academicList;
-            load();
+            //load();
         }
 
         //load function
@@ -52,10 +52,10 @@ namespace FPTPaidItemSummaryToolkit
             {
                 PaidItemHeader head = DAL_PaidItem.Instance.GetPaidItemsHeader();
                 lblAcaLevelName.Text = head.AcademicLevel;
-                lblEffectiveDate.Text = head.ActiveDate.ToString();
+                dtpEffectiveDate.Text = head.ActiveDate.ToString();
                 txtRule.Text = head.Rule;
                 lblCreaterName.Text = head.CreatorName;
-                lblCreatedDate.Text = head.CreatedDate.ToString();
+                dtpCreatedDate.Text = head.CreatedDate.ToString();
                 txtNote.Text = head.Note;
             }
             catch
@@ -73,11 +73,11 @@ namespace FPTPaidItemSummaryToolkit
             txtUnitValue.Text = "";
             if ((cbbPaidItemType.SelectedIndex +1).ToString().Equals("1") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("3"))
             {
-                txtUnitValue.Text = "1";
+                txtUnitValue.Text = "0";
             }
             if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("2"))
             {
-                txtHourRate.Text = "1";
+                txtHourRate.Text = "0";
             }
             btnAdd.Enabled = false;
             btnUpdate.Enabled = false;
@@ -168,7 +168,7 @@ namespace FPTPaidItemSummaryToolkit
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex == -1) return;
-
+            
             if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
             {
                 dataGridView1.CurrentRow.Selected = true;
@@ -189,11 +189,16 @@ namespace FPTPaidItemSummaryToolkit
                 {
                     cbbPaidItemType.SelectedIndex = 2;
                 }
-                
+                btnDelete.Enabled = true;
+                btnUpdate.Enabled = true;
             }
-            btnUpdate.Enabled = true;
+            if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString().Equals(""))
+            {
+                btnDelete.Enabled = false;
+                btnUpdate.Enabled = false;
+            }
             btnAdd.Enabled = false;
-            btnDelete.Enabled = true;
+            
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -204,45 +209,18 @@ namespace FPTPaidItemSummaryToolkit
         //Combobox Change
         private void cbbAcaLevel_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cbbAcaLevel.Items.Count > 0 && cbbPaidItemType.Items.Count > 0)
-            {
-                string acaLv = cbbAcaLevel.SelectedValue.ToString();
-                string paidItemType = cbbPaidItemType.SelectedValue.ToString();
-                dataGridView1.DataSource = DAL_PaidItem.Instance.LoadDataGridView(acaLv, Int32.Parse(paidItemType));
-            }
-            loadHeader();
+            //if (cbbAcaLevel.Items.Count > 0 && cbbPaidItemType.Items.Count > 0)
+            //{
+            //    string acaLv = cbbAcaLevel.SelectedValue.ToString();
+            //    string paidItemType = cbbPaidItemType.SelectedValue.ToString();
+            //    dataGridView1.DataSource = DAL_PaidItem.Instance.LoadDataGridView(acaLv, Int32.Parse(paidItemType));
+            //}
+            
         }
 
         private void cbbPaidItemType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cbbAcaLevel.Items.Count > 0 && cbbPaidItemType.Items.Count > 0)
-            {
-                string acaLv = cbbAcaLevel.SelectedValue.ToString();
-                string paidItemType = cbbPaidItemType.SelectedValue.ToString();
-                dataGridView1.DataSource = DAL_PaidItem.Instance.LoadDataGridView(acaLv,
-                    Int32.Parse(paidItemType));
-            }
-            if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("1") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("3"))
-            {
-                txtUnitValue.Text = "1";
-                txtUnitValue.ReadOnly = true;
-                txtHourRate.Text = "";
-            }
-            else
-            {
-                txtUnitValue.ReadOnly = false;
-            }
-
-            if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("2"))
-            {
-                txtHourRate.Text = "1";
-                txtHourRate.ReadOnly = true;
-                txtUnitValue.Text = "";
-            }
-            else
-            {
-                txtHourRate.ReadOnly = false;
-            }
+            
         }
 
         private void txtUnitValue_TextChanged(object sender, EventArgs e)
@@ -258,6 +236,45 @@ namespace FPTPaidItemSummaryToolkit
         private void txtName_TextChanged(object sender, EventArgs e)
         {
             btnAdd.Enabled = true;
+        }
+
+        private void btnFilter_Click(object sender, EventArgs e)
+        {
+            //if (cbbAcaLevel.Items.Count > 0 && cbbPaidItemType.Items.Count > 0)
+            //{
+            //    string acaLv = cbbAcaLevel.SelectedValue.ToString();
+            //    string paidItemType = cbbPaidItemType.SelectedValue.ToString();
+            //    dataGridView1.DataSource = DAL_PaidItem.Instance.LoadDataGridView(acaLv,
+            //        Int32.Parse(paidItemType));
+            //}
+            //loadHeader();
+            load();
+            if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("1") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("3"))
+            {
+                txtUnitValue.Text = "0";
+                txtUnitValue.ReadOnly = true;
+                txtHourRate.Text = "";
+            }
+            else
+            {
+                txtUnitValue.ReadOnly = false;
+            }
+
+            if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("2"))
+            {
+                txtHourRate.Text = "0";
+                txtHourRate.ReadOnly = true;
+                txtUnitValue.Text = "";
+            }
+            else
+            {
+                txtHourRate.ReadOnly = false;
+            }
+        }
+
+        private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

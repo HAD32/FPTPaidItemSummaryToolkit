@@ -73,19 +73,6 @@ namespace FPTPaidItemSummaryToolkit
             this.Close();
         }
 
-        private void cbbAcaLevel_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string selectedAcLevel = cbbAcaLevel.SelectedValue.ToString();
-            foreach (AcademicLevel aclv in academicList)
-            {
-                if (aclv.Code.Equals(selectedAcLevel))
-                {
-                    txtDetail.Text = "Mã hệ đào tạo: " + aclv.Code + "\r\nTên hệ đào tạo: " + aclv.Name + "\r\nMô tả: " + aclv.Description;
-                    break;
-                }
-            }
-        }
-
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             string selectedAcLevel = listBox1.SelectedValue.ToString();

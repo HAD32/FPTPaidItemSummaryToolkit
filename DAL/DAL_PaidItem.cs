@@ -34,50 +34,99 @@ namespace DAL
             try
             {
                 paidItemsList = (List<Object>)DAL_DataSerializer.Instance.BinaryDeserialize(acaLevel + "PaidItem.sf");
-                filterList = devideListByAcaLevelNameAndPaidItemType(acaLevel, paidItemType);
-
-                dt.Columns.Add("ID");
-                dt.Columns.Add("Tên định mức");
-                dt.Columns.Add("Định mức giờ giảng");
-                dt.Columns.Add("Đơn giá");
-                dt.Columns.Add("Hệ đào tạo");
-                dt.Columns.Add("Loại định mức");
-
-                if (filterList.Count > 0)
+                if(paidItemType == 0)
                 {
-                    foreach (Object obj in filterList)
+                    dt.Columns.Add("ID");
+                    dt.Columns.Add("Tên định mức");
+                    dt.Columns.Add("Định mức giờ giảng");
+                    dt.Columns.Add("Đơn giá");
+                    dt.Columns.Add("Hệ đào tạo");
+                    dt.Columns.Add("Loại định mức");
+
+                    if (paidItemsList.Count > 0)
                     {
-                        if (obj.GetType().Name.Equals("PaidItem"))
+                        foreach (Object obj in paidItemsList)
                         {
-                            string typeIDString = "";
-                            DataRow row = dt.NewRow();
-                            PaidItem p = (PaidItem)obj;
-                            row["ID"] = p.Id;
-                            row["Tên định mức"] = p.Name;
-                            row["Định mức giờ giảng"] = p.Rate;
-                            row["Đơn giá"] = p.UnitValue;
-                            row["Hệ đào tạo"] = p.AcaLevelCode;
-                            if (p.TypeId == 1)
+                            if (obj.GetType().Name.Equals("PaidItem"))
                             {
-                                typeIDString = "Giờ giảng";
+                                string typeIDString = "";
+                                DataRow row = dt.NewRow();
+                                PaidItem p = (PaidItem)obj;
+                                row["ID"] = p.Id;
+                                row["Tên định mức"] = p.Name;
+                                row["Định mức giờ giảng"] = p.Rate;
+                                row["Đơn giá"] = p.UnitValue;
+                                row["Hệ đào tạo"] = p.AcaLevelCode;
+                                if (p.TypeId == 1)
+                                {
+                                    typeIDString = "Giờ giảng";
+                                }
+                                else if (p.TypeId == 2)
+                                {
+                                    typeIDString = "Đơn giá";
+                                }
+                                else if (p.TypeId == 3)
+                                {
+                                    typeIDString = "Quy đổi giờ giảng";
+                                }
+                                row["Loại định mức"] = typeIDString;
+                                dt.Rows.Add(row);
                             }
-                            else if(p.TypeId == 2)
-                            {
-                                typeIDString = "Đơn giá";
-                            }
-                            else if(p.TypeId == 3)
-                            {
-                                typeIDString = "Quy đổi giờ giảng";
-                            }
-                            row["Loại định mức"] = typeIDString;
-                            dt.Rows.Add(row);
                         }
+                    }
+                    else
+                    {
+                        dt.Rows.Add("");
                     }
                 }
                 else
                 {
-                    dt.Rows.Add("");
+                    filterList = devideListByAcaLevelNameAndPaidItemType(acaLevel, paidItemType);
+
+                    dt.Columns.Add("ID");
+                    dt.Columns.Add("Tên định mức");
+                    dt.Columns.Add("Định mức giờ giảng");
+                    dt.Columns.Add("Đơn giá");
+                    dt.Columns.Add("Hệ đào tạo");
+                    dt.Columns.Add("Loại định mức");
+
+                    if (filterList.Count > 0)
+                    {
+                        foreach (Object obj in filterList)
+                        {
+                            if (obj.GetType().Name.Equals("PaidItem"))
+                            {
+                                string typeIDString = "";
+                                DataRow row = dt.NewRow();
+                                PaidItem p = (PaidItem)obj;
+                                row["ID"] = p.Id;
+                                row["Tên định mức"] = p.Name;
+                                row["Định mức giờ giảng"] = p.Rate;
+                                row["Đơn giá"] = p.UnitValue;
+                                row["Hệ đào tạo"] = p.AcaLevelCode;
+                                if (p.TypeId == 1)
+                                {
+                                    typeIDString = "Giờ giảng";
+                                }
+                                else if (p.TypeId == 2)
+                                {
+                                    typeIDString = "Đơn giá";
+                                }
+                                else if (p.TypeId == 3)
+                                {
+                                    typeIDString = "Quy đổi giờ giảng";
+                                }
+                                row["Loại định mức"] = typeIDString;
+                                dt.Rows.Add(row);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        dt.Rows.Add("");
+                    }
                 }
+                
             }
             catch (Exception ex)
             {
