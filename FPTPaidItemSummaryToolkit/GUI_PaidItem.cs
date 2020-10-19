@@ -26,9 +26,12 @@ namespace FPTPaidItemSummaryToolkit
             PaitItemType p1 = new PaitItemType("1", "Giờ giảng");
             PaitItemType p2 = new PaitItemType("2", "Đơn giá");
             PaitItemType p3 = new PaitItemType("3", "Quy đổi giờ giảng");
+            PaitItemType p4 = new PaitItemType("0", "Tất cả");
+
             list.Add(p1);
             list.Add(p2);
             list.Add(p3);
+            list.Add(p4);
             cbbPaidItemType.DataSource = list;
             cbbPaidItemType.ValueMember = "Id";
             cbbPaidItemType.DisplayMember = "Name";
@@ -174,7 +177,19 @@ namespace FPTPaidItemSummaryToolkit
                 txtHourRate.Text = dataGridView1.Rows[e.RowIndex].Cells["Định mức giờ giảng"].FormattedValue.ToString();
                 txtUnitValue.Text = dataGridView1.Rows[e.RowIndex].Cells["Đơn giá"].FormattedValue.ToString();
                 cbbAcaLevel.SelectedValue = dataGridView1.Rows[e.RowIndex].Cells["Hệ đào tạo"].FormattedValue.ToString();
-                cbbPaidItemType.SelectedValue = dataGridView1.Rows[e.RowIndex].Cells["Loại định mức"].FormattedValue.ToString();
+                if(dataGridView1.Rows[e.RowIndex].Cells["Loại định mức"].FormattedValue.ToString().Equals("Giờ giảng"))
+                {
+                    cbbPaidItemType.SelectedIndex = 0;
+                }
+                else if(dataGridView1.Rows[e.RowIndex].Cells["Loại định mức"].FormattedValue.ToString().Equals("Đơn giá"))
+                {
+                    cbbPaidItemType.SelectedIndex = 1;
+                }
+                else if(dataGridView1.Rows[e.RowIndex].Cells["Loại định mức"].FormattedValue.ToString().Equals("Quy đổi giờ giảng"))
+                {
+                    cbbPaidItemType.SelectedIndex = 2;
+                }
+                
             }
             btnUpdate.Enabled = true;
             btnAdd.Enabled = false;

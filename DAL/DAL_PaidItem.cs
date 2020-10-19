@@ -49,6 +49,7 @@ namespace DAL
                     {
                         if (obj.GetType().Name.Equals("PaidItem"))
                         {
+                            string typeIDString = "";
                             DataRow row = dt.NewRow();
                             PaidItem p = (PaidItem)obj;
                             row["ID"] = p.Id;
@@ -56,7 +57,19 @@ namespace DAL
                             row["Định mức giờ giảng"] = p.Rate;
                             row["Đơn giá"] = p.UnitValue;
                             row["Hệ đào tạo"] = p.AcaLevelCode;
-                            row["Loại định mức"] = p.TypeId;
+                            if (p.TypeId == 1)
+                            {
+                                typeIDString = "Giờ giảng";
+                            }
+                            else if(p.TypeId == 2)
+                            {
+                                typeIDString = "Đơn giá";
+                            }
+                            else if(p.TypeId == 3)
+                            {
+                                typeIDString = "Quy đổi giờ giảng";
+                            }
+                            row["Loại định mức"] = typeIDString;
                             dt.Rows.Add(row);
                         }
                     }
@@ -65,7 +78,6 @@ namespace DAL
                 {
                     dt.Rows.Add("");
                 }
-
             }
             catch (Exception ex)
             {
@@ -75,7 +87,6 @@ namespace DAL
                 dt.Columns.Add("Đơn giá");
                 dt.Columns.Add("Hệ đào tạo");
                 dt.Columns.Add("Loại định mức");
-
             }
 
 
@@ -172,6 +183,7 @@ namespace DAL
             return (PaidItemHeader)paidItemsList.ElementAt(0);
         }
 
+        //Insert, Delete, Update
         public bool Insert(string id, string name, float rate, float unitValue, int typeId, string acaLevelCode, string creatorCode)
         {
             List<Object> testList;
