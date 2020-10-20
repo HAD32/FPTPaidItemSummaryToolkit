@@ -16,7 +16,7 @@ namespace FPTPaidItemSummaryToolkit
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new GUI_PaidItem(""));
+            Application.Run(new GUI_Login());
         }
     }
 }

@@ -45,7 +45,7 @@
             this.btnUpdate.Location = new System.Drawing.Point(401, 202);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(82, 27);
-            this.btnUpdate.TabIndex = 38;
+            this.btnUpdate.TabIndex = 3;
             this.btnUpdate.Text = "Sửa";
             this.btnUpdate.UseVisualStyleBackColor = true;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
@@ -56,7 +56,7 @@
             this.btnDelete.Location = new System.Drawing.Point(287, 202);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(82, 27);
-            this.btnDelete.TabIndex = 39;
+            this.btnDelete.TabIndex = 2;
             this.btnDelete.Text = "Xóa";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
@@ -67,7 +67,7 @@
             this.btnAdd.Location = new System.Drawing.Point(176, 202);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(82, 27);
-            this.btnAdd.TabIndex = 37;
+            this.btnAdd.TabIndex = 1;
             this.btnAdd.Text = "Thêm";
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
@@ -107,7 +107,7 @@
             this.btnExit.Location = new System.Drawing.Point(449, 288);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(75, 23);
-            this.btnExit.TabIndex = 34;
+            this.btnExit.TabIndex = 4;
             this.btnExit.Text = "Đóng";
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -145,8 +145,10 @@
             this.Controls.Add(this.txtDetail);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnExit);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.Name = "GUI_AcademicLevel";
-            this.Text = "GUI_AcademicLevel";
+            this.Text = "Quản lý hệ đào tạo";
             this.Load += new System.EventHandler(this.GUI_AcademicLevel_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

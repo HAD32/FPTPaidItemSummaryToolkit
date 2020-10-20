@@ -23,17 +23,41 @@ namespace FPTPaidItemSummaryToolkit
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            confirm = true;
-            GUI_Container fcon = new GUI_Container(txtCode.Text);
+            errorProvider1.Clear();
+            if (txtName.Text.Equals(""))
+            {
+                errorProvider1.SetError(txtName, "Không để trống trường này");
+                txtName.Focus();
+            }
+            else if (txtCode.Text.Equals(""))
+            {
+                errorProvider1.SetError(txtCode, "Không để trống trường này");
+                txtCode.Focus();
+            }
+            else
+            {
+                confirm = true;
+                GUI_Container fcon = new GUI_Container(txtCode.Text);
 
-            this.Hide();
-            fcon.ShowDialog();
-            this.Close();
+                this.Hide();
+                fcon.ShowDialog();
+                this.Close();
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             
+        }
+
+        private void txtName_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

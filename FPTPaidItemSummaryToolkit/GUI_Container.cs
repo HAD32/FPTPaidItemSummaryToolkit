@@ -39,13 +39,26 @@ namespace FPTPaidItemSummaryToolkit
 
         private void managePaidItemsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+
+            Form guiContainer = GUI_Container.ActiveForm;
+            foreach (Form f in guiContainer.MdiChildren)
+            {
+                if (f.Name == "GUI_PaidItem")
+                {
+                    f.Activate();
+                    return;
+                }
+            }
             GUI_PaidItem smform = new GUI_PaidItem(staffCode);
             smform.MdiParent = this;
 
             smform.FormBorderStyle = FormBorderStyle.None;
             smform.Dock = DockStyle.Fill;
             smform.Show();
+
+            //GUI_PaidItem guiAcadLevel = new GUI_PaidItem(staffCode);
+            //guiAcadLevel.MdiParent = this;
+            //guiAcadLevel.Show();
         }
 
         private void mnsAcademic_Click(object sender, EventArgs e)

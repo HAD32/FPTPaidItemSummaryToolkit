@@ -62,13 +62,13 @@
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.loadToolStripMenuItem.Text = "Load";
             // 
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.closeToolStripMenuItem.Text = "Đóng";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
@@ -111,6 +111,7 @@
             this.IsMdiContainer = true;
             this.Name = "GUI_Container";
             this.Text = "FPT Paid Item Summary Toolkit";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.mnAll.ResumeLayout(false);
             this.mnAll.PerformLayout();
             this.ResumeLayout(false);

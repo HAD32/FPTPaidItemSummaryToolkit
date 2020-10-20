@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DTO;
 using DAL;
+using System.Text.RegularExpressions;
 
 namespace FPTPaidItemSummaryToolkit
 {
@@ -53,6 +54,7 @@ namespace FPTPaidItemSummaryToolkit
                 PaidItemHeader head = DAL_PaidItem.Instance.GetPaidItemsHeader();
                 lblAcaLevelName.Text = head.AcademicLevel;
                 dtpEffectiveDate.Text = head.ActiveDate.ToString();
+                dtpPublishDate.Text = head.PublishDate.ToString();
                 txtRule.Text = head.Rule;
                 lblCreaterName.Text = head.CreatorName;
                 dtpCreatedDate.Text = head.CreatedDate.ToString();
@@ -60,7 +62,7 @@ namespace FPTPaidItemSummaryToolkit
             }
             catch
             {
-                PaidItemHeader head = new PaidItemHeader("", DateTime.Now, "", DateTime.Now, "", "");
+                PaidItemHeader head = new PaidItemHeader("", DateTime.Now, "", DateTime.Now, DateTime.Now, "", "");
 
             }
         }
@@ -92,6 +94,12 @@ namespace FPTPaidItemSummaryToolkit
 
         }
 
+        public bool IsNumber(string pText)
+        {
+            Regex regex = new Regex(@"^[-+]?[0-9]*\.?[0-9]+$");
+            return regex.IsMatch(pText);
+        }
+
         //Add, Edit, Delete
         private void btnAdd_Click(object sender, EventArgs e)
         {
@@ -106,8 +114,19 @@ namespace FPTPaidItemSummaryToolkit
                 errorProvider1.SetError(txtUnitValue, "Không được để trống đơn giá");
                 txtHourRate.Focus();
             }
+            if (!IsNumber(txtHourRate.Text))
+            {
+                errorProvider1.SetError(txtHourRate, "Chỉ được phép điền số. Vui lòng nhập lại");
+                txtHourRate.Focus();
+            }
+            if (!IsNumber(txtUnitValue.Text))
+            {
+                errorProvider1.SetError(txtUnitValue, "Chỉ được phép điền số. Vui lòng nhập lại");
+                txtUnitValue.Focus();
+            }
             else
             {
+                
                 float hourRate = float.Parse(txtHourRate.Text);
                 float unitValue = float.Parse(txtUnitValue.Text);
                 string id = DAL_PaidItem.Instance.GetAutoIncrementID(cbbAcaLevel.SelectedValue.ToString());
@@ -115,7 +134,7 @@ namespace FPTPaidItemSummaryToolkit
                 int paidItemType = Int32.Parse(cbbPaidItemType.SelectedValue.ToString());
                 if (!txtName.Text.Trim().Equals(""))
                 {
-                    if (DAL_PaidItem.Instance.Insert(id, txtName.Text, hourRate, unitValue, paidItemType, acalv, staffCode))
+                    if (DAL_PaidItem.Instance.Insert(id, txtName.Text, hourRate, unitValue, paidItemType, acalv, staffCode, dtpPublishDate.Value))
                     {
                         MessageBox.Show("Thêm thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -131,23 +150,38 @@ namespace FPTPaidItemSummaryToolkit
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            float hourRate = float.Parse(txtHourRate.Text);
-            float unitValue = float.Parse(txtUnitValue.Text);
-
-            if (DAL_PaidItem.Instance.Update(txtID.Text, txtName.Text, hourRate, unitValue,
-                        Int32.Parse(cbbPaidItemType.SelectedValue.ToString()), cbbAcaLevel.SelectedValue.ToString()))
+            errorProvider1.Clear();
+            if (!IsNumber(txtHourRate.Text))
             {
-                MessageBox.Show("Sửa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                errorProvider1.SetError(txtHourRate, "Chỉ được phép điền số. Vui lòng nhập lại");
+                txtHourRate.Focus();
+            }
+            else if (!IsNumber(txtUnitValue.Text))
+            {
+                errorProvider1.SetError(txtUnitValue, "Chỉ được phép điền số. Vui lòng nhập lại");
+                txtUnitValue.Focus();
             }
             else
             {
-                MessageBox.Show("Không sửa được", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                float hourRate = float.Parse(txtHourRate.Text);
+                float unitValue = float.Parse(txtUnitValue.Text);
+
+                if (DAL_PaidItem.Instance.Update(txtID.Text, txtName.Text, hourRate, unitValue,
+                            Int32.Parse(cbbPaidItemType.SelectedValue.ToString()), cbbAcaLevel.SelectedValue.ToString()))
+                {
+                    MessageBox.Show("Sửa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Không sửa được", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                load();
             }
-            load();
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
+            errorProvider1.Clear();
             DialogResult result = MessageBox.Show("Do you want to delete " + txtName.Text + "?",
                                                "Confirmation Box", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
@@ -248,6 +282,7 @@ namespace FPTPaidItemSummaryToolkit
             //        Int32.Parse(paidItemType));
             //}
             //loadHeader();
+            errorProvider1.Clear();
             load();
             if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("1") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("3"))
             {
@@ -272,8 +307,26 @@ namespace FPTPaidItemSummaryToolkit
             }
         }
 
-        private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
+        private void btnSave_Click(object sender, EventArgs e)
         {
+            List<Object> list;
+            list = (List<Object>)DAL_DataSerializer.Instance.BinaryDeserialize(cbbAcaLevel.SelectedValue.ToString() + "PaidItem.sf");
+            PaidItemHeader paidItemHeader = new PaidItemHeader(txtName.Text, dtpCreatedDate.Value, lblAcaLevelName.Text, dtpPublishDate.Value,
+                dtpEffectiveDate.Value, txtRule.Text, txtNote.Text);
+            list.RemoveAt(0);
+            list.Insert(0, paidItemHeader);
+            SaveFileDialog saveDialog = new SaveFileDialog();
+            saveDialog.Title = "Save files";
+            saveDialog.FileName = lblAcaLevelName.Text + "Summary" + dtpCreatedDate.Value.ToString("dd-MM-yyyy");
+            saveDialog.Filter = "Encrypted files (*.sf)|*.sf";
+            saveDialog.FilterIndex = 2;
+            if (saveDialog.ShowDialog() == DialogResult.OK)
+            {
+                
+                DAL_DataSerializer.Instance.BinarySerialize(list, saveDialog.FileName);
+                load();
+                MessageBox.Show("Lưu thành công.", "Thông báo");
+            }
 
         }
     }

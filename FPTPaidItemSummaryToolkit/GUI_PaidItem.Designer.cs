@@ -29,13 +29,15 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dtpEffectiveDate = new System.Windows.Forms.DateTimePicker();
+            this.dtpCreatedDate = new System.Windows.Forms.DateTimePicker();
+            this.dtpPublishDate = new System.Windows.Forms.DateTimePicker();
             this.txtNote = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.lblAcaLevelName = new System.Windows.Forms.Label();
@@ -59,15 +61,14 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnFilter = new System.Windows.Forms.Button();
-            this.txtHourRate = new System.Windows.Forms.TextBox();
-            this.txtName = new System.Windows.Forms.TextBox();
-            this.txtID = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.txtName = new System.Windows.Forms.TextBox();
+            this.txtHourRate = new System.Windows.Forms.TextBox();
+            this.txtID = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.dtpCreatedDate = new System.Windows.Forms.DateTimePicker();
-            this.dtpEffectiveDate = new System.Windows.Forms.DateTimePicker();
+            this.btnSave = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -101,7 +102,7 @@
             this.groupBox2.AutoSize = true;
             this.groupBox2.Controls.Add(this.dtpEffectiveDate);
             this.groupBox2.Controls.Add(this.dtpCreatedDate);
-            this.groupBox2.Controls.Add(this.dateTimePicker1);
+            this.groupBox2.Controls.Add(this.dtpPublishDate);
             this.groupBox2.Controls.Add(this.label15);
             this.groupBox2.Controls.Add(this.txtNote);
             this.groupBox2.Controls.Add(this.label12);
@@ -121,14 +122,33 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Thông tin mô tả";
             // 
-            // dateTimePicker1
+            // dtpEffectiveDate
             // 
-            this.dateTimePicker1.CustomFormat = "dd/MM/yyyy";
-            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker1.Location = new System.Drawing.Point(385, 59);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(103, 22);
-            this.dateTimePicker1.TabIndex = 27;
+            this.dtpEffectiveDate.CustomFormat = "dd/MM/yyyy";
+            this.dtpEffectiveDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpEffectiveDate.Location = new System.Drawing.Point(385, 95);
+            this.dtpEffectiveDate.Name = "dtpEffectiveDate";
+            this.dtpEffectiveDate.Size = new System.Drawing.Size(103, 22);
+            this.dtpEffectiveDate.TabIndex = 29;
+            // 
+            // dtpCreatedDate
+            // 
+            this.dtpCreatedDate.CustomFormat = "dd/MM/yyyy";
+            this.dtpCreatedDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpCreatedDate.Location = new System.Drawing.Point(91, 95);
+            this.dtpCreatedDate.Name = "dtpCreatedDate";
+            this.dtpCreatedDate.Size = new System.Drawing.Size(101, 22);
+            this.dtpCreatedDate.TabIndex = 28;
+            this.dtpCreatedDate.Value = new System.DateTime(2020, 10, 20, 3, 53, 14, 0);
+            // 
+            // dtpPublishDate
+            // 
+            this.dtpPublishDate.CustomFormat = "dd/MM/yyyy";
+            this.dtpPublishDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpPublishDate.Location = new System.Drawing.Point(385, 59);
+            this.dtpPublishDate.Name = "dtpPublishDate";
+            this.dtpPublishDate.Size = new System.Drawing.Size(103, 22);
+            this.dtpPublishDate.TabIndex = 27;
             // 
             // txtNote
             // 
@@ -346,33 +366,33 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle8;
             this.dataGridView1.Location = new System.Drawing.Point(16, 282);
             this.dataGridView1.Name = "dataGridView1";
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
             this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataGridView1.Size = new System.Drawing.Size(1267, 281);
@@ -416,14 +436,15 @@
             this.btnFilter.UseVisualStyleBackColor = true;
             this.btnFilter.Click += new System.EventHandler(this.btnFilter_Click);
             // 
-            // txtHourRate
+            // label4
             // 
-            this.txtHourRate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtHourRate.Location = new System.Drawing.Point(448, 123);
-            this.txtHourRate.Name = "txtHourRate";
-            this.txtHourRate.Size = new System.Drawing.Size(136, 23);
-            this.txtHourRate.TabIndex = 4;
-            this.txtHourRate.TextChanged += new System.EventHandler(this.txtHourRate_TextChanged);
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(16, 75);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(98, 17);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "Tên định mức:";
             // 
             // txtName
             // 
@@ -435,22 +456,21 @@
             this.txtName.TabIndex = 3;
             this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             // 
+            // txtHourRate
+            // 
+            this.txtHourRate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtHourRate.Location = new System.Drawing.Point(448, 123);
+            this.txtHourRate.Name = "txtHourRate";
+            this.txtHourRate.Size = new System.Drawing.Size(136, 23);
+            this.txtHourRate.TabIndex = 4;
+            this.txtHourRate.TextChanged += new System.EventHandler(this.txtHourRate_TextChanged);
+            // 
             // txtID
             // 
             this.txtID.Location = new System.Drawing.Point(459, 123);
             this.txtID.Name = "txtID";
             this.txtID.Size = new System.Drawing.Size(82, 22);
             this.txtID.TabIndex = 4;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(16, 75);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(98, 17);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "Tên định mức:";
             // 
             // label1
             // 
@@ -477,31 +497,24 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
-            // dtpCreatedDate
+            // btnSave
             // 
-            this.dtpCreatedDate.CustomFormat = "dd/MM/yyyy";
-            this.dtpCreatedDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpCreatedDate.Location = new System.Drawing.Point(91, 95);
-            this.dtpCreatedDate.Name = "dtpCreatedDate";
-            this.dtpCreatedDate.Size = new System.Drawing.Size(101, 22);
-            this.dtpCreatedDate.TabIndex = 28;
-            this.dtpCreatedDate.Value = new System.DateTime(2020, 10, 20, 3, 53, 14, 0);
-            this.dtpCreatedDate.ValueChanged += new System.EventHandler(this.dateTimePicker2_ValueChanged);
-            // 
-            // dtpEffectiveDate
-            // 
-            this.dtpEffectiveDate.CustomFormat = "dd/MM/yyyy";
-            this.dtpEffectiveDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpEffectiveDate.Location = new System.Drawing.Point(385, 95);
-            this.dtpEffectiveDate.Name = "dtpEffectiveDate";
-            this.dtpEffectiveDate.Size = new System.Drawing.Size(103, 22);
-            this.dtpEffectiveDate.TabIndex = 29;
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSave.Location = new System.Drawing.Point(1109, 568);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(84, 32);
+            this.btnSave.TabIndex = 33;
+            this.btnSave.Text = "Lưu";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // GUI_PaidItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1301, 612);
+            this.Controls.Add(this.btnSave);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.dataGridView1);
@@ -510,7 +523,6 @@
             this.Controls.Add(this.label2);
             this.Name = "GUI_PaidItem";
             this.Text = "Quản lý định mức thù lao";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -556,9 +568,10 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ErrorProvider errorProvider1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dtpPublishDate;
         private System.Windows.Forms.Button btnFilter;
         private System.Windows.Forms.DateTimePicker dtpCreatedDate;
         private System.Windows.Forms.DateTimePicker dtpEffectiveDate;
+        private System.Windows.Forms.Button btnSave;
     }
 }
