@@ -22,6 +22,9 @@ namespace FPTPaidItemSummaryToolkit
         {
             InitializeComponent();
             this.staffCode = staffCode;
+            btnAdd.Enabled = false;
+            btnUpdate.Enabled = false;
+            btnDelete.Enabled = false;
             cbbPaidItemType.Items.Clear();
             List<PaitItemType> list = new List<PaitItemType>();
             PaitItemType p1 = new PaitItemType("1", "Giờ giảng");
@@ -83,9 +86,7 @@ namespace FPTPaidItemSummaryToolkit
             {
                 txtHourRate.Text = "0";
             }
-            btnAdd.Enabled = false;
-            btnUpdate.Enabled = false;
-            btnDelete.Enabled = false;
+            
             if (cbbAcaLevel.Items.Count > 0 && cbbPaidItemType.Items.Count > 0)
             {
                 string acalv = cbbAcaLevel.SelectedValue.ToString();
@@ -256,7 +257,32 @@ namespace FPTPaidItemSummaryToolkit
 
         private void cbbPaidItemType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+            if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("1") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("3"))
+            {
+                txtUnitValue.Text = "0";
+                txtUnitValue.ReadOnly = true;
+                txtHourRate.Text = "";
+            }
+            else
+            {
+                txtUnitValue.ReadOnly = false;
+            }
+
+            if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("2"))
+            {
+                txtHourRate.Text = "0";
+                txtHourRate.ReadOnly = true;
+                txtUnitValue.Text = "";
+            }
+            else
+            {
+                txtHourRate.ReadOnly = false;
+            }
+            if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("4"))
+            {
+                txtHourRate.Text = "";
+                txtUnitValue.Text = "";
+            }
         }
 
         private void txtUnitValue_TextChanged(object sender, EventArgs e)
