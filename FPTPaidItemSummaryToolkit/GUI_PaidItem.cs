@@ -46,11 +46,13 @@ namespace FPTPaidItemSummaryToolkit
             //load();
         }
 
+
         //load function
         void loadHeader()
         {
             try
             {
+                //DAL_PaidItem.Instance.serializeListImmediately(cbbPaidItemType.SelectedValue.ToString(), staffCode);
                 PaidItemHeader head = DAL_PaidItem.Instance.GetPaidItemsHeader();
                 lblAcaLevelName.Text = head.AcademicLevel;
                 dtpEffectiveDate.Text = head.ActiveDate.ToString();
@@ -309,25 +311,49 @@ namespace FPTPaidItemSummaryToolkit
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            List<Object> list;
-            list = (List<Object>)DAL_DataSerializer.Instance.BinaryDeserialize(cbbAcaLevel.SelectedValue.ToString() + "PaidItem.sf");
-            PaidItemHeader paidItemHeader = new PaidItemHeader(txtName.Text, dtpCreatedDate.Value, lblAcaLevelName.Text, dtpPublishDate.Value,
-                dtpEffectiveDate.Value, txtRule.Text, txtNote.Text);
-            list.RemoveAt(0);
-            list.Insert(0, paidItemHeader);
-            SaveFileDialog saveDialog = new SaveFileDialog();
-            saveDialog.Title = "Save files";
-            saveDialog.FileName = lblAcaLevelName.Text + "Summary" + dtpCreatedDate.Value.ToString("dd-MM-yyyy");
-            saveDialog.Filter = "Encrypted files (*.sf)|*.sf";
-            saveDialog.FilterIndex = 2;
-            if (saveDialog.ShowDialog() == DialogResult.OK)
+            List<Object> list = new List<object>();
+            try
             {
-                
-                DAL_DataSerializer.Instance.BinarySerialize(list, saveDialog.FileName);
-                load();
-                MessageBox.Show("Lưu thành công.", "Thông báo");
-            }
+                list = (List<Object>)DAL_DataSerializer.Instance.BinaryDeserialize(cbbAcaLevel.SelectedValue.ToString() + "PaidItem.sf");
+                PaidItemHeader paidItemHeader = new PaidItemHeader(txtName.Text, dtpCreatedDate.Value, lblAcaLevelName.Text, dtpPublishDate.Value,
+                    dtpEffectiveDate.Value, txtRule.Text, txtNote.Text);
+                list.RemoveAt(0);
+                list.Insert(0, paidItemHeader);
+                SaveFileDialog saveDialog = new SaveFileDialog();
+                saveDialog.Title = "Save files";
+                saveDialog.FileName = lblAcaLevelName.Text + "Summary" + dtpCreatedDate.Value.ToString("dd-MM-yyyy");
+                saveDialog.Filter = "Encrypted files (*.sf)|*.sf";
+                saveDialog.FilterIndex = 2;
+                if (saveDialog.ShowDialog() == DialogResult.OK)
+                {
 
+                    DAL_DataSerializer.Instance.BinarySerialize(list, saveDialog.FileName);
+                    load();
+                    MessageBox.Show("Lưu thành công.", "Thông báo");
+                }
+            }
+            catch
+            {
+                PaidItemHeader paidItemHeader = new PaidItemHeader(txtName.Text, dtpCreatedDate.Value, lblAcaLevelName.Text, dtpPublishDate.Value,
+                    dtpEffectiveDate.Value, txtRule.Text, txtNote.Text);
+                list.RemoveAt(0);
+                list.Insert(0, paidItemHeader);
+                SaveFileDialog saveDialog = new SaveFileDialog();
+                saveDialog.Title = "Save files";
+                saveDialog.FileName = lblAcaLevelName.Text + "Summary" + dtpCreatedDate.Value.ToString("dd-MM-yyyy");
+                saveDialog.Filter = "Encrypted files (*.sf)|*.sf";
+                saveDialog.FilterIndex = 2;
+                if (saveDialog.ShowDialog() == DialogResult.OK)
+                {
+
+                    DAL_DataSerializer.Instance.BinarySerialize(list, saveDialog.FileName);
+                    load();
+                    MessageBox.Show("Lưu thành công.", "Thông báo");
+                }
+            }
+            
+                
+            
         }
     }
 }

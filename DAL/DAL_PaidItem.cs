@@ -309,5 +309,14 @@ namespace DAL
             }
             return pItem;
         }
+
+        //serialize Now
+        //public void serializeListImmediately(string acaLvCode, string creatorCode, DateTime createdDate, DateTime publishDate, DateTime activeDate)
+        //{
+        //    PaidItemHeader pih = new PaidItemHeader(creatorCode, createdDate, acaLvCode, publishDate,activeDate, "ABC/31T", "");
+        //    paidItemsList.RemoveAt(0);
+        //    paidItemsList.Insert(0, pih);
+        //    DAL_DataSerializer.Instance.BinarySerialize(paidItemsList,  acaLvCode + "PaidItem.sf");
+        //}
     }
 }
