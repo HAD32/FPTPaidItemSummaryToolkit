@@ -76,6 +76,18 @@
     <Compile Include="GUI_PaidItem.Designer.cs">
       <DependentUpon>GUI_PaidItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI_SetKey.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI_SetKey.Designer.cs">
+      <DependentUpon>GUI_SetKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI_Summary.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI_Summary.Designer.cs">
+      <DependentUpon>GUI_Summary.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI_UpdateForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -98,6 +110,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI_PaidItem.resx">
       <DependentUpon>GUI_PaidItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI_SetKey.resx">
+      <DependentUpon>GUI_SetKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI_Summary.resx">
+      <DependentUpon>GUI_Summary.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI_UpdateForm.resx">
       <DependentUpon>GUI_UpdateForm.cs</DependentUpon>

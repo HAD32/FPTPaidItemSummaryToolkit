@@ -69,6 +69,8 @@ namespace DAL
                                 {
                                     typeIDString = "Quy đổi giờ giảng";
                                 }
+                                else if (p.TypeId == 4)
+                                    typeIDString = "Trừ phạt";
                                 row["Loại định mức"] = typeIDString;
                                 dt.Rows.Add(row);
                             }
@@ -116,6 +118,8 @@ namespace DAL
                                 {
                                     typeIDString = "Quy đổi giờ giảng";
                                 }
+                                else if (p.TypeId == 4)
+                                    typeIDString = "Trừ phạt";
                                 row["Loại định mức"] = typeIDString;
                                 dt.Rows.Add(row);
                             }
@@ -130,6 +134,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
+                dt.Columns.Clear();
                 dt.Columns.Add("ID");
                 dt.Columns.Add("Tên định mức");
                 dt.Columns.Add("Định mức giờ giảng");
@@ -236,7 +241,7 @@ namespace DAL
             try
             {
                 testList = new List<Object>();
-                PaidItemHeader pih = new PaidItemHeader(creatorCode, DateTime.Now, acaLevelCode, publishDate, DateTime.Now, "ABC/31T", "");
+                PaidItemHeader pih = new PaidItemHeader(creatorCode, DateTime.Now, acaLevelCode, publishDate, DateTime.Now, "ABC/31T", "","");
                 testList = (List<Object>)DAL_DataSerializer.Instance.BinaryDeserialize(acaLevelCode + "PaidItem.sf");
                 testList.RemoveAt(0);
                 testList.Insert(0, pih);
@@ -246,7 +251,7 @@ namespace DAL
             catch (Exception ex)
             {
                 testList = new List<Object>();
-                PaidItemHeader pih = new PaidItemHeader(creatorCode, DateTime.Now, acaLevelCode, DateTime.Now, DateTime.Now, "ABC/31T", "");
+                PaidItemHeader pih = new PaidItemHeader(creatorCode, DateTime.Now, acaLevelCode, DateTime.Now, DateTime.Now, "ABC/31T", "","");
                 testList.Add(pih);
                 testList.Add(new PaidItem(id, name, rate, unitValue, typeId, acaLevelCode));
                 DAL_DataSerializer.Instance.BinarySerialize(testList, acaLevelCode + "PaidItem.sf");

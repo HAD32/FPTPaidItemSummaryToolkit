@@ -86,6 +86,9 @@ namespace FPTPaidItemSummaryToolkit
             this.Close();
         }
 
-        
+        private void mniSummary_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

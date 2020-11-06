@@ -30,12 +30,11 @@
         {
             this.mnAll = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniSummary = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mniManage = new System.Windows.Forms.ToolStripMenuItem();
             this.managePaidItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnsAcademic = new System.Windows.Forms.ToolStripMenuItem();
-            this.summaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnAll.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,22 +52,23 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loadToolStripMenuItem,
+            this.mniSummary,
             this.closeToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
-            // loadToolStripMenuItem
+            // mniSummary
             // 
-            this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
-            this.loadToolStripMenuItem.Text = "Load";
+            this.mniSummary.Name = "mniSummary";
+            this.mniSummary.Size = new System.Drawing.Size(180, 22);
+            this.mniSummary.Text = "Tổng hợp file ";
+            this.mniSummary.Click += new System.EventHandler(this.mniSummary_Click);
             // 
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.closeToolStripMenuItem.Text = "Đóng";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
@@ -76,8 +76,7 @@
             // 
             this.mniManage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.managePaidItemsToolStripMenuItem,
-            this.mnsAcademic,
-            this.summaryToolStripMenuItem});
+            this.mnsAcademic});
             this.mniManage.Name = "mniManage";
             this.mniManage.Size = new System.Drawing.Size(60, 20);
             this.mniManage.Text = "Quản lý";
@@ -95,12 +94,6 @@
             this.mnsAcademic.Size = new System.Drawing.Size(281, 22);
             this.mnsAcademic.Text = "Hệ đào tạo";
             this.mnsAcademic.Click += new System.EventHandler(this.mnsAcademic_Click);
-            // 
-            // summaryToolStripMenuItem
-            // 
-            this.summaryToolStripMenuItem.Name = "summaryToolStripMenuItem";
-            this.summaryToolStripMenuItem.Size = new System.Drawing.Size(281, 22);
-            this.summaryToolStripMenuItem.Text = "Tổng hợp";
             // 
             // GUI_Container
             // 
@@ -123,12 +116,11 @@
 
         private System.Windows.Forms.MenuStrip mnAll;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mniSummary;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mniManage;
         private System.Windows.Forms.ToolStripMenuItem managePaidItemsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mnsAcademic;
-        private System.Windows.Forms.ToolStripMenuItem summaryToolStripMenuItem;
     }
 }
 

@@ -16,20 +16,21 @@ namespace DTO
         public DateTime ActiveDate { get; set; }
         public string Rule { get; set; }
         public string Note { get; set; }
-
+        public string Key { get; set; }
         public PaidItemHeader()
         {
         }
 
-        public PaidItemHeader(string creatorName, DateTime createdDate, string academicLevel, DateTime publishDate, DateTime activeDate, string rule, string note)
+        public PaidItemHeader(string creatorName, DateTime createdDate, string academicLevel, DateTime publishDate, DateTime activeDate, string rule, string note, string key)
         {
-            this.CreatorName = creatorName;
-            this.CreatedDate = createdDate;
-            this.AcademicLevel = academicLevel;
-            this.PublishDate = publishDate;
-            this.ActiveDate = activeDate;
-            this.Rule = rule;
-            this.Note = note;
+            CreatorName = creatorName;
+            CreatedDate = createdDate;
+            AcademicLevel = academicLevel;
+            PublishDate = publishDate;
+            ActiveDate = activeDate;
+            Rule = rule;
+            Note = note;
+            Key = key;
         }
     }
 }

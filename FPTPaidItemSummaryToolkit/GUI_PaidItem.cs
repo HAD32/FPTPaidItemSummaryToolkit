@@ -27,11 +27,13 @@ namespace FPTPaidItemSummaryToolkit
             PaitItemType p1 = new PaitItemType("1", "Giờ giảng");
             PaitItemType p2 = new PaitItemType("2", "Đơn giá");
             PaitItemType p3 = new PaitItemType("3", "Quy đổi giờ giảng");
+            PaitItemType p5 = new PaitItemType("4", "Trừ phạt");
             PaitItemType p4 = new PaitItemType("0", "Tất cả");
 
             list.Add(p1);
             list.Add(p2);
             list.Add(p3);
+            list.Add(p5);
             list.Add(p4);
             cbbPaidItemType.DataSource = list;
             cbbPaidItemType.ValueMember = "Id";
@@ -64,7 +66,7 @@ namespace FPTPaidItemSummaryToolkit
             }
             catch
             {
-                PaidItemHeader head = new PaidItemHeader("", DateTime.Now, "", DateTime.Now, DateTime.Now, "", "");
+                PaidItemHeader head = new PaidItemHeader("", DateTime.Now, "", DateTime.Now, DateTime.Now, "", "","");
 
             }
         }
@@ -79,7 +81,7 @@ namespace FPTPaidItemSummaryToolkit
             {
                 txtUnitValue.Text = "0";
             }
-            if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("2"))
+            if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("2") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("4"))
             {
                 txtHourRate.Text = "0";
             }
@@ -297,7 +299,7 @@ namespace FPTPaidItemSummaryToolkit
                 txtUnitValue.ReadOnly = false;
             }
 
-            if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("2"))
+            if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("2") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("4"))
             {
                 txtHourRate.Text = "0";
                 txtHourRate.ReadOnly = true;
@@ -312,16 +314,26 @@ namespace FPTPaidItemSummaryToolkit
         private void btnSave_Click(object sender, EventArgs e)
         {
             List<Object> list = new List<object>();
+            string Key = "";
+            GUI_SetKey passForm = new GUI_SetKey();
+            DialogResult result = passForm.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                Key = passForm.Key;
+            }
+            else
+                return;
+
             try
             {
                 list = (List<Object>)DAL_DataSerializer.Instance.BinaryDeserialize(cbbAcaLevel.SelectedValue.ToString() + "PaidItem.sf");
-                PaidItemHeader paidItemHeader = new PaidItemHeader(txtName.Text, dtpCreatedDate.Value, lblAcaLevelName.Text, dtpPublishDate.Value,
-                    dtpEffectiveDate.Value, txtRule.Text, txtNote.Text);
+                PaidItemHeader paidItemHeader = new PaidItemHeader(lblCreaterName.Text, dtpCreatedDate.Value, lblAcaLevelName.Text, dtpPublishDate.Value,
+                    dtpEffectiveDate.Value, txtRule.Text, txtNote.Text, Key);
                 list.RemoveAt(0);
                 list.Insert(0, paidItemHeader);
                 SaveFileDialog saveDialog = new SaveFileDialog();
                 saveDialog.Title = "Save files";
-                saveDialog.FileName = lblAcaLevelName.Text + "Summary" + dtpCreatedDate.Value.ToString("dd-MM-yyyy");
+                saveDialog.FileName = lblAcaLevelName.Text + "PaidItem" + dtpCreatedDate.Value.ToString("ddMMyyyy");
                 saveDialog.Filter = "Encrypted files (*.sf)|*.sf";
                 saveDialog.FilterIndex = 2;
                 if (saveDialog.ShowDialog() == DialogResult.OK)
@@ -334,13 +346,13 @@ namespace FPTPaidItemSummaryToolkit
             }
             catch
             {
-                PaidItemHeader paidItemHeader = new PaidItemHeader(txtName.Text, dtpCreatedDate.Value, lblAcaLevelName.Text, dtpPublishDate.Value,
-                    dtpEffectiveDate.Value, txtRule.Text, txtNote.Text);
+                PaidItemHeader paidItemHeader = new PaidItemHeader(lblCreaterName.Text, dtpCreatedDate.Value, lblAcaLevelName.Text, dtpPublishDate.Value,
+                    dtpEffectiveDate.Value, txtRule.Text, txtNote.Text, Key);
                 list.RemoveAt(0);
                 list.Insert(0, paidItemHeader);
                 SaveFileDialog saveDialog = new SaveFileDialog();
                 saveDialog.Title = "Save files";
-                saveDialog.FileName = lblAcaLevelName.Text + "Summary" + dtpCreatedDate.Value.ToString("dd-MM-yyyy");
+                saveDialog.FileName = lblAcaLevelName.Text + "PaidItem" + dtpCreatedDate.Value.ToString("ddMMyyyy");
                 saveDialog.Filter = "Encrypted files (*.sf)|*.sf";
                 saveDialog.FilterIndex = 2;
                 if (saveDialog.ShowDialog() == DialogResult.OK)
