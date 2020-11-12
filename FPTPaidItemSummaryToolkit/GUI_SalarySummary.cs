@@ -16,5 +16,25 @@ namespace FPTPaidItemSummaryToolkit
         {
             InitializeComponent();
         }
+
+        private void GUI_SalarySummary_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
