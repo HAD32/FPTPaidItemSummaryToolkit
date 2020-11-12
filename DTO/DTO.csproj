@@ -43,12 +43,15 @@
   <ItemGroup>
     <Compile Include="AcademicLevel.cs" />
     <Compile Include="Campus.cs" />
+    <Compile Include="MonthlyPaidItemRecord.cs" />
+    <Compile Include="MonthlyTeacherPaidItemRecord.cs" />
     <Compile Include="PaidItem.cs" />
     <Compile Include="PaidItemHeader.cs" />
     <Compile Include="PaitItemType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Staff.cs" />
     <Compile Include="StaffType.cs" />
+    <Compile Include="User.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

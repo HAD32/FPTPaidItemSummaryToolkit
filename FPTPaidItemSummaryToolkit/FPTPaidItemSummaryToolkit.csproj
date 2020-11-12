@@ -58,6 +58,12 @@
     <Compile Include="GUI_Container.Designer.cs">
       <DependentUpon>GUI_Container.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI_FinalSummary.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI_FinalSummary.Designer.cs">
+      <DependentUpon>GUI_FinalSummary.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI_InsertForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,6 +108,9 @@
     <EmbeddedResource Include="GUI_Container.resx">
       <DependentUpon>GUI_Container.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI_FinalSummary.resx">
+      <DependentUpon>GUI_FinalSummary.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI_InsertForm.resx">
       <DependentUpon>GUI_InsertForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -128,6 +137,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -151,6 +161,12 @@
       <Project>{6419ffe7-8861-43d3-816e-d2af570fbae3}</Project>
       <Name>DTO</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\searchIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

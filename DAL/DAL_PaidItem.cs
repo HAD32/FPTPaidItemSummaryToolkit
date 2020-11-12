@@ -56,7 +56,7 @@ namespace DAL
                                 row["Tên định mức"] = p.Name;
                                 row["Định mức giờ giảng"] = p.Rate;
                                 row["Đơn giá"] = p.UnitValue;
-                                row["Hệ đào tạo"] = p.AcaLevelCode;
+                                row["Hệ đào tạo"] = p.AcadLevelCode;
                                 if (p.TypeId == 1)
                                 {
                                     typeIDString = "Giờ giảng";
@@ -105,7 +105,7 @@ namespace DAL
                                 row["Tên định mức"] = p.Name;
                                 row["Định mức giờ giảng"] = p.Rate;
                                 row["Đơn giá"] = p.UnitValue;
-                                row["Hệ đào tạo"] = p.AcaLevelCode;
+                                row["Hệ đào tạo"] = p.AcadLevelCode;
                                 if (p.TypeId == 1)
                                 {
                                     typeIDString = "Giờ giảng";
@@ -274,7 +274,7 @@ namespace DAL
             item.Rate = rate;
             item.UnitValue = unitValue;
             item.TypeId = typeId;
-            item.AcaLevelCode = acaLevelCode;
+            item.AcadLevelCode = acaLevelCode;
 
             DAL_DataSerializer.Instance.BinarySerialize(paidItemsList, acaLevelCode + "PaidItem.sf");
             return true;
