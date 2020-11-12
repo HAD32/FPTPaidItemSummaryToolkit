@@ -44,6 +44,7 @@
     <Compile Include="DAL_AcademicLevel.cs" />
     <Compile Include="DAL_DataSerializer.cs" />
     <Compile Include="DAL_PaidItem.cs" />
+    <Compile Include="DAL_Summary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

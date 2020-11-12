@@ -16,12 +16,11 @@ namespace FPTPaidItemSummaryToolkit
     public partial class GUI_PaidItem : Form
     {
         List<AcademicLevel> academicList = new List<AcademicLevel>();
-
-        public string staffCode = "";
-        public GUI_PaidItem(string staffCode)
+        User u;
+        public GUI_PaidItem(User u)
         {
             InitializeComponent();
-            this.staffCode = staffCode;
+            this.u = u;
             cbbPaidItemType.Items.Clear();
             List<PaitItemType> list = new List<PaitItemType>();
             PaitItemType p1 = new PaitItemType("1", "Giờ giảng");
@@ -138,7 +137,7 @@ namespace FPTPaidItemSummaryToolkit
                 int paidItemType = Int32.Parse(cbbPaidItemType.SelectedValue.ToString());
                 if (!txtName.Text.Trim().Equals(""))
                 {
-                    if (DAL_PaidItem.Instance.Insert(id, txtName.Text, hourRate, unitValue, paidItemType, acalv, staffCode, dtpPublishDate.Value))
+                    if (DAL_PaidItem.Instance.Insert(id, txtName.Text, hourRate, unitValue, paidItemType, acalv, u.Id, dtpPublishDate.Value))
                     {
                         MessageBox.Show("Thêm thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }

@@ -7,18 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using DTO;
+using DAL;
 namespace FPTPaidItemSummaryToolkit
 {
     public partial class GUI_Container : Form
     {
+        User u;
         private int childFormNumber = 0;
-        public string staffCode = "";
-        public GUI_Container(string staffCode)
+        public GUI_Container(User u)
         {
             InitializeComponent();
-            this.staffCode = staffCode;
-
+            this.u = u;
         }
         public GUI_Container()
         {
@@ -49,24 +49,16 @@ namespace FPTPaidItemSummaryToolkit
                     return;
                 }
             }
-            GUI_PaidItem smform = new GUI_PaidItem(staffCode);
+            GUI_PaidItem smform = new GUI_PaidItem(u);
             smform.MdiParent = this;
 
             smform.FormBorderStyle = FormBorderStyle.None;
             smform.Dock = DockStyle.Fill;
             smform.Show();
-
-            //GUI_PaidItem guiAcadLevel = new GUI_PaidItem(staffCode);
-            //guiAcadLevel.MdiParent = this;
-            //guiAcadLevel.Show();
         }
 
         private void mnsAcademic_Click(object sender, EventArgs e)
         {
-            //GUI_AcademicLevel frmAM = new GUI_AcademicLevel();
-            //frmAM.MdiParent = this;
-
-            //frmAM.Show();
             Form guiContainer = GUI_Container.ActiveForm;
             foreach (Form f in guiContainer.MdiChildren)
             {
@@ -88,7 +80,11 @@ namespace FPTPaidItemSummaryToolkit
 
         private void mniSummary_Click(object sender, EventArgs e)
         {
-
+            GUI_Summary guiSummary = new GUI_Summary(u);
+            guiSummary.MdiParent = this;
+            guiSummary.FormBorderStyle = FormBorderStyle.None;
+            guiSummary.Dock = DockStyle.Fill;
+            guiSummary.Show();
         }
     }
 }

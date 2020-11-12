@@ -5,49 +5,104 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using DTO;
+using DAL;
 namespace FPTPaidItemSummaryToolkit
 {
     
     public partial class GUI_Login : Form
     {
- 
-        private bool confirm { get; set; }
+        bool isSaved = false;
+        User u;
         public GUI_Login()
         {
             InitializeComponent();
-            confirm = false;
+            try
+            {
+                u = (User)DAL_DataSerializer.Instance.BinaryDeserialize("UserInfo\\User.fs");
+                txtCode.Text = u.Id;
+                txtEmail.Text = u.Email;
+                isSaved = true;
+            }
+            catch (Exception)
+            {
+                u = new User();
+                isSaved = false;
+            }
+        }
+
+        bool ValidateLogin()
+        {
+            string regexStr = @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*" + "@"
+                                   + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$";
+            errorProvider1.Clear();
+            if (txtCode.Text.Equals(""))
+            {
+                errorProvider1.SetError(txtCode, "Không để trống trường này");
+                txtCode.Focus();
+                return false;
+            }
+
+            if (txtEmail.Text.Equals(""))
+            {
+                errorProvider1.SetError(txtEmail, "Không để trống trường này");
+                txtEmail.Focus();
+                return false;
+            }
+            else if (!Regex.IsMatch(txtEmail.Text, regexStr))
+            {
+                errorProvider1.SetError(txtEmail, "Không đúng định dạng email.");
+                txtEmail.Focus();
+                return false;
+            }
+            return true;
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            errorProvider1.Clear();
-            if (txtName.Text.Equals(""))
+            if (ValidateLogin())
             {
-                errorProvider1.SetError(txtName, "Không để trống trường này");
-                txtName.Focus();
-            }
-            else if (txtCode.Text.Equals(""))
-            {
-                errorProvider1.SetError(txtCode, "Không để trống trường này");
-                txtCode.Focus();
-            }
-            else
-            {
-                confirm = true;
-                GUI_Container fcon = new GUI_Container(txtCode.Text);
+                u.Id = txtCode.Text;
+                u.Email = txtEmail.Text;
+                if (!isSaved)
+                {
+                    DialogResult result = MessageBox.Show("Bạn có muốn lưu thông tin người dùng?", "Thông báo", MessageBoxButtons.YesNo);
+                    if (result == DialogResult.Yes)
+                    {
+                        DAL_DataSerializer.Instance.BinarySerialize(u, "UserInfo\\User.fs");
+                        MessageBox.Show("Lưu thông tin người dùng thành công", "Thông báo");
+                        isSaved = true;
+                    }
+                }
 
+                GUI_Container fcon = new GUI_Container(u);
                 this.Hide();
                 fcon.ShowDialog();
                 this.Close();
             }
         }
 
-        private void btnClose_Click(object sender, EventArgs e)
+        private void btnSave_Click(object sender, EventArgs e)
         {
-            this.Close();
+            if (ValidateLogin())
+            {
+                DAL_DataSerializer.Instance.BinarySerialize(u, "UserInfo\\User.fs");
+                MessageBox.Show("Lưu thông tin người dùng thành công", "Thông báo");
+                isSaved = true;
+            }
+        }
+
+        private void txtCode_TextChanged(object sender, EventArgs e)
+        {
+            isSaved = false;
+        }
+
+        private void txtEmail_TextChanged(object sender, EventArgs e)
+        {
+            isSaved = false;
         }
     }
 }
