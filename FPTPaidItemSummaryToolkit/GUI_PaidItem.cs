@@ -111,30 +111,33 @@ namespace FPTPaidItemSummaryToolkit
             {
                 errorProvider1.SetError(txtHourRate, "Không được để trống định mức giờ giảng");
                 txtHourRate.Focus();
+                return;
             }
-            else if (txtUnitValue.Text.Equals(""))
+            if (txtUnitValue.Text.Equals(""))
             {
                 errorProvider1.SetError(txtUnitValue, "Không được để trống đơn giá");
-                txtHourRate.Focus();
+                txtUnitValue.Focus();
+                return;
             }
-            if (!IsNumber(txtHourRate.Text))
+            if (!IsNumber(txtHourRate.Text.Trim()))
             {
                 errorProvider1.SetError(txtHourRate, "Chỉ được phép điền số. Vui lòng nhập lại");
                 txtHourRate.Focus();
+                return;
             }
-            if (!IsNumber(txtUnitValue.Text))
+            if (!IsNumber(txtUnitValue.Text.Trim()))
             {
                 errorProvider1.SetError(txtUnitValue, "Chỉ được phép điền số. Vui lòng nhập lại");
                 txtUnitValue.Focus();
+                return;
             }
             else
             {
-                
-                float hourRate = float.Parse(txtHourRate.Text);
-                float unitValue = float.Parse(txtUnitValue.Text);
-                string id = DAL_PaidItem.Instance.GetAutoIncrementID(cbbAcaLevel.SelectedValue.ToString());
-                string acalv = cbbAcaLevel.SelectedValue.ToString();
-                int paidItemType = Int32.Parse(cbbPaidItemType.SelectedValue.ToString());
+                float hourRate = float.Parse(txtHourRate.Text.Trim());
+                float unitValue = float.Parse(txtUnitValue.Text.Trim());
+                string id = DAL_PaidItem.Instance.GetAutoIncrementID(cbbAcaLevel.SelectedValue.ToString().Trim());
+                string acalv = cbbAcaLevel.SelectedValue.ToString().Trim();
+                int paidItemType = Int32.Parse(cbbPaidItemType.SelectedValue.ToString().Trim());
                 if (!txtName.Text.Trim().Equals(""))
                 {
                     if (DAL_PaidItem.Instance.Insert(id, txtName.Text, hourRate, unitValue, paidItemType, acalv, u.Id, dtpPublishDate.Value))
@@ -211,9 +214,9 @@ namespace FPTPaidItemSummaryToolkit
                 dataGridView1.CurrentRow.Selected = true;
                 txtID.Text = dataGridView1.Rows[e.RowIndex].Cells["ID"].FormattedValue.ToString();
                 txtName.Text = dataGridView1.Rows[e.RowIndex].Cells["Tên định mức"].FormattedValue.ToString();
-                txtHourRate.Text = dataGridView1.Rows[e.RowIndex].Cells["Định mức giờ giảng"].FormattedValue.ToString();
-                txtUnitValue.Text = dataGridView1.Rows[e.RowIndex].Cells["Đơn giá"].FormattedValue.ToString();
-                cbbAcaLevel.SelectedValue = dataGridView1.Rows[e.RowIndex].Cells["Hệ đào tạo"].FormattedValue.ToString();
+                txtHourRate.Text = dataGridView1.Rows[e.RowIndex].Cells["Định mức giờ giảng"].Value.ToString();
+                txtUnitValue.Text = dataGridView1.Rows[e.RowIndex].Cells["Đơn giá"].Value.ToString();
+                cbbAcaLevel.SelectedValue = dataGridView1.Rows[e.RowIndex].Cells["Hệ đào tạo"].Value.ToString();
                 if(dataGridView1.Rows[e.RowIndex].Cells["Loại định mức"].FormattedValue.ToString().Equals("Giờ giảng"))
                 {
                     cbbPaidItemType.SelectedIndex = 0;
@@ -228,6 +231,9 @@ namespace FPTPaidItemSummaryToolkit
                 }
                 btnDelete.Enabled = true;
                 btnUpdate.Enabled = true;
+                txtName.ReadOnly = false;
+                txtHourRate.ReadOnly = false;
+                txtUnitValue.ReadOnly = false;
             }
             if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString().Equals(""))
             {
@@ -244,20 +250,29 @@ namespace FPTPaidItemSummaryToolkit
         }
 
         //Combobox Change
-        private void cbbAcaLevel_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //if (cbbAcaLevel.Items.Count > 0 && cbbPaidItemType.Items.Count > 0)
-            //{
-            //    string acaLv = cbbAcaLevel.SelectedValue.ToString();
-            //    string paidItemType = cbbPaidItemType.SelectedValue.ToString();
-            //    dataGridView1.DataSource = DAL_PaidItem.Instance.LoadDataGridView(acaLv, Int32.Parse(paidItemType));
-            //}
-            
-        }
-
         private void cbbPaidItemType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+            //if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("1") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("3"))
+            //{
+            //    txtUnitValue.Text = "0";
+            //    txtUnitValue.ReadOnly = true;
+            //    txtHourRate.Text = "";
+            //}
+            //else
+            //{
+            //    txtUnitValue.ReadOnly = false;
+            //}
+
+            //if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("2") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("4"))
+            //{
+            //    txtHourRate.Text = "0";
+            //    txtHourRate.ReadOnly = true;
+            //    txtUnitValue.Text = "";
+            //}
+            //else
+            //{
+            //    txtHourRate.ReadOnly = false;
+            //}
         }
 
         private void txtUnitValue_TextChanged(object sender, EventArgs e)
@@ -277,37 +292,41 @@ namespace FPTPaidItemSummaryToolkit
 
         private void btnFilter_Click(object sender, EventArgs e)
         {
-            //if (cbbAcaLevel.Items.Count > 0 && cbbPaidItemType.Items.Count > 0)
-            //{
-            //    string acaLv = cbbAcaLevel.SelectedValue.ToString();
-            //    string paidItemType = cbbPaidItemType.SelectedValue.ToString();
-            //    dataGridView1.DataSource = DAL_PaidItem.Instance.LoadDataGridView(acaLv,
-            //        Int32.Parse(paidItemType));
-            //}
-            //loadHeader();
             errorProvider1.Clear();
             load();
-            if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("1") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("3"))
+            if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("5"))
             {
-                txtUnitValue.Text = "0";
-                txtUnitValue.ReadOnly = true;
-                txtHourRate.Text = "";
-            }
-            else
-            {
-                txtUnitValue.ReadOnly = false;
-            }
-
-            if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("2") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("4"))
-            {
-                txtHourRate.Text = "0";
+                txtName.ReadOnly = true;
                 txtHourRate.ReadOnly = true;
-                txtUnitValue.Text = "";
+                txtUnitValue.ReadOnly = true;
             }
             else
             {
-                txtHourRate.ReadOnly = false;
+                if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("1") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("3"))
+                {
+                    txtUnitValue.Text = "0";
+                    txtUnitValue.ReadOnly = true;
+                    txtHourRate.Text = "";
+                }
+                else
+                {
+                    txtUnitValue.ReadOnly = false;
+                    txtName.ReadOnly = false;
+                }
+
+                if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("2") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("4"))
+                {
+                    txtHourRate.Text = "0";
+                    txtHourRate.ReadOnly = true;
+                    txtUnitValue.Text = "";
+                }
+                else
+                {
+                    txtHourRate.ReadOnly = false;
+                    txtName.ReadOnly = false;
+                }
             }
+            
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -365,6 +384,23 @@ namespace FPTPaidItemSummaryToolkit
             
                 
             
+        }
+
+        private void GUI_PaidItem_Load(object sender, EventArgs e)
+        {
+            if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("1") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("3"))
+            {
+                txtUnitValue.Text = "0";
+                txtUnitValue.ReadOnly = true;
+            }
+            if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("2") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("4"))
+            {
+                txtHourRate.Text = "0";
+                txtHourRate.ReadOnly = true;
+            }
+            btnAdd.Enabled = false;
+            btnUpdate.Enabled = false;
+            btnDelete.Enabled = false;
         }
     }
 }

@@ -115,9 +115,9 @@
             this.groupBox2.Controls.Add(this.label13);
             this.groupBox2.Controls.Add(this.label14);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(715, 53);
+            this.groupBox2.Location = new System.Drawing.Point(761, 53);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(586, 223);
+            this.groupBox2.Size = new System.Drawing.Size(512, 223);
             this.groupBox2.TabIndex = 28;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Thông tin mô tả";
@@ -247,7 +247,7 @@
             "1",
             "2",
             "3"});
-            this.cbbPaidItemType.Location = new System.Drawing.Point(429, 24);
+            this.cbbPaidItemType.Location = new System.Drawing.Point(454, 24);
             this.cbbPaidItemType.Name = "cbbPaidItemType";
             this.cbbPaidItemType.Size = new System.Drawing.Size(176, 24);
             this.cbbPaidItemType.TabIndex = 2;
@@ -257,7 +257,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(323, 26);
+            this.label8.Location = new System.Drawing.Point(348, 26);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(100, 17);
             this.label8.TabIndex = 14;
@@ -293,9 +293,8 @@
             this.cbbAcaLevel.ItemHeight = 16;
             this.cbbAcaLevel.Location = new System.Drawing.Point(122, 24);
             this.cbbAcaLevel.Name = "cbbAcaLevel";
-            this.cbbAcaLevel.Size = new System.Drawing.Size(176, 24);
+            this.cbbAcaLevel.Size = new System.Drawing.Size(210, 24);
             this.cbbAcaLevel.TabIndex = 1;
-            this.cbbAcaLevel.SelectedIndexChanged += new System.EventHandler(this.cbbAcaLevel_SelectedIndexChanged);
             // 
             // btnAdd
             // 
@@ -312,7 +311,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(16, 26);
+            this.label7.Location = new System.Drawing.Point(32, 27);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(82, 17);
             this.label7.TabIndex = 12;
@@ -331,7 +330,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(18, 126);
+            this.label6.Location = new System.Drawing.Point(53, 125);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(61, 17);
             this.label6.TabIndex = 9;
@@ -350,7 +349,8 @@
             // btnExit
             // 
             this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExit.Location = new System.Drawing.Point(1199, 568);
+            this.btnExit.AutoSize = true;
+            this.btnExit.Location = new System.Drawing.Point(1189, 580);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(84, 32);
             this.btnExit.TabIndex = 32;
@@ -395,7 +395,7 @@
             this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(1267, 281);
+            this.dataGridView1.Size = new System.Drawing.Size(1257, 292);
             this.dataGridView1.TabIndex = 31;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
@@ -420,7 +420,7 @@
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(16, 53);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(693, 223);
+            this.groupBox1.Size = new System.Drawing.Size(739, 223);
             this.groupBox1.TabIndex = 30;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Thông tin";
@@ -428,7 +428,7 @@
             // btnFilter
             // 
             this.btnFilter.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFilter.Location = new System.Drawing.Point(611, 22);
+            this.btnFilter.Location = new System.Drawing.Point(636, 23);
             this.btnFilter.Name = "btnFilter";
             this.btnFilter.Size = new System.Drawing.Size(76, 24);
             this.btnFilter.TabIndex = 15;
@@ -500,7 +500,8 @@
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.Location = new System.Drawing.Point(1109, 568);
+            this.btnSave.AutoSize = true;
+            this.btnSave.Location = new System.Drawing.Point(1099, 580);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(84, 32);
             this.btnSave.TabIndex = 33;
@@ -512,8 +513,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1301, 612);
+            this.ClientSize = new System.Drawing.Size(1290, 621);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btnExit);
@@ -523,6 +523,7 @@
             this.Controls.Add(this.label2);
             this.Name = "GUI_PaidItem";
             this.Text = "Quản lý định mức thù lao";
+            this.Load += new System.EventHandler(this.GUI_PaidItem_Load);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
