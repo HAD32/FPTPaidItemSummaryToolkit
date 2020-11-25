@@ -80,6 +80,15 @@ namespace FPTPaidItemSummaryToolkit
 
         private void mniSummary_Click(object sender, EventArgs e)
         {
+            Form guiContainer = GUI_Container.ActiveForm;
+            foreach (Form f in guiContainer.MdiChildren)
+            {
+                if (f.Name == "GUI_Summary")
+                {
+                    f.Activate();
+                    return;
+                }
+            }
             GUI_Summary guiSummary = new GUI_Summary(u);
             guiSummary.MdiParent = this;
             guiSummary.FormBorderStyle = FormBorderStyle.None;

@@ -35,13 +35,13 @@ namespace FPTPaidItemSummaryToolkit
                 if (DAL_AcademicLevel.Instance.Insert(academicLevelsList, txtCode.Text, txtName.Text, txtDescription.Text))
                 {
                     
-                    MessageBox.Show("Thêm thành công!");
+                    MessageBox.Show("Thêm hệ đào tạo thành công!");
 
                     this.Close();
                 }
                 else
                 {
-                    MessageBox.Show("Không thêm được");
+                    MessageBox.Show("Không thêm được hệ đào tạo");
                 }
             }
         }

@@ -122,7 +122,7 @@
             this.Controls.Add(this.btnUpdate);
             this.Controls.Add(this.label1);
             this.Name = "GUI_UpdateForm";
-            this.Text = "GUI_UpdateForm";
+            this.Text = "Sửa hệ đào tạo";
             this.ResumeLayout(false);
             this.PerformLayout();
 

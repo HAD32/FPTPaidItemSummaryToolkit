@@ -37,12 +37,12 @@ namespace FPTPaidItemSummaryToolkit
             if (DAL_AcademicLevel.Instance.Update(academicLevelsList, txtCode.Text, txtName.Text, txtDescription.Text))
             {
                 DAL_DataSerializer.Instance.BinarySerialize(academicLevelsList, "AcademicLevels.sf");
-                MessageBox.Show("Update successful");
+                MessageBox.Show("Sửa hệ đào tạo thành công");
                 this.Close();
             }
             else
             {
-                MessageBox.Show("Update fail");
+                MessageBox.Show("Không sửa được hệ đào tạo");
             }
         }
 
