@@ -46,18 +46,27 @@ namespace FPTPaidItemSummaryToolkit
             cbbAcaLevel.DisplayMember = "Name";
             cbbAcaLevel.DataSource = academicList;
             //load();
-            DoubleBuffer.DoubleBuffered(dataGridView1, true);
+            
         }
 
-        
-
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;
+                return cp;
+            }
+        }
 
         //load function
+        /// <summary>
+        /// Load Paid Item Header function
+        /// </summary>
         void loadHeader()
         {
             try
             {
-                //DAL_PaidItem.Instance.serializeListImmediately(cbbPaidItemType.SelectedValue.ToString(), staffCode);
                 PaidItemHeader head = DAL_PaidItem.Instance.GetPaidItemsHeader();
                 lblAcaLevelName.Text = head.AcademicLevel;
                 dtpEffectiveDate.Text = head.ActiveDate.ToString();
@@ -74,20 +83,14 @@ namespace FPTPaidItemSummaryToolkit
             }
         }
 
+        /// <summary>
+        /// Load form after add, edit, delete
+        /// </summary>
         void load()
         {
             txtID.Text = "";
             txtName.Text = "";
-            txtHourRate.Text = "";
-            txtUnitValue.Text = "";
-            if ((cbbPaidItemType.SelectedIndex +1).ToString().Equals("1") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("3"))
-            {
-                txtUnitValue.Text = "0";
-            }
-            if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("2") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("4"))
-            {
-                txtHourRate.Text = "0";
-            }
+            txtUnit.Text = "";
             btnAdd.Enabled = false;
             btnUpdate.Enabled = false;
             btnDelete.Enabled = false;
@@ -98,47 +101,46 @@ namespace FPTPaidItemSummaryToolkit
                 dataGridView1.DataSource = DAL_PaidItem.Instance.LoadDataGridView(acalv, paidItemType);
             }
             loadHeader();
-
         }
 
+        /// <summary>
+        /// Check a string is number or not by regex 
+        /// </summary>
+        /// <param name="pText"></param>
+        /// <returns></returns>
         public bool IsNumber(string pText)
         {
             Regex regex = new Regex(@"^[-+]?[0-9]*\.?[0-9]+$");
             return regex.IsMatch(pText);
         }
 
-        //Add, Edit, Delete
+        //Add, Edit, Delete function
+        /// <summary>
+        /// "Thêm" button click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAdd_Click(object sender, EventArgs e)
         {
             errorProvider1.Clear();
-            if (txtHourRate.Text.Equals("") )
+            if (!IsNumber(txtUnit.Text.Trim()))
             {
-                errorProvider1.SetError(txtHourRate, "Không được để trống định mức giờ giảng");
-                txtHourRate.Focus();
-                return;
-            }
-            if (txtUnitValue.Text.Equals(""))
-            {
-                errorProvider1.SetError(txtUnitValue, "Không được để trống đơn giá");
-                txtUnitValue.Focus();
-                return;
-            }
-            if (!IsNumber(txtHourRate.Text.Trim()))
-            {
-                errorProvider1.SetError(txtHourRate, "Chỉ được phép điền số. Vui lòng nhập lại");
-                txtHourRate.Focus();
-                return;
-            }
-            if (!IsNumber(txtUnitValue.Text.Trim()))
-            {
-                errorProvider1.SetError(txtUnitValue, "Chỉ được phép điền số. Vui lòng nhập lại");
-                txtUnitValue.Focus();
+                errorProvider1.SetError(txtUnit, "Chỉ được phép điền số. Vui lòng nhập lại");
+                txtUnit.Focus();
                 return;
             }
             else
             {
-                float hourRate = float.Parse(txtHourRate.Text.Trim());
-                float unitValue = float.Parse(txtUnitValue.Text.Trim());
+                float unitValue = 0;
+                float hourRate = 0;
+                if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("1") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("3"))
+                {
+                    hourRate = float.Parse(txtUnit.Text.Trim());
+                }
+                else if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("2") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("4"))
+                {
+                    unitValue = float.Parse(txtUnit.Text.Trim());
+                }
                 string id = DAL_PaidItem.Instance.GetAutoIncrementID(cbbAcaLevel.SelectedValue.ToString().Trim());
                 string acalv = cbbAcaLevel.SelectedValue.ToString().Trim();
                 int paidItemType = Int32.Parse(cbbPaidItemType.SelectedValue.ToString().Trim());
@@ -158,24 +160,32 @@ namespace FPTPaidItemSummaryToolkit
             
         }
 
+        /// <summary>
+        /// "Sửa" button click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             errorProvider1.Clear();
-            if (!IsNumber(txtHourRate.Text))
+            if (!IsNumber(txtUnit.Text.Trim()))
             {
-                errorProvider1.SetError(txtHourRate, "Chỉ được phép điền số. Vui lòng nhập lại");
-                txtHourRate.Focus();
-            }
-            else if (!IsNumber(txtUnitValue.Text))
-            {
-                errorProvider1.SetError(txtUnitValue, "Chỉ được phép điền số. Vui lòng nhập lại");
-                txtUnitValue.Focus();
+                errorProvider1.SetError(txtUnit, "Chỉ được phép điền số. Vui lòng nhập lại");
+                txtUnit.Focus();
+                return;
             }
             else
             {
-                float hourRate = float.Parse(txtHourRate.Text);
-                float unitValue = float.Parse(txtUnitValue.Text);
-
+                float unitValue = 0;
+                float hourRate = 0;
+                if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("1") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("3"))
+                {
+                    hourRate = float.Parse(txtUnit.Text.Trim());
+                }
+                else if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("2") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("4"))
+                {
+                    unitValue = float.Parse(txtUnit.Text.Trim());
+                }
                 if (DAL_PaidItem.Instance.Update(txtID.Text, txtName.Text, hourRate, unitValue,
                             Int32.Parse(cbbPaidItemType.SelectedValue.ToString()), cbbAcaLevel.SelectedValue.ToString()))
                 {
@@ -189,11 +199,16 @@ namespace FPTPaidItemSummaryToolkit
             }
         }
 
+        /// <summary>
+        /// "Xóa" button click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnDelete_Click(object sender, EventArgs e)
         {
             errorProvider1.Clear();
-            DialogResult result = MessageBox.Show("Do you want to delete " + txtName.Text + "?",
-                                               "Confirmation Box", MessageBoxButtons.YesNo);
+            DialogResult result = MessageBox.Show("Bạn có muốn xóa " + txtName.Text + "?",
+                                               "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result == DialogResult.Yes)
             {
                 if (DAL_PaidItem.Instance.Delete(txtID.Text, cbbAcaLevel.SelectedValue.ToString()))
@@ -209,6 +224,11 @@ namespace FPTPaidItemSummaryToolkit
         }
 
         //load data grid view
+        /// <summary>
+        /// click cell of datagridview
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex == -1) return;
@@ -218,26 +238,28 @@ namespace FPTPaidItemSummaryToolkit
                 dataGridView1.CurrentRow.Selected = true;
                 txtID.Text = dataGridView1.Rows[e.RowIndex].Cells["ID"].FormattedValue.ToString();
                 txtName.Text = dataGridView1.Rows[e.RowIndex].Cells["Tên định mức"].FormattedValue.ToString();
-                txtHourRate.Text = dataGridView1.Rows[e.RowIndex].Cells["Định mức giờ giảng"].Value.ToString();
-                txtUnitValue.Text = dataGridView1.Rows[e.RowIndex].Cells["Đơn giá"].Value.ToString();
                 cbbAcaLevel.SelectedValue = dataGridView1.Rows[e.RowIndex].Cells["Hệ đào tạo"].Value.ToString();
                 if(dataGridView1.Rows[e.RowIndex].Cells["Loại định mức"].FormattedValue.ToString().Equals("Giờ giảng"))
                 {
                     cbbPaidItemType.SelectedIndex = 0;
+                    lblUnit.Text = "Giờ giảng:";
+                    txtUnit.Text = dataGridView1.Rows[e.RowIndex].Cells["Định mức giờ giảng"].Value.ToString();
                 }
                 else if(dataGridView1.Rows[e.RowIndex].Cells["Loại định mức"].FormattedValue.ToString().Equals("Đơn giá"))
                 {
                     cbbPaidItemType.SelectedIndex = 1;
+                    lblUnit.Text = "Đơn giá:";
+                    txtUnit.Text = dataGridView1.Rows[e.RowIndex].Cells["Đơn giá"].Value.ToString();
                 }
                 else if(dataGridView1.Rows[e.RowIndex].Cells["Loại định mức"].FormattedValue.ToString().Equals("Quy đổi giờ giảng"))
                 {
                     cbbPaidItemType.SelectedIndex = 2;
+                    lblUnit.Text = "Quy đổi giờ giảng:";
+                    txtUnit.Text = dataGridView1.Rows[e.RowIndex].Cells["Định mức giờ giảng"].Value.ToString();
                 }
                 btnDelete.Enabled = true;
                 btnUpdate.Enabled = true;
                 txtName.ReadOnly = false;
-                txtHourRate.ReadOnly = false;
-                txtUnitValue.ReadOnly = false;
             }
             if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString().Equals(""))
             {
@@ -248,91 +270,79 @@ namespace FPTPaidItemSummaryToolkit
             
         }
 
+        /// <summary>
+        /// "Đóng" button click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        //Combobox Change
-        private void cbbPaidItemType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("1") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("3"))
-            //{
-            //    txtUnitValue.Text = "0";
-            //    txtUnitValue.ReadOnly = true;
-            //    txtHourRate.Text = "";
-            //}
-            //else
-            //{
-            //    txtUnitValue.ReadOnly = false;
-            //}
-
-            //if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("2") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("4"))
-            //{
-            //    txtHourRate.Text = "0";
-            //    txtHourRate.ReadOnly = true;
-            //    txtUnitValue.Text = "";
-            //}
-            //else
-            //{
-            //    txtHourRate.ReadOnly = false;
-            //}
-        }
-
-        private void txtUnitValue_TextChanged(object sender, EventArgs e)
-        {
-            btnAdd.Enabled = true;
-        }
-
-        private void txtHourRate_TextChanged(object sender, EventArgs e)
-        {
-            btnAdd.Enabled = true;
-        }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void txtName_TextChanged(object sender, EventArgs e)
         {
             btnAdd.Enabled = true;
+            txtUnit.ReadOnly = false;
         }
 
+        /// <summary>
+        /// "Hiển thị" button click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnFilter_Click(object sender, EventArgs e)
         {
+            /**
+             * 
+             */
             errorProvider1.Clear();
             load();
             if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("5"))
             {
                 txtName.ReadOnly = true;
-                txtHourRate.ReadOnly = true;
-                txtUnitValue.ReadOnly = true;
+                txtUnit.ReadOnly = true;
             }
             else
             {
-                if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("1") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("3"))
+                if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("1"))
                 {
-                    txtUnitValue.Text = "0";
-                    txtUnitValue.ReadOnly = true;
-                    txtHourRate.Text = "";
-                }
-                else
-                {
-                    txtUnitValue.ReadOnly = false;
+                    lblUnit.Text = "Giờ giảng:";
                     txtName.ReadOnly = false;
+                    txtUnit.ReadOnly = false;
                 }
-
-                if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("2") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("4"))
+                else if((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("2"))
                 {
-                    txtHourRate.Text = "0";
-                    txtHourRate.ReadOnly = true;
-                    txtUnitValue.Text = "";
-                }
-                else
-                {
-                    txtHourRate.ReadOnly = false;
+                    lblUnit.Text = "Đơn giá:";
                     txtName.ReadOnly = false;
+                    txtUnit.ReadOnly = false;
+                }
+                else if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("3"))
+                {
+                    lblUnit.Text = "Quy đổi giờ giảng:";
+                    txtName.ReadOnly = false;
+                    txtUnit.ReadOnly = false;
+                }
+                else if((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("4"))
+                {
+                    lblUnit.Text = "Đơn giá:";
+                    txtName.ReadOnly = false;
+                    txtUnit.ReadOnly = false;
                 }
             }
             
         }
 
+        /// <summary>
+        /// "Lưu" button click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSave_Click(object sender, EventArgs e)
         {
             List<Object> list = new List<object>();
@@ -390,21 +400,21 @@ namespace FPTPaidItemSummaryToolkit
             
         }
 
+        /// <summary>
+        /// Form Load when show form 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GUI_PaidItem_Load(object sender, EventArgs e)
         {
-            if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("1") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("3"))
-            {
-                txtUnitValue.Text = "0";
-                txtUnitValue.ReadOnly = true;
-            }
-            if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("2") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("4"))
-            {
-                txtHourRate.Text = "0";
-                txtHourRate.ReadOnly = true;
-            }
             btnAdd.Enabled = false;
             btnUpdate.Enabled = false;
             btnDelete.Enabled = false;
+        }
+
+        private void txtUnit_TextChanged(object sender, EventArgs e)
+        {
+            btnAdd.Enabled = true;
         }
     }
 }

@@ -124,6 +124,7 @@
             this.Controls.Add(this.txtCode);
             this.Controls.Add(this.label1);
             this.Name = "GUI_InsertForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Thêm hệ đào tạo";
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -46,7 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DoubleBuffer.cs" />
     <Compile Include="GUI_AcademicLevel.cs">
       <SubType>Form</SubType>
     </Compile>
