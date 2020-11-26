@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using DTO;
 using DAL;
 using System.Text.RegularExpressions;
+using System.Reflection;
 
 namespace FPTPaidItemSummaryToolkit
 {
@@ -45,7 +46,10 @@ namespace FPTPaidItemSummaryToolkit
             cbbAcaLevel.DisplayMember = "Name";
             cbbAcaLevel.DataSource = academicList;
             //load();
+            DoubleBuffer.DoubleBuffered(dataGridView1, true);
         }
+
+        
 
 
         //load function
