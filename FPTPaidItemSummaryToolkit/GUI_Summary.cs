@@ -117,7 +117,37 @@ namespace FPTPaidItemSummaryToolkit
             dt.Columns.Add("Email");
             dt.Columns.Add("HĐLĐ");
             dt.Columns.Add("Bộ môn khác");
-            List<MonthlyTeacherPaidItemRecord> teacherRecords = mtpirList;
+
+            dt.Columns.Add("Bậc lương quản lý");
+            dt.Columns.Add("Tiền lương quản lý");
+
+            dt.Columns.Add("Bậc F");
+            dt.Columns.Add("Tiền F");
+            dt.Columns.Add("Định mức giờ giảng theo LCB");
+            dt.Columns.Add("Lương cơ bản");
+            dt.Columns.Add("Khoản bổ sung quản lý");
+
+            if(currentMpir.Campus.Equals("HOALAC"))
+                dt.Columns.Add("Hỗ trợ dạy Hòa Lạc");
+            dt.Columns.Add("Tổng lương giảng dạy FPTUHN");
+            //Lương cơ bản thực tế
+            //Khoản bổ sung
+            //Bù/trừ
+            //Tiền trưởng môn
+            //Hỗ trợ dạy Hòa Lạc
+    
+            dt.Columns.Add("Tính bổ sung 50% các giờ không vượt đã tính 50% vào cuối kỳ");
+            dt.Columns.Add("Tổng lương tháng");
+
+            dt.Columns.Add("Tạm ứng để nhận LCB");
+            dt.Columns.Add("Trừ tiền tạm ứng tháng trước");
+            dt.Columns.Add("Tiền lương tháng sau khi cộng/trừ tiền tạm ứng");
+
+            dt.Columns.Add("Số giờ dạy trên 132h");
+            
+            
+
+            List <MonthlyTeacherPaidItemRecord> teacherRecords = mtpirList;
             List<PaidItem> PaidItemList = teacherRecords[0].PaidItemList;
             DataRow r;
             r = dt.NewRow();
@@ -142,11 +172,12 @@ namespace FPTPaidItemSummaryToolkit
             }
             dt.Rows.Add(r);
             dt.Columns.Add("Ghi chú");
-            dt.Columns.Add("Tổng lương");
             
             foreach (MonthlyTeacherPaidItemRecord record in teacherRecords)
             {
+                float teachingHour = 0;
                 float sum=0;
+                float HLpension = 0;
                 r = dt.NewRow();
                 Staff s = record.StaffInfo;
                 r["ACC"] = s.Account;
@@ -164,10 +195,23 @@ namespace FPTPaidItemSummaryToolkit
                         sum += p.Value * p.UnitValue;
                     else
                         sum -= p.Value * p.UnitValue;
+                    if(p.TypeId == 1)
+                    {
+                        teachingHour += p.Value;
+                    }
                 }
-                record.Sum = sum;
+                r["Số giờ dạy trên 132h"] = teachingHour > 132 ? (teachingHour - 132) : 0;
+                try
+                {
+                    HLpension = (teachingHour * 10) > 500 ? 500 : (teachingHour * 10);
+                    r["Hỗ trợ dạy Hòa Lạc"] = HLpension;
+                }
+                catch (Exception) {
+                    HLpension = 0; 
+                }
+                record.Sum = sum + HLpension ;
                 r["Ghi chú"] = record.Note;
-                r["Tổng lương"] = record.Sum;
+                r["Tổng lương giảng dạy FPTUHN"] = record.Sum;
                 dt.Rows.Add(r);
             }
             dtgDisplay.DataSource = dt;
