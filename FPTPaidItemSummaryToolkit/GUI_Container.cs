@@ -37,7 +37,7 @@ namespace FPTPaidItemSummaryToolkit
             childForm.Show();
         }
 
-        private void managePaidItemsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ManagePaidItemsToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
             Form guiContainer = GUI_Container.ActiveForm;
@@ -57,7 +57,7 @@ namespace FPTPaidItemSummaryToolkit
             smform.Show();
         }
 
-        private void mnsAcademic_Click(object sender, EventArgs e)
+        private void MnsAcademic_Click(object sender, EventArgs e)
         {
             Form guiContainer = GUI_Container.ActiveForm;
             foreach (Form f in guiContainer.MdiChildren)
@@ -73,12 +73,12 @@ namespace FPTPaidItemSummaryToolkit
             guiAcadLevel.Show();
         }
 
-        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+        private void CloseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void mniSummary_Click(object sender, EventArgs e)
+        private void MniSummary_Click(object sender, EventArgs e)
         {
             Form guiContainer = GUI_Container.ActiveForm;
             foreach (Form f in guiContainer.MdiChildren)
@@ -94,6 +94,22 @@ namespace FPTPaidItemSummaryToolkit
             guiSummary.FormBorderStyle = FormBorderStyle.None;
             guiSummary.Dock = DockStyle.Fill;
             guiSummary.Show();
+        }
+
+        private void UserInfoManagement_Click(object sender, EventArgs e)
+        {
+            Form guiContainer = GUI_Container.ActiveForm;
+            foreach (Form f in guiContainer.MdiChildren)
+            {
+                if (f.Name == "GUI_UserInfoManagement")
+                {
+                    f.Activate();
+                    return;
+                }
+            }
+            GUI_UserInfoManagement guiUserinfo = new GUI_UserInfoManagement();
+            guiUserinfo.MdiParent = this;
+            guiUserinfo.Show();
         }
     }
 }

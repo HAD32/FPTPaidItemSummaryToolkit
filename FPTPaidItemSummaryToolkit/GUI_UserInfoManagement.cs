@@ -8,16 +8,16 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using DTO;
 using DAL;
+using DTO;
+
 namespace FPTPaidItemSummaryToolkit
 {
-    
-    public partial class GUI_Login : Form
+    public partial class GUI_UserInfoManagement : Form
     {
         private bool isSaved = false;
         User u;
-        public GUI_Login()
+        public GUI_UserInfoManagement()
         {
             InitializeComponent();
             try
@@ -61,31 +61,7 @@ namespace FPTPaidItemSummaryToolkit
             return true;
         }
 
-        private void btnLogin_Click(object sender, EventArgs e)
-        {
-            if (ValidateLogin())
-            {
-                u.Id = txtCode.Text;
-                u.Email = txtEmail.Text;
-                if (!isSaved)
-                {
-                    DialogResult result = MessageBox.Show("Bạn có muốn lưu thông tin người dùng?", "Thông báo", MessageBoxButtons.YesNo);
-                    if (result == DialogResult.Yes)
-                    {
-                        DAL_DataSerializer.Instance.BinarySerialize(u, "UserInfo\\User.fs");
-                        MessageBox.Show("Lưu thông tin người dùng thành công", "Thông báo");
-                        isSaved = true;
-                    }
-                }
-
-                GUI_Container fcon = new GUI_Container(u);
-                this.Hide();
-                fcon.ShowDialog();
-                this.Close();
-            }
-        }
-
-        private void btnSave_Click(object sender, EventArgs e)
+        private void BtnSave_Click(object sender, EventArgs e)
         {
             if (ValidateLogin())
             {
@@ -93,16 +69,6 @@ namespace FPTPaidItemSummaryToolkit
                 MessageBox.Show("Lưu thông tin người dùng thành công", "Thông báo");
                 isSaved = true;
             }
-        }
-
-        private void txtCode_TextChanged(object sender, EventArgs e)
-        {
-            isSaved = false;
-        }
-
-        private void txtEmail_TextChanged(object sender, EventArgs e)
-        {
-            isSaved = false;
         }
     }
 }

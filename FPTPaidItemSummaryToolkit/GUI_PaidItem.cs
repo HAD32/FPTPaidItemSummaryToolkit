@@ -129,6 +129,11 @@ namespace FPTPaidItemSummaryToolkit
                 txtUnit.Focus();
                 return;
             }
+            if (txtName.Text.Equals("")){
+                errorProvider1.SetError(txtName, "Chỉ được phép điền số. Vui lòng nhập lại");
+                txtName.Focus();
+                return;
+            }
             else
             {
                 float unitValue = 0;
@@ -239,23 +244,28 @@ namespace FPTPaidItemSummaryToolkit
                 txtID.Text = dataGridView1.Rows[e.RowIndex].Cells["ID"].FormattedValue.ToString();
                 txtName.Text = dataGridView1.Rows[e.RowIndex].Cells["Tên định mức"].FormattedValue.ToString();
                 cbbAcaLevel.SelectedValue = dataGridView1.Rows[e.RowIndex].Cells["Hệ đào tạo"].Value.ToString();
-                if(dataGridView1.Rows[e.RowIndex].Cells["Loại định mức"].FormattedValue.ToString().Equals("Giờ giảng"))
+                cbbPaidItemType.Text = dataGridView1.Rows[e.RowIndex].Cells["Loại định mức"].FormattedValue.ToString();
+                lblUnit.Text = cbbPaidItemType.Text;
+                if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("1"))
                 {
-                    cbbPaidItemType.SelectedIndex = 0;
                     lblUnit.Text = "Giờ giảng:";
-                    txtUnit.Text = dataGridView1.Rows[e.RowIndex].Cells["Định mức giờ giảng"].Value.ToString();
+                    txtUnit.Text = dataGridView1.Rows[e.RowIndex].Cells["Định mức giờ giảng"].FormattedValue.ToString();
+                    txtName.ReadOnly = false;
+                    txtUnit.ReadOnly = false;
                 }
-                else if(dataGridView1.Rows[e.RowIndex].Cells["Loại định mức"].FormattedValue.ToString().Equals("Đơn giá"))
+                else if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("2") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("4"))
                 {
-                    cbbPaidItemType.SelectedIndex = 1;
                     lblUnit.Text = "Đơn giá:";
-                    txtUnit.Text = dataGridView1.Rows[e.RowIndex].Cells["Đơn giá"].Value.ToString();
+                    txtUnit.Text = dataGridView1.Rows[e.RowIndex].Cells["Đơn giá"].FormattedValue.ToString();
+                    txtName.ReadOnly = false;
+                    txtUnit.ReadOnly = false;
                 }
-                else if(dataGridView1.Rows[e.RowIndex].Cells["Loại định mức"].FormattedValue.ToString().Equals("Quy đổi giờ giảng"))
+                else if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("3"))
                 {
-                    cbbPaidItemType.SelectedIndex = 2;
                     lblUnit.Text = "Quy đổi giờ giảng:";
-                    txtUnit.Text = dataGridView1.Rows[e.RowIndex].Cells["Định mức giờ giảng"].Value.ToString();
+                    txtUnit.Text = dataGridView1.Rows[e.RowIndex].Cells["Định mức giờ giảng"].FormattedValue.ToString();
+                    txtName.ReadOnly = false;
+                    txtUnit.ReadOnly = false;
                 }
                 btnDelete.Enabled = true;
                 btnUpdate.Enabled = true;
@@ -316,7 +326,7 @@ namespace FPTPaidItemSummaryToolkit
                     txtName.ReadOnly = false;
                     txtUnit.ReadOnly = false;
                 }
-                else if((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("2"))
+                else if((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("2") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("4"))
                 {
                     lblUnit.Text = "Đơn giá:";
                     txtName.ReadOnly = false;
@@ -328,14 +338,7 @@ namespace FPTPaidItemSummaryToolkit
                     txtName.ReadOnly = false;
                     txtUnit.ReadOnly = false;
                 }
-                else if((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("4"))
-                {
-                    lblUnit.Text = "Đơn giá:";
-                    txtName.ReadOnly = false;
-                    txtUnit.ReadOnly = false;
-                }
             }
-            
         }
 
         /// <summary>
@@ -395,9 +398,6 @@ namespace FPTPaidItemSummaryToolkit
                     MessageBox.Show("Lưu thành công.", "Thông báo");
                 }
             }
-            
-                
-            
         }
 
         /// <summary>
