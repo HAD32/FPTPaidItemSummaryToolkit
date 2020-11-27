@@ -77,7 +77,6 @@ namespace FPTPaidItemSummaryToolkit
                         isSaved = true;
                     }
                 }
-
                 GUI_Container fcon = new GUI_Container(u);
                 this.Hide();
                 fcon.ShowDialog();
@@ -89,6 +88,8 @@ namespace FPTPaidItemSummaryToolkit
         {
             if (ValidateLogin())
             {
+                u.Id = txtCode.Text;
+                u.Email = txtEmail.Text;
                 DAL_DataSerializer.Instance.BinarySerialize(u, "UserInfo\\User.fs");
                 MessageBox.Show("Lưu thông tin người dùng thành công", "Thông báo");
                 isSaved = true;

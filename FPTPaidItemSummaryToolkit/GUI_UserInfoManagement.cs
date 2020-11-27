@@ -20,18 +20,11 @@ namespace FPTPaidItemSummaryToolkit
         public GUI_UserInfoManagement()
         {
             InitializeComponent();
-            try
-            {
-                u = (User)DAL_DataSerializer.Instance.BinaryDeserialize("UserInfo\\User.fs");
-                txtCode.Text = u.Id;
-                txtEmail.Text = u.Email;
-                isSaved = true;
-            }
-            catch (Exception)
-            {
-                u = new User();
-                isSaved = false;
-            }
+            u = (User)DAL_DataSerializer.Instance.BinaryDeserialize("UserInfo\\User.fs");
+            txtCode.Text = u.Id;
+            txtEmail.Text = u.Email;
+            isSaved = true;
+            
         }
 
         bool ValidateLogin()
@@ -66,8 +59,9 @@ namespace FPTPaidItemSummaryToolkit
             if (ValidateLogin())
             {
                 DAL_DataSerializer.Instance.BinarySerialize(u, "UserInfo\\User.fs");
-                MessageBox.Show("Lưu thông tin người dùng thành công", "Thông báo");
                 isSaved = true;
+                MessageBox.Show("Lưu thông tin người dùng thành công", "Thông báo");
+                
             }
         }
     }
