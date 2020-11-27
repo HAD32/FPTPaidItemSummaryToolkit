@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DTO;
 using DAL;
+using System.IO;
+
 namespace FPTPaidItemSummaryToolkit
 {
     
@@ -72,9 +74,19 @@ namespace FPTPaidItemSummaryToolkit
                     DialogResult result = MessageBox.Show("Bạn có muốn lưu thông tin người dùng?", "Thông báo", MessageBoxButtons.YesNo);
                     if (result == DialogResult.Yes)
                     {
-                        DAL_DataSerializer.Instance.BinarySerialize(u, "UserInfo\\User.fs");
-                        MessageBox.Show("Lưu thông tin người dùng thành công", "Thông báo");
-                        isSaved = true;
+                        try
+                        {
+                            DAL_DataSerializer.Instance.BinarySerialize(u, "UserInfo\\User.fs");
+                            MessageBox.Show("Lưu thông tin người dùng thành công", "Thông báo");
+                            isSaved = true;
+                        }
+                        catch (Exception)
+                        {
+                            Directory.CreateDirectory(Path.GetDirectoryName(Application.ExecutablePath) + "UserInfo");
+                            DAL_DataSerializer.Instance.BinarySerialize(u, "UserInfo\\User.fs");
+                            MessageBox.Show("Lưu thông tin người dùng thành công", "Thông báo");
+                            isSaved = true;
+                        }
                     }
                 }
 
@@ -89,9 +101,21 @@ namespace FPTPaidItemSummaryToolkit
         {
             if (ValidateLogin())
             {
-                DAL_DataSerializer.Instance.BinarySerialize(u, "UserInfo\\User.fs");
-                MessageBox.Show("Lưu thông tin người dùng thành công", "Thông báo");
-                isSaved = true;
+                u.Id = txtCode.Text;
+                u.Email = txtEmail.Text;
+                try
+                {
+                    DAL_DataSerializer.Instance.BinarySerialize(u, "UserInfo\\User.fs");
+                    MessageBox.Show("Lưu thông tin người dùng thành công", "Thông báo");
+                    isSaved = true;
+                }
+                catch (Exception)
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(Application.ExecutablePath) + "\\UserInfo");
+                    DAL_DataSerializer.Instance.BinarySerialize(u, "UserInfo\\User.fs");
+                    MessageBox.Show("Lưu thông tin người dùng thành công", "Thông báo");
+                    isSaved = true;
+                }
             }
         }
 
