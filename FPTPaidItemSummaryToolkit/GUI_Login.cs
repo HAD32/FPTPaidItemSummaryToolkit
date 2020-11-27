@@ -17,7 +17,7 @@ namespace FPTPaidItemSummaryToolkit
     
     public partial class GUI_Login : Form
     {
-        bool isSaved = false;
+        private bool isSaved = false;
         User u;
         public GUI_Login()
         {
@@ -65,7 +65,7 @@ namespace FPTPaidItemSummaryToolkit
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            if (ValidateLogin())
+            if(ValidateLogin())
             {
                 u.Id = txtCode.Text;
                 u.Email = txtEmail.Text;

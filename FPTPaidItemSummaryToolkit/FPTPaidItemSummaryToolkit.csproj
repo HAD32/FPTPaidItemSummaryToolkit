@@ -46,7 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DoubleBuffer.cs" />
     <Compile Include="GUI_AcademicLevel.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -101,6 +100,12 @@
     <Compile Include="GUI_UpdateForm.Designer.cs">
       <DependentUpon>GUI_UpdateForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI_UserInfoManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI_UserInfoManagement.Designer.cs">
+      <DependentUpon>GUI_UserInfoManagement.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GUI_AcademicLevel.resx">
@@ -129,6 +134,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI_UpdateForm.resx">
       <DependentUpon>GUI_UpdateForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI_UserInfoManagement.resx">
+      <DependentUpon>GUI_UserInfoManagement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
