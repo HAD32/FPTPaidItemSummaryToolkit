@@ -61,7 +61,6 @@ namespace FPTPaidItemSummaryToolkit
                 DAL_DataSerializer.Instance.BinarySerialize(u, "UserInfo\\User.fs");
                 isSaved = true;
                 MessageBox.Show("Lưu thông tin người dùng thành công", "Thông báo");
-                
             }
         }
     }

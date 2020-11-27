@@ -45,7 +45,7 @@ namespace FPTPaidItemSummaryToolkit
             cbbAcaLevel.ValueMember = "Code";
             cbbAcaLevel.DisplayMember = "Name";
             cbbAcaLevel.DataSource = academicList;
-            //load();
+            load();
             
         }
 
