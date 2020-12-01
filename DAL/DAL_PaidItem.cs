@@ -132,7 +132,7 @@ namespace DAL
                 }
                 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 dt.Columns.Clear();
                 dt.Columns.Add("ID");
@@ -190,7 +190,7 @@ namespace DAL
                     count++;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 incrementId = acaLevelName + "1";
             }
@@ -248,7 +248,7 @@ namespace DAL
                 testList.Add(new PaidItem(id, name, rate, unitValue, typeId, acaLevelCode));
                 DAL_DataSerializer.Instance.BinarySerialize(testList, acaLevelCode + "PaidItem.sf");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 testList = new List<Object>();
                 PaidItemHeader pih = new PaidItemHeader(creatorCode, DateTime.Now, acaLevelCode, DateTime.Now, DateTime.Now, "ABC/31T", "","");
