@@ -76,7 +76,7 @@
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.dtgDisplay);
             this.Name = "GUI_FinalSummary";
-            this.Text = "GUI_FinalSummary";
+            this.Text = "Tổng hợp ";
             ((System.ComponentModel.ISupportInitialize)(this.dtgDisplay)).EndInit();
             this.ResumeLayout(false);
 

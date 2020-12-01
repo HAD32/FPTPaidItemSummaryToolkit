@@ -79,7 +79,6 @@ namespace FPTPaidItemSummaryToolkit
             catch
             {
                 PaidItemHeader head = new PaidItemHeader("", DateTime.Now, "", DateTime.Now, DateTime.Now, "", "","");
-
             }
         }
 
@@ -415,6 +414,11 @@ namespace FPTPaidItemSummaryToolkit
         private void txtUnit_TextChanged(object sender, EventArgs e)
         {
             btnAdd.Enabled = true;
+        }
+
+        private void GUI_PaidItem_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
         }
     }
 }

@@ -36,12 +36,12 @@
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.txtAcadLevelCode = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.txtAcadLevelName = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.txtDescription = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtAcadLevelName = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtAcadLevelCode = new System.Windows.Forms.TextBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -138,31 +138,13 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Mô tả";
             // 
-            // txtAcadLevelCode
+            // txtDescription
             // 
-            this.txtAcadLevelCode.Location = new System.Drawing.Point(123, 27);
-            this.txtAcadLevelCode.Name = "txtAcadLevelCode";
-            this.txtAcadLevelCode.ReadOnly = true;
-            this.txtAcadLevelCode.Size = new System.Drawing.Size(309, 22);
-            this.txtAcadLevelCode.TabIndex = 46;
-            this.txtAcadLevelCode.TextChanged += new System.EventHandler(this.txtAcadLevelCode_TextChanged);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(15, 68);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(102, 16);
-            this.label5.TabIndex = 47;
-            this.label5.Text = "Tên hệ đào tạo:";
-            // 
-            // txtAcadLevelName
-            // 
-            this.txtAcadLevelName.Location = new System.Drawing.Point(123, 65);
-            this.txtAcadLevelName.Name = "txtAcadLevelName";
-            this.txtAcadLevelName.Size = new System.Drawing.Size(309, 22);
-            this.txtAcadLevelName.TabIndex = 48;
+            this.txtDescription.Location = new System.Drawing.Point(123, 100);
+            this.txtDescription.Multiline = true;
+            this.txtDescription.Name = "txtDescription";
+            this.txtDescription.Size = new System.Drawing.Size(309, 86);
+            this.txtDescription.TabIndex = 50;
             // 
             // label6
             // 
@@ -174,6 +156,32 @@
             this.label6.TabIndex = 49;
             this.label6.Text = "Mô tả:";
             // 
+            // txtAcadLevelName
+            // 
+            this.txtAcadLevelName.Location = new System.Drawing.Point(123, 65);
+            this.txtAcadLevelName.Name = "txtAcadLevelName";
+            this.txtAcadLevelName.Size = new System.Drawing.Size(309, 22);
+            this.txtAcadLevelName.TabIndex = 48;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(15, 68);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(102, 16);
+            this.label5.TabIndex = 47;
+            this.label5.Text = "Tên hệ đào tạo:";
+            // 
+            // txtAcadLevelCode
+            // 
+            this.txtAcadLevelCode.Location = new System.Drawing.Point(123, 27);
+            this.txtAcadLevelCode.Name = "txtAcadLevelCode";
+            this.txtAcadLevelCode.ReadOnly = true;
+            this.txtAcadLevelCode.Size = new System.Drawing.Size(309, 22);
+            this.txtAcadLevelCode.TabIndex = 46;
+            this.txtAcadLevelCode.TextChanged += new System.EventHandler(this.txtAcadLevelCode_TextChanged);
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.listBox1);
@@ -184,14 +192,6 @@
             this.groupBox2.TabIndex = 47;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Hệ đào tạo";
-            // 
-            // txtDescription
-            // 
-            this.txtDescription.Location = new System.Drawing.Point(123, 100);
-            this.txtDescription.Multiline = true;
-            this.txtDescription.Name = "txtDescription";
-            this.txtDescription.Size = new System.Drawing.Size(309, 86);
-            this.txtDescription.TabIndex = 50;
             // 
             // GUI_AcademicLevel
             // 
@@ -205,7 +205,8 @@
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnExit);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.Name = "GUI_AcademicLevel";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
