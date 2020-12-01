@@ -15,8 +15,9 @@ namespace FPTPaidItemSummaryToolkit
 {
     public partial class GUI_UserInfoManagement : Form
     {
-        private bool isSaved = false;
         User u;
+        private bool isSaved = false;
+
         public GUI_UserInfoManagement()
         {
             InitializeComponent();
