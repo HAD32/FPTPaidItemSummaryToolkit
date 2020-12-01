@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,7 +34,7 @@ namespace DAL
             List<Object> filterList = new List<Object>();
             try
             {
-                paidItemsList = (List<Object>)DAL_DataSerializer.Instance.BinaryDeserialize(acaLevel + "PaidItem.sf");
+                paidItemsList = (List<Object>)DAL_DataSerializer.Instance.BinaryDeserialize("Paid Item Files\\" + acaLevel + "PaidItem.fs");
                 if(paidItemType == 0)
                 {
                     dt.Columns.Add("ID");
@@ -132,7 +133,7 @@ namespace DAL
                 }
                 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 dt.Columns.Clear();
                 dt.Columns.Add("ID");
@@ -190,7 +191,7 @@ namespace DAL
                     count++;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 incrementId = acaLevelName + "1";
             }
@@ -237,31 +238,30 @@ namespace DAL
         //Insert, Delete, Update
         public bool Insert(string id, string name, float rate, float unitValue, int typeId, string acaLevelCode, string creatorCode, DateTime publishDate)
         {
-            List<Object> testList;
+            List<Object> testList = new List<object>();
+            if(!File.Exists(Environment.CurrentDirectory + "\\Paid Item Files"))
+                Directory.CreateDirectory(Environment.CurrentDirectory + "\\Paid Item Files");
+            testList = (List<Object>)DAL_DataSerializer.Instance.BinaryDeserialize("Paid Item Files\\" + acaLevelCode + "PaidItem.fs");
+            if (testList is null)
+                testList = new List<object>();
+            PaidItemHeader pih = new PaidItemHeader(creatorCode, DateTime.Now, acaLevelCode, publishDate, DateTime.Now, "ABC/31T", "");
             try
             {
-                testList = new List<Object>();
-                PaidItemHeader pih = new PaidItemHeader(creatorCode, DateTime.Now, acaLevelCode, publishDate, DateTime.Now, "ABC/31T", "","");
-                testList = (List<Object>)DAL_DataSerializer.Instance.BinaryDeserialize(acaLevelCode + "PaidItem.sf");
                 testList.RemoveAt(0);
                 testList.Insert(0, pih);
-                testList.Add(new PaidItem(id, name, rate, unitValue, typeId, acaLevelCode));
-                DAL_DataSerializer.Instance.BinarySerialize(testList, acaLevelCode + "PaidItem.sf");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                testList = new List<Object>();
-                PaidItemHeader pih = new PaidItemHeader(creatorCode, DateTime.Now, acaLevelCode, DateTime.Now, DateTime.Now, "ABC/31T", "","");
                 testList.Add(pih);
-                testList.Add(new PaidItem(id, name, rate, unitValue, typeId, acaLevelCode));
-                DAL_DataSerializer.Instance.BinarySerialize(testList, acaLevelCode + "PaidItem.sf");
             }
+            testList.Add(new PaidItem(id, name, rate, unitValue, typeId, acaLevelCode));
+            DAL_DataSerializer.Instance.BinarySerialize(testList, "Paid Item Files\\" + acaLevelCode + "PaidItem.fs");
             return true;
         }
 
         public bool Update(string id, string name, float rate, float unitValue, int typeId, string acaLevelCode)
         {
-            paidItemsList = (List<Object>)DAL_DataSerializer.Instance.BinaryDeserialize(acaLevelCode + "PaidItem.sf");
+            paidItemsList = (List<Object>)DAL_DataSerializer.Instance.BinaryDeserialize("Paid Item Files\\" + acaLevelCode + "PaidItem.fs");
             for (int i = 0; i < paidItemsList.Count; i++)
             {
                 if (checkCode(paidItemsList, id) != -1)
@@ -275,26 +275,23 @@ namespace DAL
             item.UnitValue = unitValue;
             item.TypeId = typeId;
             item.AcadLevelCode = acaLevelCode;
-
-            DAL_DataSerializer.Instance.BinarySerialize(paidItemsList, acaLevelCode + "PaidItem.sf");
+            DAL_DataSerializer.Instance.BinarySerialize(paidItemsList, "Paid Item Files\\" + acaLevelCode + "PaidItem.fs");
             return true;
-
         }
 
-        public bool Delete(string id, string acaLv)
+        public bool Delete(string id, string acaLevelCode)
         {
-            paidItemsList = (List<Object>)DAL_DataSerializer.Instance.BinaryDeserialize(acaLv + "PaidItem.sf");
+            paidItemsList = (List<Object>)DAL_DataSerializer.Instance.BinaryDeserialize("Paid Item Files\\" + acaLevelCode + "PaidItem.fs");
             for (int i = 0; i < paidItemsList.Count; i++)
             {
                 if (checkCode(paidItemsList, id) != -1)
                 {
                     paidItemsList.RemoveAt(checkCode(paidItemsList, id));
-                    DAL_DataSerializer.Instance.BinarySerialize(paidItemsList, acaLv + "PaidItem.sf");
+                    DAL_DataSerializer.Instance.BinarySerialize(paidItemsList, "Paid Item Files\\" + acaLevelCode + "PaidItem.fs");
                     return true;
                 }
             }
             return false;
-
         }
 
         public PaidItem GetOnePaidItemByCode(string id)
@@ -314,15 +311,5 @@ namespace DAL
             }
             return pItem;
         }
-
-        //serialize Now
-        //public void serializeListImmediately(string acaLvCode, string creatorCode, DateTime createdDate, DateTime publishDate, DateTime activeDate)
-        //{
-        //    PaidItemHeader pih = new PaidItemHeader(creatorCode, createdDate, acaLvCode, publishDate,activeDate, "ABC/31T", "");
-        //    paidItemsList.RemoveAt(0);
-        //    paidItemsList.Insert(0, pih);
-        //    DAL_DataSerializer.Instance.BinarySerialize(paidItemsList,  acaLvCode + "PaidItem.sf");
-        //}
-        
     }
 }

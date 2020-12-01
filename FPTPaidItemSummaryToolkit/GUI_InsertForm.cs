@@ -9,18 +9,17 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DTO;
 using DAL;
+using System.IO;
 
 namespace FPTPaidItemSummaryToolkit
 {
     public partial class GUI_InsertForm : Form
     {
         List<AcademicLevel> academicLevelsList = new List<AcademicLevel>();
-
         public GUI_InsertForm(List<AcademicLevel> list)
         {
             InitializeComponent();
             academicLevelsList = list;
-
         }
 
         public GUI_InsertForm()
@@ -32,11 +31,9 @@ namespace FPTPaidItemSummaryToolkit
         {
             if (!txtName.Text.Trim().Equals("") && !txtCode.Text.Trim().Equals(""))
             {
-                if (DAL_AcademicLevel.Instance.Insert(academicLevelsList, txtCode.Text, txtName.Text, txtDescription.Text))
+                if (DAL_AcademicLevel.Instance.Insert(academicLevelsList, txtCode.Text, txtName.Text, txtDescription.Text)) 
                 {
-                    
                     MessageBox.Show("Thêm hệ đào tạo thành công!");
-
                     this.Close();
                 }
                 else
