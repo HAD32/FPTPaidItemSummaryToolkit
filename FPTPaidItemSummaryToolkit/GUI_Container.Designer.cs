@@ -35,6 +35,7 @@
             this.mniManage = new System.Windows.Forms.ToolStripMenuItem();
             this.managePaidItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnsAcademic = new System.Windows.Forms.ToolStripMenuItem();
+            this.UserInfoManagement = new System.Windows.Forms.ToolStripMenuItem();
             this.mnAll.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,22 +62,23 @@
             // mniSummary
             // 
             this.mniSummary.Name = "mniSummary";
-            this.mniSummary.Size = new System.Drawing.Size(180, 22);
+            this.mniSummary.Size = new System.Drawing.Size(147, 22);
             this.mniSummary.Text = "Tổng hợp file ";
-            this.mniSummary.Click += new System.EventHandler(this.mniSummary_Click);
+            this.mniSummary.Click += new System.EventHandler(this.MniSummary_Click);
             // 
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.closeToolStripMenuItem.Text = "Đóng";
-            this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
+            this.closeToolStripMenuItem.Click += new System.EventHandler(this.CloseToolStripMenuItem_Click);
             // 
             // mniManage
             // 
             this.mniManage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.managePaidItemsToolStripMenuItem,
-            this.mnsAcademic});
+            this.mnsAcademic,
+            this.UserInfoManagement});
             this.mniManage.Name = "mniManage";
             this.mniManage.Size = new System.Drawing.Size(60, 20);
             this.mniManage.Text = "Quản lý";
@@ -84,16 +86,23 @@
             // managePaidItemsToolStripMenuItem
             // 
             this.managePaidItemsToolStripMenuItem.Name = "managePaidItemsToolStripMenuItem";
-            this.managePaidItemsToolStripMenuItem.Size = new System.Drawing.Size(281, 22);
-            this.managePaidItemsToolStripMenuItem.Text = "Quản lý định mức thù lao ( paid items )";
-            this.managePaidItemsToolStripMenuItem.Click += new System.EventHandler(this.managePaidItemsToolStripMenuItem_Click);
+            this.managePaidItemsToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.managePaidItemsToolStripMenuItem.Text = "Định mức thù lao";
+            this.managePaidItemsToolStripMenuItem.Click += new System.EventHandler(this.ManagePaidItemsToolStripMenuItem_Click);
             // 
             // mnsAcademic
             // 
             this.mnsAcademic.Name = "mnsAcademic";
-            this.mnsAcademic.Size = new System.Drawing.Size(281, 22);
+            this.mnsAcademic.Size = new System.Drawing.Size(196, 22);
             this.mnsAcademic.Text = "Hệ đào tạo";
-            this.mnsAcademic.Click += new System.EventHandler(this.mnsAcademic_Click);
+            this.mnsAcademic.Click += new System.EventHandler(this.MnsAcademic_Click);
+            // 
+            // UserInfoManagement
+            // 
+            this.UserInfoManagement.Name = "UserInfoManagement";
+            this.UserInfoManagement.Size = new System.Drawing.Size(196, 22);
+            this.UserInfoManagement.Text = "Thông tin người dùng  ";
+            this.UserInfoManagement.Click += new System.EventHandler(this.UserInfoManagement_Click);
             // 
             // GUI_Container
             // 
@@ -121,6 +130,7 @@
         private System.Windows.Forms.ToolStripMenuItem mniManage;
         private System.Windows.Forms.ToolStripMenuItem managePaidItemsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mnsAcademic;
+        private System.Windows.Forms.ToolStripMenuItem UserInfoManagement;
     }
 }
 

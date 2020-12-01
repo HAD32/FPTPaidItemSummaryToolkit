@@ -21,12 +21,22 @@ namespace FPTPaidItemSummaryToolkit
             InitializeComponent();
         }
 
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;
+                return cp;
+            }
+        }
+
         void Reload()
         {
             academicList = (List<AcademicLevel>)DAL_DataSerializer.Instance.BinaryDeserialize("AcademicLevels.sf");
             listBox1.DataSource = academicList;
             listBox1.ValueMember = "Code";
-            listBox1.DisplayMember = "Code";
+            listBox1.DisplayMember = "Name";
         }
 
         private void GUI_AcademicLevel_Load(object sender, EventArgs e)
@@ -44,21 +54,29 @@ namespace FPTPaidItemSummaryToolkit
             GUI_InsertForm insertForm = new GUI_InsertForm(academicList);
             insertForm.FormClosed += Reload;
             insertForm.ShowDialog();
+
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             AcademicLevel acLv = DAL_AcademicLevel.Instance.GetOneAcaLevelByCode(listBox1.SelectedValue.ToString(), academicList);
-            GUI_UpdateForm frmUp = new GUI_UpdateForm(academicList, acLv.Code, acLv.Name, acLv.Description);
-            frmUp.FormClosed += Reload;
-            frmUp.ShowDialog();
+            if (DAL_AcademicLevel.Instance.Update(academicList, txtAcadLevelCode.Text, txtAcadLevelName.Text, txtDescription.Text))
+            {
+                DAL_DataSerializer.Instance.BinarySerialize(academicList, "AcademicLevels.sf");
+                MessageBox.Show("Sửa hệ đào tạo thành công");
+            }
+            else
+            {
+                MessageBox.Show("Không sửa được hệ đào tạo");
+            }
+            Reload();
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
             AcademicLevel acLv = DAL_AcademicLevel.Instance.GetOneAcaLevelByCode(listBox1.SelectedValue.ToString(), academicList);
-            DialogResult result = MessageBox.Show("Do you want to delete " + listBox1.SelectedValue.ToString() + "?",
-                                                "Confirmation Box", MessageBoxButtons.YesNo);
+            DialogResult result = MessageBox.Show("Bạn có muốn xóa " + listBox1.SelectedValue.ToString() + "?",
+                                                "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result == DialogResult.Yes)
             {
                 DAL_AcademicLevel.Instance.Delete(academicList, acLv.Code);
@@ -75,14 +93,35 @@ namespace FPTPaidItemSummaryToolkit
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string selectedAcLevel = listBox1.SelectedValue.ToString();
-            foreach (AcademicLevel aclv in academicList)
+            if(listBox1.SelectedValue != null)
             {
-                if (aclv.Code.Equals(selectedAcLevel))
+                string selectedAcLevel = listBox1.SelectedValue.ToString();
+
+                foreach (AcademicLevel aclv in academicList)
                 {
-                    txtDetail.Text = "Mã hệ đào tạo: " + aclv.Code + "\r\nTên hệ đào tạo: " + aclv.Name + "\r\nMô tả: " + aclv.Description;
-                    break;
+                    if (aclv.Code.Equals(selectedAcLevel))
+                    {
+                        txtAcadLevelCode.Text = aclv.Code;
+                        txtAcadLevelName.Text = aclv.Name;
+                        txtDescription.Text = aclv.Description;
+                        break;
+                    }
                 }
+            }
+            else
+            {
+                return;
+            }
+            btnUpdate.Enabled = true;
+            btnDelete.Enabled = true;
+            txtAcadLevelCode.ReadOnly = true;
+        }
+
+        private void txtAcadLevelCode_TextChanged(object sender, EventArgs e)
+        {
+            if (!txtAcadLevelCode.Text.Equals(""))
+            {
+                btnAdd.Enabled = true;
             }
         }
     }

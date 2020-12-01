@@ -51,7 +51,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
-            this.btnExport = new System.Windows.Forms.Button();
             this.btnLoadFile = new System.Windows.Forms.Button();
             this.btnSummary = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
@@ -311,17 +310,6 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
-            // btnExport
-            // 
-            this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnExport.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExport.Location = new System.Drawing.Point(121, 490);
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(124, 32);
-            this.btnExport.TabIndex = 18;
-            this.btnExport.Text = "Xuất ra file Excel";
-            this.btnExport.UseVisualStyleBackColor = true;
-            // 
             // btnLoadFile
             // 
             this.btnLoadFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -337,7 +325,7 @@
             // 
             this.btnSummary.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnSummary.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSummary.Location = new System.Drawing.Point(254, 490);
+            this.btnSummary.Location = new System.Drawing.Point(121, 490);
             this.btnSummary.Name = "btnSummary";
             this.btnSummary.Size = new System.Drawing.Size(91, 32);
             this.btnSummary.TabIndex = 21;
@@ -381,7 +369,6 @@
             this.Controls.Add(this.btnSummary);
             this.Controls.Add(this.btnLoadFile);
             this.Controls.Add(this.btnRefresh);
-            this.Controls.Add(this.btnExport);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
@@ -395,8 +382,9 @@
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.dtgDisplay);
             this.Controls.Add(this.btnLoad);
+            this.DoubleBuffered = true;
             this.Name = "GUI_Summary";
-            this.Text = "GUI_Summary";
+            this.Text = "Tổng hợp thù lao giảng viên";
             ((System.ComponentModel.ISupportInitialize)(this.dtgDisplay)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -433,7 +421,6 @@
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Label lblEmail;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.Button btnLoadFile;
         private System.Windows.Forms.Button btnSummary;

@@ -322,6 +322,8 @@ namespace FPTPaidItemSummaryToolkit
         private void btnLoadFile_Click(object sender, EventArgs e)
         {
             OpenFileDialog openDialog = new OpenFileDialog();
+            openDialog.Title = "Chọn file tổng hợp";
+            openDialog.Filter = "Encrypted files (*.sf)|*.sf";
             DialogResult result = openDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
