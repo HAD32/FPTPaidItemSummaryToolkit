@@ -33,10 +33,20 @@ namespace FPTPaidItemSummaryToolkit
 
         void Reload()
         {
-            academicList = (List<AcademicLevel>)DAL_DataSerializer.Instance.BinaryDeserialize("AcademicLevels.sf");
-            listBox1.DataSource = academicList;
-            listBox1.ValueMember = "Code";
-            listBox1.DisplayMember = "Name";
+            try
+            {
+                academicList = (List<AcademicLevel>)DAL_DataSerializer.Instance.BinaryDeserialize("Academic Levels\\AcademicLevel.fs");
+                listBox1.DataSource = academicList;
+                listBox1.ValueMember = "Code";
+                listBox1.DisplayMember = "Name";
+                txtAcadLevelCode.Text = "";
+                txtAcadLevelName.Text = "";
+                txtDescription.Text = "";
+            }
+            catch (Exception)
+            {
+                academicList = new List<AcademicLevel>();
+            }
         }
 
         private void GUI_AcademicLevel_Load(object sender, EventArgs e)
@@ -62,7 +72,7 @@ namespace FPTPaidItemSummaryToolkit
             AcademicLevel acLv = DAL_AcademicLevel.Instance.GetOneAcaLevelByCode(listBox1.SelectedValue.ToString(), academicList);
             if (DAL_AcademicLevel.Instance.Update(academicList, txtAcadLevelCode.Text, txtAcadLevelName.Text, txtDescription.Text))
             {
-                DAL_DataSerializer.Instance.BinarySerialize(academicList, "AcademicLevels.sf");
+                DAL_DataSerializer.Instance.BinarySerialize(academicList, "Academic Levels\\AcademicLevel.fs");
                 MessageBox.Show("Sửa hệ đào tạo thành công");
             }
             else
@@ -82,7 +92,7 @@ namespace FPTPaidItemSummaryToolkit
                 DAL_AcademicLevel.Instance.Delete(academicList, acLv.Code);
 
             }
-            DAL_DataSerializer.Instance.BinarySerialize(academicList, "AcademicLevels.sf");
+            DAL_DataSerializer.Instance.BinarySerialize(academicList, "Academic Levels\\AcademicLevel.fs");
             Reload();
         }
 

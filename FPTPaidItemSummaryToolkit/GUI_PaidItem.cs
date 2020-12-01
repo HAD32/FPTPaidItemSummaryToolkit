@@ -40,7 +40,7 @@ namespace FPTPaidItemSummaryToolkit
             cbbPaidItemType.DisplayMember = "Name";
 
             academicList.Clear();
-            academicList = (List<AcademicLevel>)DAL_DataSerializer.Instance.BinaryDeserialize("AcademicLevels.sf");
+            academicList = (List<AcademicLevel>)DAL_DataSerializer.Instance.BinaryDeserialize("Academic Levels\\AcademicLevel.fs");
 
             cbbAcaLevel.ValueMember = "Code";
             cbbAcaLevel.DisplayMember = "Name";
@@ -78,7 +78,7 @@ namespace FPTPaidItemSummaryToolkit
             }
             catch
             {
-                PaidItemHeader head = new PaidItemHeader("", DateTime.Now, "", DateTime.Now, DateTime.Now, "", "","");
+                PaidItemHeader head = new PaidItemHeader("", DateTime.Now, "", DateTime.Now, DateTime.Now, "", "");
             }
         }
 
@@ -129,7 +129,7 @@ namespace FPTPaidItemSummaryToolkit
                 return;
             }
             if (txtName.Text.Equals("")){
-                errorProvider1.SetError(txtName, "Chỉ được phép điền số. Vui lòng nhập lại");
+                errorProvider1.SetError(txtName, "Xin vui lòng không để trống trường này.");
                 txtName.Focus();
                 return;
             }
@@ -240,35 +240,32 @@ namespace FPTPaidItemSummaryToolkit
             if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
             {
                 dataGridView1.CurrentRow.Selected = true;
+
                 txtID.Text = dataGridView1.Rows[e.RowIndex].Cells["ID"].FormattedValue.ToString();
                 txtName.Text = dataGridView1.Rows[e.RowIndex].Cells["Tên định mức"].FormattedValue.ToString();
                 cbbAcaLevel.SelectedValue = dataGridView1.Rows[e.RowIndex].Cells["Hệ đào tạo"].Value.ToString();
                 cbbPaidItemType.Text = dataGridView1.Rows[e.RowIndex].Cells["Loại định mức"].FormattedValue.ToString();
                 lblUnit.Text = cbbPaidItemType.Text;
+
                 if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("1"))
                 {
                     lblUnit.Text = "Giờ giảng:";
                     txtUnit.Text = dataGridView1.Rows[e.RowIndex].Cells["Định mức giờ giảng"].FormattedValue.ToString();
-                    txtName.ReadOnly = false;
-                    txtUnit.ReadOnly = false;
                 }
                 else if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("2") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("4"))
                 {
                     lblUnit.Text = "Đơn giá:";
                     txtUnit.Text = dataGridView1.Rows[e.RowIndex].Cells["Đơn giá"].FormattedValue.ToString();
-                    txtName.ReadOnly = false;
-                    txtUnit.ReadOnly = false;
                 }
                 else if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("3"))
                 {
                     lblUnit.Text = "Quy đổi giờ giảng:";
                     txtUnit.Text = dataGridView1.Rows[e.RowIndex].Cells["Định mức giờ giảng"].FormattedValue.ToString();
-                    txtName.ReadOnly = false;
-                    txtUnit.ReadOnly = false;
                 }
+                txtName.ReadOnly = false;
+                txtUnit.ReadOnly = false;
                 btnDelete.Enabled = true;
                 btnUpdate.Enabled = true;
-                txtName.ReadOnly = false;
             }
             if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString().Equals(""))
             {
@@ -276,7 +273,6 @@ namespace FPTPaidItemSummaryToolkit
                 btnUpdate.Enabled = false;
             }
             btnAdd.Enabled = false;
-            
         }
 
         /// <summary>
@@ -288,12 +284,7 @@ namespace FPTPaidItemSummaryToolkit
         {
             this.Close();
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        
         private void txtName_TextChanged(object sender, EventArgs e)
         {
             btnAdd.Enabled = true;
@@ -305,39 +296,27 @@ namespace FPTPaidItemSummaryToolkit
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnFilter_Click(object sender, EventArgs e)
+        private void btnShow_Click(object sender, EventArgs e)
         {
             /**
              * 
              */
             errorProvider1.Clear();
             load();
-            if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("5"))
+            if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("1"))
             {
-                txtName.ReadOnly = true;
-                txtUnit.ReadOnly = true;
+                lblUnit.Text = "Định mức giờ giảng:";
             }
-            else
+            else if((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("2") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("4"))
             {
-                if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("1"))
-                {
-                    lblUnit.Text = "Giờ giảng:";
-                    txtName.ReadOnly = false;
-                    txtUnit.ReadOnly = false;
-                }
-                else if((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("2") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("4"))
-                {
-                    lblUnit.Text = "Đơn giá:";
-                    txtName.ReadOnly = false;
-                    txtUnit.ReadOnly = false;
-                }
-                else if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("3"))
-                {
-                    lblUnit.Text = "Quy đổi giờ giảng:";
-                    txtName.ReadOnly = false;
-                    txtUnit.ReadOnly = false;
-                }
+                lblUnit.Text = "Đơn giá:";
             }
+            else if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("3"))
+            {
+                lblUnit.Text = "Định mức quy đổi giờ giảng:";
+            }
+            txtName.ReadOnly = false;
+            txtUnit.ReadOnly = false;
         }
 
         /// <summary>
@@ -347,56 +326,43 @@ namespace FPTPaidItemSummaryToolkit
         /// <param name="e"></param>
         private void btnSave_Click(object sender, EventArgs e)
         {
-            List<Object> list = new List<object>();
-            string Key = "";
-            GUI_SetKey passForm = new GUI_SetKey();
-            DialogResult result = passForm.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                Key = passForm.Key;
-            }
-            else
-                return;
-
-            try
-            {
-                list = (List<Object>)DAL_DataSerializer.Instance.BinaryDeserialize(cbbAcaLevel.SelectedValue.ToString() + "PaidItem.sf");
-                PaidItemHeader paidItemHeader = new PaidItemHeader(lblCreaterName.Text, dtpCreatedDate.Value, lblAcaLevelName.Text, dtpPublishDate.Value,
-                    dtpEffectiveDate.Value, txtRule.Text, txtNote.Text, Key);
+            List<Object> list = (List<Object>)DAL_DataSerializer.Instance.BinaryDeserialize("Paid Item Files\\" + cbbAcaLevel.SelectedValue.ToString() + "PaidItem.fs"); ;
+            PaidItemHeader paidItemHeader = new PaidItemHeader(lblCreaterName.Text, dtpCreatedDate.Value, lblAcaLevelName.Text, dtpPublishDate.Value,
+                    dtpEffectiveDate.Value, txtRule.Text, txtNote.Text);
+            //try
+            //{
+                
                 list.RemoveAt(0);
                 list.Insert(0, paidItemHeader);
                 SaveFileDialog saveDialog = new SaveFileDialog();
                 saveDialog.Title = "Save files";
                 saveDialog.FileName = lblAcaLevelName.Text + "PaidItem" + dtpCreatedDate.Value.ToString("ddMMyyyy");
-                saveDialog.Filter = "Encrypted files (*.sf)|*.sf";
+                saveDialog.Filter = "Encrypted files (*.fs)|*.fs";
                 saveDialog.FilterIndex = 2;
                 if (saveDialog.ShowDialog() == DialogResult.OK)
                 {
-
                     DAL_DataSerializer.Instance.BinarySerialize(list, saveDialog.FileName);
                     load();
                     MessageBox.Show("Lưu thành công.", "Thông báo");
                 }
-            }
-            catch
-            {
-                PaidItemHeader paidItemHeader = new PaidItemHeader(lblCreaterName.Text, dtpCreatedDate.Value, lblAcaLevelName.Text, dtpPublishDate.Value,
-                    dtpEffectiveDate.Value, txtRule.Text, txtNote.Text, Key);
-                list.RemoveAt(0);
-                list.Insert(0, paidItemHeader);
-                SaveFileDialog saveDialog = new SaveFileDialog();
-                saveDialog.Title = "Save files";
-                saveDialog.FileName = lblAcaLevelName.Text + "PaidItem" + dtpCreatedDate.Value.ToString("ddMMyyyy");
-                saveDialog.Filter = "Encrypted files (*.sf)|*.sf";
-                saveDialog.FilterIndex = 2;
-                if (saveDialog.ShowDialog() == DialogResult.OK)
-                {
+            //}
+            //catch
+            //{
+            //    list.RemoveAt(0);
+            //    list.Insert(0, paidItemHeader);
+            //    SaveFileDialog saveDialog = new SaveFileDialog();
+            //    saveDialog.Title = "Save files";
+            //    saveDialog.FileName = lblAcaLevelName.Text + "PaidItem" + dtpCreatedDate.Value.ToString("ddMMyyyy");
+            //    saveDialog.Filter = "Encrypted files (*.sf)|*.sf";
+            //    saveDialog.FilterIndex = 2;
+            //    if (saveDialog.ShowDialog() == DialogResult.OK)
+            //    {
 
-                    DAL_DataSerializer.Instance.BinarySerialize(list, saveDialog.FileName);
-                    load();
-                    MessageBox.Show("Lưu thành công.", "Thông báo");
-                }
-            }
+            //        DAL_DataSerializer.Instance.BinarySerialize(list, saveDialog.FileName);
+            //        load();
+            //        MessageBox.Show("Lưu thành công.", "Thông báo");
+            //    }
+            //}
         }
 
         /// <summary>
