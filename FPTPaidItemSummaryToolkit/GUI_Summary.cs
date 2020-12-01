@@ -18,6 +18,18 @@ namespace FPTPaidItemSummaryToolkit
         List<MonthlyPaidItemRecord> mpirList = new List<MonthlyPaidItemRecord>();
         MonthlyPaidItemRecord currentMpir = new MonthlyPaidItemRecord();
         User u;
+
+        //enhance drawing performance
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;
+                return cp;
+            }
+        }
+
         public GUI_Summary(User u)
         {
             InitializeComponent();
@@ -171,7 +183,6 @@ namespace FPTPaidItemSummaryToolkit
                 }
             }
             dt.Rows.Add(r);
-            dt.Columns.Add("Ghi chú");
             
             foreach (MonthlyTeacherPaidItemRecord record in teacherRecords)
             {
@@ -210,7 +221,6 @@ namespace FPTPaidItemSummaryToolkit
                     HLpension = 0; 
                 }
                 record.Sum = sum + HLpension ;
-                r["Ghi chú"] = record.Note;
                 r["Tổng lương giảng dạy FPTUHN"] = record.Sum;
                 dt.Rows.Add(r);
             }
@@ -267,7 +277,7 @@ namespace FPTPaidItemSummaryToolkit
                 if (row.Cells["ACC"].Value is object && !row.Cells["ACC"].Value.ToString().Equals(""))
                 {
                     MonthlyTeacherPaidItemRecord mtpir = DAL_Summary.Instance.GetMtpirByStaffAccount(row.Cells["ACC"].Value.ToString(), mtpirList);
-                    List<PaidItem> pitl = DAL_Summary.Instance.GetPaidItemList(cbxAcadLv.SelectedItem.ToString());
+                    List<PaidItem> pitl = mtpir.PaidItemList;
 
                     foreach (PaidItem p in pitl)
                     {
@@ -329,7 +339,7 @@ namespace FPTPaidItemSummaryToolkit
                     btnSearch.Enabled = true;
                     btnSave.Enabled = true;
                 }
-                MessageBox.Show("Thành công.");
+                MessageBox.Show("Nhập file tổng hợp thành công.","Thông báo",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
         }
 
@@ -338,5 +348,6 @@ namespace FPTPaidItemSummaryToolkit
             GUI_FinalSummary fSumForm = new GUI_FinalSummary(mpirList);
             fSumForm.ShowDialog();
         }
+        
     }
 }
