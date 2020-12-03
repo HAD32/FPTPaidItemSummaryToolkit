@@ -16,11 +16,6 @@ namespace FPTPaidItemSummaryToolkit
     {
         List<AcademicLevel> academicList = new List<AcademicLevel>();
 
-        public GUI_AcademicLevel()
-        {
-            InitializeComponent();
-        }
-
         protected override CreateParams CreateParams
         {
             get
@@ -29,6 +24,11 @@ namespace FPTPaidItemSummaryToolkit
                 cp.ExStyle |= 0x02000000;
                 return cp;
             }
+        }
+
+        public GUI_AcademicLevel()
+        {
+            InitializeComponent();
         }
 
         void Reload()
