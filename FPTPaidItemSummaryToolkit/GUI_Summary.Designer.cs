@@ -82,6 +82,7 @@
             this.dtgDisplay.Size = new System.Drawing.Size(1038, 237);
             this.dtgDisplay.TabIndex = 1;
             this.dtgDisplay.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgDisplay_CellEndEdit);
+            this.dtgDisplay.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dtgDisplay_CellMouseClick);
             // 
             // cbxAcadLv
             // 

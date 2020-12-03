@@ -111,5 +111,21 @@ namespace FPTPaidItemSummaryToolkit
             guiUserinfo.MdiParent = this;
             guiUserinfo.Show();
         }
+
+        private void mniPension_Click(object sender, EventArgs e)
+        {
+            Form guiContainer = GUI_Container.ActiveForm;
+            foreach (Form f in guiContainer.MdiChildren)
+            {
+                if (f.Name == "GUI_PensionManagement")
+                {
+                    f.Activate();
+                    return;
+                }
+            }
+            GUI_PensionManagement guiPension = new GUI_PensionManagement();
+            guiPension.MdiParent = this;
+            guiPension.Show();
+        }
     }
 }

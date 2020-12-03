@@ -52,6 +52,12 @@
     <Compile Include="GUI_AcademicLevel.Designer.cs">
       <DependentUpon>GUI_AcademicLevel.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI_AddMultipleFromExcel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI_AddMultipleFromExcel.Designer.cs">
+      <DependentUpon>GUI_AddMultipleFromExcel.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI_Container.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -82,11 +88,23 @@
     <Compile Include="GUI_PaidItem.Designer.cs">
       <DependentUpon>GUI_PaidItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI_PensionManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI_PensionManagement.Designer.cs">
+      <DependentUpon>GUI_PensionManagement.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI_SetKey.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUI_SetKey.Designer.cs">
       <DependentUpon>GUI_SetKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI_SimpleModifyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI_SimpleModifyForm.Designer.cs">
+      <DependentUpon>GUI_SimpleModifyForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI_Summary.cs">
       <SubType>Form</SubType>
@@ -111,6 +129,9 @@
     <EmbeddedResource Include="GUI_AcademicLevel.resx">
       <DependentUpon>GUI_AcademicLevel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI_AddMultipleFromExcel.resx">
+      <DependentUpon>GUI_AddMultipleFromExcel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI_Container.resx">
       <DependentUpon>GUI_Container.cs</DependentUpon>
     </EmbeddedResource>
@@ -126,8 +147,14 @@
     <EmbeddedResource Include="GUI_PaidItem.resx">
       <DependentUpon>GUI_PaidItem.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI_PensionManagement.resx">
+      <DependentUpon>GUI_PensionManagement.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI_SetKey.resx">
       <DependentUpon>GUI_SetKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI_SimpleModifyForm.resx">
+      <DependentUpon>GUI_SimpleModifyForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI_Summary.resx">
       <DependentUpon>GUI_Summary.cs</DependentUpon>
