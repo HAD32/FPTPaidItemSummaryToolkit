@@ -93,7 +93,7 @@ namespace FPTPaidItemSummaryToolkit
                     if (!accountList.Contains(s.Account))
                     {
                         accountList.Add(s.Account);
-                        mtpirFinalList.Add(new MonthlyTeacherPaidItemRecord("", s, null, "", mtpir.Sum));
+                        mtpirFinalList.Add(new MonthlyTeacherPaidItemRecord("", s, null,null, "", mtpir.Sum));
                     }
                     else
                     {

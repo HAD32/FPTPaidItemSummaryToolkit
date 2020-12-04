@@ -18,6 +18,7 @@ namespace FPTPaidItemSummaryToolkit
         List<MonthlyPaidItemRecord> mpirList = new List<MonthlyPaidItemRecord>();
         MonthlyPaidItemRecord currentMpir = new MonthlyPaidItemRecord();
         User u;
+        List<PensionList> plList = (List<PensionList>)DAL_DataSerializer.Instance.BinaryDeserialize("Pension List\\PensionList.fs");
 
         //enhance drawing performance
         protected override CreateParams CreateParams
@@ -129,36 +130,13 @@ namespace FPTPaidItemSummaryToolkit
             dt.Columns.Add("Email");
             dt.Columns.Add("HĐLĐ");
             dt.Columns.Add("Bộ môn khác");
-
-            dt.Columns.Add("Bậc lương quản lý");
-            dt.Columns.Add("Tiền lương quản lý");
-
-            dt.Columns.Add("Bậc F");
-            dt.Columns.Add("Tiền F");
-            dt.Columns.Add("Định mức giờ giảng theo LCB");
-            dt.Columns.Add("Lương cơ bản");
-            dt.Columns.Add("Khoản bổ sung quản lý");
-
-            if(currentMpir.Campus.Equals("HOALAC"))
-                dt.Columns.Add("Hỗ trợ dạy Hòa Lạc");
-            dt.Columns.Add("Tổng lương giảng dạy FPTUHN");
-            //Lương cơ bản thực tế
-            //Khoản bổ sung
-            //Bù/trừ
-            //Tiền trưởng môn
-            //Hỗ trợ dạy Hòa Lạc
-    
-            dt.Columns.Add("Tính bổ sung 50% các giờ không vượt đã tính 50% vào cuối kỳ");
-            dt.Columns.Add("Tổng lương tháng");
-
-            dt.Columns.Add("Tạm ứng để nhận LCB");
-            dt.Columns.Add("Trừ tiền tạm ứng tháng trước");
-            dt.Columns.Add("Tiền lương tháng sau khi cộng/trừ tiền tạm ứng");
-
-            dt.Columns.Add("Số giờ dạy trên 132h");
             
+            if(plList is object)
+                foreach(Pension p in plList[0].pensionList)
+                {
+                    dt.Columns.Add(p.PensionName);
+                }
             
-
             List <MonthlyTeacherPaidItemRecord> teacherRecords = mtpirList;
             List<PaidItem> PaidItemList = teacherRecords[0].PaidItemList;
             DataRow r;
@@ -211,17 +189,40 @@ namespace FPTPaidItemSummaryToolkit
                         teachingHour += p.Value;
                     }
                 }
-                r["Số giờ dạy trên 132h"] = teachingHour > 132 ? (teachingHour - 132) : 0;
-                try
+
+                if(plList is object)
                 {
-                    HLpension = (teachingHour * 10) > 500 ? 500 : (teachingHour * 10);
-                    r["Hỗ trợ dạy Hòa Lạc"] = HLpension;
+                    if (record.PensionList is object)
+                        foreach (Pension p in record.PensionList.pensionList)
+                        {
+                            r[p.PensionName] = p.PensionValue;
+                        }
+                    else
+                    {
+                        record.PensionList = new PensionList();
+                        record.PensionList.pensionList = new List<Pension>();
+                        foreach (Pension p in plList[0].pensionList)
+                        {
+                            record.PensionList.pensionList.Add(new Pension(p.PensionName, 0));
+                        }
+                        foreach (Pension p in record.PensionList.pensionList)
+                        {
+                            r[p.PensionName] = p.PensionValue;
+                        }
+                    }
                 }
-                catch (Exception) {
-                    HLpension = 0; 
-                }
-                record.Sum = sum + HLpension ;
-                r["Tổng lương giảng dạy FPTUHN"] = record.Sum;
+                
+                //r["Số giờ dạy trên 132h"] = teachingHour > 132 ? (teachingHour - 132) : 0;
+                //try
+                //{
+                //    HLpension = (teachingHour * 10) > 500 ? 500 : (teachingHour * 10);
+                //    r["Hỗ trợ dạy Hòa Lạc"] = HLpension;
+                //}
+                //catch (Exception) {
+                //    HLpension = 0; 
+                //}
+                //record.Sum = sum + HLpension ;
+                //r["Tổng lương giảng dạy FPTUHN"] = record.Sum;
                 dt.Rows.Add(r);
             }
             dtgDisplay.DataSource = dt;
@@ -278,7 +279,6 @@ namespace FPTPaidItemSummaryToolkit
                 {
                     MonthlyTeacherPaidItemRecord mtpir = DAL_Summary.Instance.GetMtpirByStaffAccount(row.Cells["ACC"].Value.ToString(), mtpirList);
                     List<PaidItem> pitl = mtpir.PaidItemList;
-
                     foreach (PaidItem p in pitl)
                     {
                         Object obj = row.Cells[p.Name].Value;
@@ -286,6 +286,19 @@ namespace FPTPaidItemSummaryToolkit
                         {
                             if (!String.IsNullOrWhiteSpace(obj.ToString()))
                                 p.Value = float.Parse(obj.ToString());
+                        }
+                    }
+                    if(mtpir.PensionList is object)
+                    {
+                        List<Pension> penList = mtpir.PensionList.pensionList;
+                        foreach (Pension p in penList)
+                        {
+                            Object obj = row.Cells[p.PensionName].Value;
+                            if (obj is object)
+                            {
+                                if (!String.IsNullOrWhiteSpace(obj.ToString()))
+                                    p.PensionValue = float.Parse(obj.ToString());
+                            }
                         }
                     }
                     mtpir.PaidItemList = pitl;
@@ -350,6 +363,30 @@ namespace FPTPaidItemSummaryToolkit
             GUI_FinalSummary fSumForm = new GUI_FinalSummary(mpirList);
             fSumForm.ShowDialog();
         }
-        
+
+        string columnName;
+        private void dtgDisplay_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                int columnIndex = dtgDisplay.CurrentCell.ColumnIndex;
+                columnName = dtgDisplay.Columns[columnIndex].Name;
+                ContextMenuStrip cm = new ContextMenuStrip();
+                cm.Items.Add("Nhập từ file Excel");
+                cm.Show(this, this.PointToClient(MousePosition));
+                cm.ItemClicked += new ToolStripItemClickedEventHandler(InsertMultipleFromExcel);
+            }
+        }
+        private void InsertMultipleFromExcel(object sender, ToolStripItemClickedEventArgs e)
+        {
+            GUI_AddMultipleFromExcel ExcelImportForm = new GUI_AddMultipleFromExcel(currentMpir, columnName);
+            DialogResult result = ExcelImportForm.ShowDialog();
+            if (result == DialogResult.Cancel)
+            {
+                this.currentMpir = ExcelImportForm.mpir;
+                ConstructDatatable(currentMpir.mtpirList);
+            }
+            tempSave();
+        }
     }
 }
