@@ -51,7 +51,6 @@ namespace FPTPaidItemSummaryToolkit
             }
             GUI_PaidItem smform = new GUI_PaidItem(u);
             smform.MdiParent = this;
-
             smform.FormBorderStyle = FormBorderStyle.None;
             smform.Dock = DockStyle.Fill;
             smform.Show();
