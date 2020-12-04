@@ -36,21 +36,23 @@
             this.label3 = new System.Windows.Forms.Label();
             this.txtCode = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.cbbType = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtDescription
             // 
-            this.txtDescription.Location = new System.Drawing.Point(137, 97);
+            this.txtDescription.Location = new System.Drawing.Point(137, 129);
             this.txtDescription.Multiline = true;
             this.txtDescription.Name = "txtDescription";
-            this.txtDescription.Size = new System.Drawing.Size(250, 64);
+            this.txtDescription.Size = new System.Drawing.Size(250, 32);
             this.txtDescription.TabIndex = 25;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(88, 119);
+            this.label2.Location = new System.Drawing.Point(89, 129);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(38, 15);
             this.label2.TabIndex = 24;
@@ -110,11 +112,35 @@
             this.label1.TabIndex = 18;
             this.label1.Text = "Mã hệ đào tạo";
             // 
+            // cbbType
+            // 
+            this.cbbType.FormattingEnabled = true;
+            this.cbbType.Items.AddRange(new object[] {
+            "Đại học",
+            "Trung học",
+            "Tiểu học"});
+            this.cbbType.Location = new System.Drawing.Point(137, 92);
+            this.cbbType.Name = "cbbType";
+            this.cbbType.Size = new System.Drawing.Size(250, 21);
+            this.cbbType.TabIndex = 26;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(74, 93);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(53, 15);
+            this.label4.TabIndex = 27;
+            this.label4.Text = "Phân hệ";
+            // 
             // GUI_InsertForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(429, 218);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.cbbType);
             this.Controls.Add(this.txtDescription);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnCancel);
@@ -141,5 +167,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtCode;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cbbType;
+        private System.Windows.Forms.Label label4;
     }
 }

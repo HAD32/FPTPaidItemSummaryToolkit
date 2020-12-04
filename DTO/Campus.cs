@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace DTO
 {
-    class Campus
+    [Serializable]
+    public class Campus
     {
-        private string Code { get; set; }
-        private string Name { get; set; }
-        private string Description { get; set; }
+        public string Code { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
 
         public Campus()
         {

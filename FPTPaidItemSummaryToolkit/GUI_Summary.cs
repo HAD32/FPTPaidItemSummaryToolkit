@@ -71,7 +71,7 @@ namespace FPTPaidItemSummaryToolkit
             List<MonthlyPaidItemRecord> mpirListByAcadLv = new List<MonthlyPaidItemRecord>();
             foreach(MonthlyPaidItemRecord mpir in mpirList)
             {
-                if (mpir.AcadLv.Equals(acadLv))
+                if (mpir.AcadLv.Code.Equals(acadLv))
                     mpirListByAcadLv.Add(mpir);
             }
             return mpirListByAcadLv;
@@ -81,7 +81,7 @@ namespace FPTPaidItemSummaryToolkit
         {
             foreach(MonthlyPaidItemRecord mpir in mpirList)
             {
-                if (mpir.AcadLv.Equals(AcadLv) && mpir.Campus.Equals(Campus))
+                if (mpir.AcadLv.Code.Equals(AcadLv) && mpir.Campus.Equals(Campus))
                     return mpir;
             }
             return null;
@@ -89,6 +89,8 @@ namespace FPTPaidItemSummaryToolkit
 
         private void btnLoad_Click(object sender, EventArgs e)
         {
+            cbxAcadLv.Items.Clear();
+            cbxCampus.Items.Clear();
             FolderBrowserDialog fbDialog = new FolderBrowserDialog();
             DialogResult result = fbDialog.ShowDialog();
             if (result == DialogResult.OK)
@@ -99,7 +101,10 @@ namespace FPTPaidItemSummaryToolkit
                     foreach (MonthlyPaidItemRecord mpir in mpirList)
                     {
                         if (!cbxAcadLv.Items.Contains(mpir.AcadLv))
+                        {
                             cbxAcadLv.Items.Add(mpir.AcadLv);
+                        }
+                        cbxAcadLv.DisplayMember = "Code";
                     }
                     cbxAcadLv.SelectedIndex = 0;
                     lblFile.Text = fbDialog.SelectedPath;
@@ -113,7 +118,8 @@ namespace FPTPaidItemSummaryToolkit
         private void cbxAcadLv_SelectedIndexChanged(object sender, EventArgs e)
         {
             cbxCampus.Items.Clear();
-            List<MonthlyPaidItemRecord> mpirListByAcadLv = GetSummaryFileByAcadLv(cbxAcadLv.SelectedItem.ToString());
+            AcademicLevel academic = (AcademicLevel)cbxAcadLv.SelectedItem;
+            List<MonthlyPaidItemRecord> mpirListByAcadLv = GetSummaryFileByAcadLv(academic.Code);
             foreach (MonthlyPaidItemRecord mpir in mpirListByAcadLv)
             {
                 cbxCampus.Items.Add(mpir.Campus);
@@ -130,12 +136,22 @@ namespace FPTPaidItemSummaryToolkit
             dt.Columns.Add("Email");
             dt.Columns.Add("HĐLĐ");
             dt.Columns.Add("Bộ môn khác");
-            
-            if(plList is object)
-                foreach(Pension p in plList[0].pensionList)
+
+            if (plList is object)
+            {
+                foreach (PensionList p in plList)
                 {
-                    dt.Columns.Add(p.PensionName);
+                    if (p.pensionListName.Trim().Equals(currentMpir.AcadLv.Type.Trim()))
+                    {
+                        foreach (Pension pen in p.pensionList)
+                        {
+                            dt.Columns.Add(pen.PensionName);
+                        }
+                        break;
+                    }
+                    MessageBox.Show(p.pensionListName + " - " + currentMpir.AcadLv.Type);
                 }
+            }
             
             List <MonthlyTeacherPaidItemRecord> teacherRecords = mtpirList;
             List<PaidItem> PaidItemList = teacherRecords[0].PaidItemList;
@@ -201,13 +217,20 @@ namespace FPTPaidItemSummaryToolkit
                     {
                         record.PensionList = new PensionList();
                         record.PensionList.pensionList = new List<Pension>();
-                        foreach (Pension p in plList[0].pensionList)
+                        foreach (PensionList p in plList)
                         {
-                            record.PensionList.pensionList.Add(new Pension(p.PensionName, 0));
+                            if (p.pensionListName.Trim().Equals(currentMpir.AcadLv.Type.Trim()))
+                            {
+                                foreach (Pension pe in p.pensionList)
+                                {
+                                    record.PensionList.pensionList.Add(new Pension(pe.PensionName, 0));
+                                }
+                                break;
+                            }
                         }
-                        foreach (Pension p in record.PensionList.pensionList)
+                        foreach (Pension pe in record.PensionList.pensionList)
                         {
-                            r[p.PensionName] = p.PensionValue;
+                            r[pe.PensionName] = pe.PensionValue;
                         }
                     }
                 }
@@ -250,7 +273,8 @@ namespace FPTPaidItemSummaryToolkit
 
         private void btnShow_Click(object sender, EventArgs e)
         {
-            currentMpir = GetMpir(cbxAcadLv.SelectedItem.ToString(), cbxCampus.SelectedItem.ToString());
+            AcademicLevel academic = (AcademicLevel)cbxAcadLv.SelectedItem;
+            currentMpir = GetMpir(academic.Code, cbxCampus.SelectedItem.ToString());
             ConstructDatatable(currentMpir.mtpirList);
         }
 
@@ -325,18 +349,21 @@ namespace FPTPaidItemSummaryToolkit
             SaveFileDialog saveDialog = new SaveFileDialog();
             saveDialog.Title = "Lưu file";
             saveDialog.FileName = "Summary_" + DateTime.Now.ToString("ddMMyy")+"_"+u.Id;
-            saveDialog.Filter = "Encrypted files (*.sf)|*.sf";
+            saveDialog.Filter = "Encrypted files (*.fs)|*.fs";
             if (saveDialog.ShowDialog() == DialogResult.OK)
             {
-                DAL_DataSerializer.Instance.BinarySerialize(mpirList, saveDialog.FileName);   
+                DAL_DataSerializer.Instance.BinarySerialize(mpirList, saveDialog.FileName);
+                MessageBox.Show("Lưu file tổng hợp thành công");
             }
         }
 
         private void btnLoadFile_Click(object sender, EventArgs e)
         {
+            cbxAcadLv.Items.Clear();
+            cbxCampus.Items.Clear();
             OpenFileDialog openDialog = new OpenFileDialog();
             openDialog.Title = "Chọn file tổng hợp";
-            openDialog.Filter = "Encrypted files (*.sf)|*.sf";
+            openDialog.Filter = "Encrypted files (*.fs)|*.fs";
             DialogResult result = openDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
@@ -346,7 +373,10 @@ namespace FPTPaidItemSummaryToolkit
                     foreach (MonthlyPaidItemRecord mpir in mpirList)
                     {
                         if (!cbxAcadLv.Items.Contains(mpir.AcadLv))
+                        {
                             cbxAcadLv.Items.Add(mpir.AcadLv);
+                        }
+                        cbxAcadLv.DisplayMember = "Code";
                     }
                     cbxAcadLv.SelectedIndex = 0;
                     lblFile.Text = openDialog.FileName;

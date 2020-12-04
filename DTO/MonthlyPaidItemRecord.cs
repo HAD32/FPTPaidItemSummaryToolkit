@@ -12,7 +12,7 @@ namespace DTO
         //header: creator, acadlv, paiditemFileheader,
         public string Name { get; set; }
         public User CreatorInfo { get; set; }
-        public string AcadLv { get; set; }
+        public AcademicLevel AcadLv { get; set; }
         public string Campus { get; set; }
         public string StaffFileLocation { get; set; }
         public DateTime FromDate { get; set; }
@@ -25,7 +25,7 @@ namespace DTO
         {
         }
 
-        public MonthlyPaidItemRecord(string name, User creatorInfo, string acadLv, string campus, string staffFileLocation, 
+        public MonthlyPaidItemRecord(string name, User creatorInfo, AcademicLevel acadLv, string campus, string staffFileLocation, 
             DateTime fromDate, DateTime toDate, DateTime lastModifiedDate, PaidItemHeader paidItemFileHeader, List<MonthlyTeacherPaidItemRecord> mtpirList)
         {
             Name = name;
