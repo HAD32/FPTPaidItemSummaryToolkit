@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -66,9 +67,21 @@ namespace FPTPaidItemSummaryToolkit
         {
             if (ValidateLogin())
             {
-                DAL_DataSerializer.Instance.BinarySerialize(u, "UserInfo\\User.fs");
-                isSaved = true;
-                MessageBox.Show("Lưu thông tin người dùng thành công", "Thông báo",MessageBoxButtons.OK, MessageBoxIcon.Information);
+                u.Id = txtCode.Text;
+                u.Email = txtEmail.Text;
+                try
+                {
+                    DAL_DataSerializer.Instance.BinarySerialize(u, "UserInfo\\User.fs");
+                    MessageBox.Show("Lưu thông tin người dùng thành công", "Thông báo");
+                    isSaved = true;
+                }
+                catch (Exception)
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(Application.ExecutablePath) + "\\UserInfo");
+                    DAL_DataSerializer.Instance.BinarySerialize(u, "UserInfo\\User.fs");
+                    MessageBox.Show("Lưu thông tin người dùng thành công", "Thông báo");
+                    isSaved = true;
+                }
             }
         }
 
