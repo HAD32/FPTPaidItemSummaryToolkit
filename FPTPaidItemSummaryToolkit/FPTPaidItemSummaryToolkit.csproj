@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NCalc">
+      <HintPath>..\..\..\..\..\Downloads\ncalc\sourceCode\ncalc\Evaluant.Calculator\bin\Debug\NCalc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -58,6 +61,12 @@
     <Compile Include="GUI_AddMultipleFromExcel.Designer.cs">
       <DependentUpon>GUI_AddMultipleFromExcel.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI_CreateFormula.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI_CreateFormula.Designer.cs">
+      <DependentUpon>GUI_CreateFormula.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI_Container.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,6 +78,12 @@
     </Compile>
     <Compile Include="GUI_FinalSummary.Designer.cs">
       <DependentUpon>GUI_FinalSummary.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI_History.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI_History.Designer.cs">
+      <DependentUpon>GUI_History.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI_InsertForm.cs">
       <SubType>Form</SubType>
@@ -93,12 +108,6 @@
     </Compile>
     <Compile Include="GUI_PensionManagement.Designer.cs">
       <DependentUpon>GUI_PensionManagement.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI_SetKey.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI_SetKey.Designer.cs">
-      <DependentUpon>GUI_SetKey.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI_SimpleModifyForm.cs">
       <SubType>Form</SubType>
@@ -126,11 +135,17 @@
     <EmbeddedResource Include="GUI_AddMultipleFromExcel.resx">
       <DependentUpon>GUI_AddMultipleFromExcel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI_CreateFormula.resx">
+      <DependentUpon>GUI_CreateFormula.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI_Container.resx">
       <DependentUpon>GUI_Container.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI_FinalSummary.resx">
       <DependentUpon>GUI_FinalSummary.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI_History.resx">
+      <DependentUpon>GUI_History.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI_InsertForm.resx">
       <DependentUpon>GUI_InsertForm.cs</DependentUpon>
@@ -143,9 +158,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI_PensionManagement.resx">
       <DependentUpon>GUI_PensionManagement.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI_SetKey.resx">
-      <DependentUpon>GUI_SetKey.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI_SimpleModifyForm.resx">
       <DependentUpon>GUI_SimpleModifyForm.cs</DependentUpon>

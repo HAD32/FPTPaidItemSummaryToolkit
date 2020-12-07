@@ -329,41 +329,20 @@ namespace FPTPaidItemSummaryToolkit
         {
             List<Object> list = (List<Object>)DAL_DataSerializer.Instance.BinaryDeserialize("Paid Item Files\\" + cbbAcaLevel.SelectedValue.ToString() + "PaidItem.fs"); ;
             PaidItemHeader paidItemHeader = new PaidItemHeader(lblCreaterName.Text, dtpCreatedDate.Value, lblAcaLevelName.Text, dtpPublishDate.Value,
-                    dtpEffectiveDate.Value, txtRule.Text, txtNote.Text);
-            //try
-            //{
-                
-                list.RemoveAt(0);
-                list.Insert(0, paidItemHeader);
-                SaveFileDialog saveDialog = new SaveFileDialog();
-                saveDialog.Title = "Save files";
-                saveDialog.FileName = lblAcaLevelName.Text + "PaidItem" + dtpCreatedDate.Value.ToString("ddMMyyyy");
-                saveDialog.Filter = "Encrypted files (*.fs)|*.fs";
-                saveDialog.FilterIndex = 2;
-                if (saveDialog.ShowDialog() == DialogResult.OK)
-                {
-                    DAL_DataSerializer.Instance.BinarySerialize(list, saveDialog.FileName);
-                    load();
-                    MessageBox.Show("Lưu thành công.", "Thông báo");
-                }
-            //}
-            //catch
-            //{
-            //    list.RemoveAt(0);
-            //    list.Insert(0, paidItemHeader);
-            //    SaveFileDialog saveDialog = new SaveFileDialog();
-            //    saveDialog.Title = "Save files";
-            //    saveDialog.FileName = lblAcaLevelName.Text + "PaidItem" + dtpCreatedDate.Value.ToString("ddMMyyyy");
-            //    saveDialog.Filter = "Encrypted files (*.sf)|*.sf";
-            //    saveDialog.FilterIndex = 2;
-            //    if (saveDialog.ShowDialog() == DialogResult.OK)
-            //    {
-
-            //        DAL_DataSerializer.Instance.BinarySerialize(list, saveDialog.FileName);
-            //        load();
-            //        MessageBox.Show("Lưu thành công.", "Thông báo");
-            //    }
-            //}
+                    dtpEffectiveDate.Value, txtRule.Text, txtNote.Text);                
+            list.RemoveAt(0);
+            list.Insert(0, paidItemHeader);
+            SaveFileDialog saveDialog = new SaveFileDialog();
+            saveDialog.Title = "Save files";
+            saveDialog.FileName = lblAcaLevelName.Text + "PaidItem" + dtpCreatedDate.Value.ToString("ddMMyyyy");
+            saveDialog.Filter = "Encrypted files (*.fs)|*.fs";
+            saveDialog.FilterIndex = 2;
+            if (saveDialog.ShowDialog() == DialogResult.OK)
+            {
+                DAL_DataSerializer.Instance.BinarySerialize(list, saveDialog.FileName);
+                load();
+                MessageBox.Show("Lưu thành công.", "Thông báo");
+            }
         }
 
         /// <summary>

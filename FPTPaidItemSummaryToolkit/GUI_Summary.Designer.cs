@@ -170,16 +170,16 @@
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(314, 71);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(149, 17);
+            this.label4.Size = new System.Drawing.Size(137, 17);
             this.label4.TabIndex = 11;
-            this.label4.Text = "Thư mục file tổng hợp:";
+            this.label4.Text = "Địa chỉ file tổng hợp:";
             // 
             // lblFile
             // 
             this.lblFile.AutoSize = true;
             this.lblFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFile.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.lblFile.Location = new System.Drawing.Point(478, 71);
+            this.lblFile.Location = new System.Drawing.Point(457, 71);
             this.lblFile.Name = "lblFile";
             this.lblFile.Size = new System.Drawing.Size(106, 17);
             this.lblFile.TabIndex = 12;

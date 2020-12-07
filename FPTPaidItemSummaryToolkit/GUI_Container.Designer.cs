@@ -37,6 +37,7 @@
             this.mnsAcademic = new System.Windows.Forms.ToolStripMenuItem();
             this.UserInfoManagement = new System.Windows.Forms.ToolStripMenuItem();
             this.mniPension = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniHistory = new System.Windows.Forms.ToolStripMenuItem();
             this.mnAll.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -63,14 +64,14 @@
             // mniSummary
             // 
             this.mniSummary.Name = "mniSummary";
-            this.mniSummary.Size = new System.Drawing.Size(147, 22);
+            this.mniSummary.Size = new System.Drawing.Size(180, 22);
             this.mniSummary.Text = "Tổng hợp file ";
             this.mniSummary.Click += new System.EventHandler(this.MniSummary_Click);
             // 
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.closeToolStripMenuItem.Text = "Đóng";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.CloseToolStripMenuItem_Click);
             // 
@@ -79,8 +80,9 @@
             this.mniManage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.managePaidItemsToolStripMenuItem,
             this.mnsAcademic,
+            this.mniPension,
             this.UserInfoManagement,
-            this.mniPension});
+            this.mniHistory});
             this.mniManage.Name = "mniManage";
             this.mniManage.Size = new System.Drawing.Size(60, 20);
             this.mniManage.Text = "Quản lý";
@@ -113,6 +115,13 @@
             this.mniPension.Text = "Phụ cấp";
             this.mniPension.Click += new System.EventHandler(this.mniPension_Click);
             // 
+            // mniHistory
+            // 
+            this.mniHistory.Name = "mniHistory";
+            this.mniHistory.Size = new System.Drawing.Size(196, 22);
+            this.mniHistory.Text = "Lịch sử";
+            this.mniHistory.Click += new System.EventHandler(this.mniHistory_Click);
+            // 
             // GUI_Container
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -141,6 +150,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnsAcademic;
         private System.Windows.Forms.ToolStripMenuItem UserInfoManagement;
         private System.Windows.Forms.ToolStripMenuItem mniPension;
+        private System.Windows.Forms.ToolStripMenuItem mniHistory;
     }
 }
 

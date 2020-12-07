@@ -151,7 +151,6 @@ namespace FPTPaidItemSummaryToolkit
                 txtAddCampus.Focus();
                 return;
             }
-            int i = 0;
             if(academic.CampusList is object)
             {
                 if (academic.CampusList.Count > 0)
