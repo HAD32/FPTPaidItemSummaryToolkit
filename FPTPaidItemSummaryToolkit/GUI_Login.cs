@@ -82,7 +82,7 @@ namespace FPTPaidItemSummaryToolkit
                         }
                         catch (Exception)
                         {
-                            Directory.CreateDirectory(Path.GetDirectoryName(Application.ExecutablePath) + "UserInfo");
+                            Directory.CreateDirectory(Path.GetDirectoryName(Application.ExecutablePath) + "\\UserInfo");
                             DAL_DataSerializer.Instance.BinarySerialize(u, "UserInfo\\User.fs");
                             MessageBox.Show("Lưu thông tin người dùng thành công", "Thông báo");
                             isSaved = true;
