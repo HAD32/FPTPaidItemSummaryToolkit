@@ -11,6 +11,7 @@ namespace DTO
     {
         public string PensionName { get; set; }
         public float PensionValue { get; set; }
+        public string PensionFormula { get; set; }
 
         public Pension()
         {
@@ -20,6 +21,11 @@ namespace DTO
         {
             PensionName = pensionName;
             PensionValue = pensionValue;
+        }
+
+        public Pension(string pensionName, float pensionValue, string pensionFormula) : this(pensionName, pensionValue)
+        {
+            PensionFormula = pensionFormula;
         }
     }
 }

@@ -19,6 +19,7 @@ namespace FPTPaidItemSummaryToolkit
         MonthlyPaidItemRecord currentMpir = new MonthlyPaidItemRecord();
         User u;
         List<PensionList> plList = (List<PensionList>)DAL_DataSerializer.Instance.BinaryDeserialize("Pension List\\PensionList.fs");
+        string savedLocation = "";
 
         //enhance drawing performance
         protected override CreateParams CreateParams
@@ -111,6 +112,7 @@ namespace FPTPaidItemSummaryToolkit
                     btnShow.Enabled = true;
                     btnSearch.Enabled = true;
                     btnSave.Enabled = true;
+                    savedLocation = "";
                 }
             }
         }
@@ -234,18 +236,6 @@ namespace FPTPaidItemSummaryToolkit
                         }
                     }
                 }
-                
-                //r["Số giờ dạy trên 132h"] = teachingHour > 132 ? (teachingHour - 132) : 0;
-                //try
-                //{
-                //    HLpension = (teachingHour * 10) > 500 ? 500 : (teachingHour * 10);
-                //    r["Hỗ trợ dạy Hòa Lạc"] = HLpension;
-                //}
-                //catch (Exception) {
-                //    HLpension = 0; 
-                //}
-                //record.Sum = sum + HLpension ;
-                //r["Tổng lương giảng dạy FPTUHN"] = record.Sum;
                 dt.Rows.Add(r);
             }
             dtgDisplay.DataSource = dt;
@@ -346,15 +336,32 @@ namespace FPTPaidItemSummaryToolkit
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            SaveFileDialog saveDialog = new SaveFileDialog();
-            saveDialog.Title = "Lưu file";
-            saveDialog.FileName = "Summary_" + DateTime.Now.ToString("ddMMyy")+"_"+u.Id;
-            saveDialog.Filter = "Encrypted files (*.fs)|*.fs";
-            if (saveDialog.ShowDialog() == DialogResult.OK)
+            if (string.IsNullOrWhiteSpace(savedLocation))
             {
-                DAL_DataSerializer.Instance.BinarySerialize(mpirList, saveDialog.FileName);
+                SaveFileDialog saveDialog = new SaveFileDialog();
+                saveDialog.Title = "Lưu file";
+                saveDialog.FileName = "Summary_" + DateTime.Now.ToString("ddMMyy") + "_" + u.Id;
+                saveDialog.Filter = "Encrypted files (*.fs)|*.fs";
+                if (saveDialog.ShowDialog() == DialogResult.OK)
+                {
+                    DAL_DataSerializer.Instance.BinarySerialize(mpirList, saveDialog.FileName);
+                    MessageBox.Show("Lưu file tổng hợp thành công");
+                }
+                savedLocation = saveDialog.FileName;
+            }
+            else
+            {
+                DAL_DataSerializer.Instance.BinarySerialize(mpirList, savedLocation);
                 MessageBox.Show("Lưu file tổng hợp thành công");
             }
+
+            string history = u.Id + "|" +Path.GetFileName(savedLocation)+ "|" + DateTime.Now;
+            List<string> historyList;
+            historyList = (List<string>)DAL_DataSerializer.Instance.BinaryDeserialize("History.fs");
+            if(historyList is null)
+                historyList = new List<string>();
+            historyList.Add(history);
+            DAL_DataSerializer.Instance.BinarySerialize(historyList, "History.fs");         
         }
 
         private void btnLoadFile_Click(object sender, EventArgs e)
@@ -384,6 +391,7 @@ namespace FPTPaidItemSummaryToolkit
                     btnSearch.Enabled = true;
                     btnSave.Enabled = true;
                 }
+                savedLocation = openDialog.FileName;
                 MessageBox.Show("Nhập file tổng hợp thành công.","Thông báo",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
         }
@@ -402,12 +410,27 @@ namespace FPTPaidItemSummaryToolkit
                 int columnIndex = dtgDisplay.CurrentCell.ColumnIndex;
                 columnName = dtgDisplay.Columns[columnIndex].Name;
                 ContextMenuStrip cm = new ContextMenuStrip();
-                cm.Items.Add("Nhập từ file Excel");
+                cm.Items.Add("Nhập dữ liệu");
+                cm.Items.Add("Gán công thức");
                 cm.Show(this, this.PointToClient(MousePosition));
-                cm.ItemClicked += new ToolStripItemClickedEventHandler(InsertMultipleFromExcel);
+                cm.ItemClicked += new ToolStripItemClickedEventHandler(ToolTipsFunction);
             }
         }
-        private void InsertMultipleFromExcel(object sender, ToolStripItemClickedEventArgs e)
+        private void ToolTipsFunction(object sender, ToolStripItemClickedEventArgs e)
+        {
+            string selectedItem = e.ClickedItem.Text;
+            switch (selectedItem)
+            {
+                case "Nhập dữ liệu":
+                    InsertMultipleFromExcel();
+                    break;
+                case "Gán công thức":
+                    CalculateByFormula(currentMpir);
+                    break;
+            }
+        }
+
+        private void InsertMultipleFromExcel()
         {
             GUI_AddMultipleFromExcel ExcelImportForm = new GUI_AddMultipleFromExcel(currentMpir, columnName);
             DialogResult result = ExcelImportForm.ShowDialog();
@@ -418,5 +441,19 @@ namespace FPTPaidItemSummaryToolkit
             }
             tempSave();
         }
+
+        private void CalculateByFormula(MonthlyPaidItemRecord mpir)
+        {
+            GUI_CreateFormula CalculateForm = new GUI_CreateFormula(mpir, columnName);
+            DialogResult result = CalculateForm.ShowDialog();
+            if(result == DialogResult.OK)
+            {
+                this.currentMpir = CalculateForm.mpir;
+                ConstructDatatable(currentMpir.mtpirList);
+            }
+            tempSave();
+        }
+
+        
     }
 }
