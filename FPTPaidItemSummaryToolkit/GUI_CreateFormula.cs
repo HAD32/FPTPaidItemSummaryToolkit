@@ -14,10 +14,13 @@ namespace FPTPaidItemSummaryToolkit
 {
     public partial class GUI_CreateFormula : Form
     {
+        char[] operators = { '+', '-', '*', '/' };
         public string formula { get; set; }
         public MonthlyPaidItemRecord mpir { get; set; }
         public string inputItem;
-        bool flag = false;
+        List<string> selectedItems = new List<string>();
+        private bool ignoreSelectedIndexChanged;
+
         public GUI_CreateFormula(MonthlyPaidItemRecord mpir, string columnName)
         {
             InitializeComponent();
@@ -26,7 +29,7 @@ namespace FPTPaidItemSummaryToolkit
             inputItem = columnName;
             foreach(Pension p in mpir.mtpirList[0].PensionList.pensionList)
             {
-                lstColumn.Items.Add(p.PensionName);
+                selectedItems.Add(p.PensionName.Trim());
                 if (p.PensionName.Trim().Equals(inputItem.Trim()))
                 {
                     if (p.PensionFormula is object)
@@ -35,121 +38,75 @@ namespace FPTPaidItemSummaryToolkit
             }
             foreach (PaidItem p in mpir.mtpirList[0].PaidItemList)
             {
-                lstColumn.Items.Add(p.Name);
+                selectedItems.Add(p.Name.Trim());
             }
+            ignoreSelectedIndexChanged = true;
+            lstColumn.DataSource = selectedItems;
+            lstColumn.SelectedIndex = -1;
+            ignoreSelectedIndexChanged = false;
         }
 
         private void lstColumn_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (flag)
-                return;
-            txtFormula.AppendText(" "+lstColumn.SelectedItem.ToString().Trim() + " ");
-            flag = true;
+            if (ignoreSelectedIndexChanged) return;
+            string shortText = txtFormula.Text.Trim();
+            if (string.IsNullOrWhiteSpace(shortText))
+            {
+                txtFormula.AppendText(" " + lstColumn.SelectedItem.ToString().Trim() + " ");
+            }
+            if (shortText.EndsWith("+") || shortText.EndsWith("-") || shortText.EndsWith("*") || shortText.EndsWith("/")|| shortText.EndsWith("("))
+            {
+                txtFormula.AppendText(" " + lstColumn.SelectedItem.ToString().Trim() + " ");
+            }
         }
 
         private void txtFormula_TextChanged(object sender, EventArgs e)
         {
-            if (!flag)
-                return;
-            string shortText = txtFormula.Text.Trim();
-            if (shortText.EndsWith("+") || shortText.EndsWith("-") || shortText.EndsWith("*") || shortText.EndsWith(":"))
-            {
-                flag = false;
-            }
-            else
-                flag = true;
         }
 
         private void btnAppend_Click(object sender, EventArgs e)
         {
-            this.formula = txtFormula.Text;
-            if(formula.Trim().EndsWith("+")|| formula.Trim().EndsWith("-") || formula.Trim().EndsWith("*") || formula.Trim().EndsWith(":"))
-            {
-                ToolTip tt = new ToolTip();
-                tt.IsBalloon = true;
-                tt.UseFading = true;
-                tt.Show("Công thức không hợp lệ, xin hãy kiểm tra lại.", txtFormula, 60, -50, 2000);
-                txtFormula.Focus();
-                return;
-            }
-            if (!ValidateFormula(formula))
-                return;
-            this.DialogResult = DialogResult.OK;
+            this.formula = txtFormula.Text.Trim();
             foreach(MonthlyTeacherPaidItemRecord m in mpir.mtpirList)
             {
                 foreach(Pension p in m.PensionList.pensionList)
                 {
                     if (p.PensionName.Equals(inputItem))
                     {
-                        p.PensionValue = ResolveFormula(formula, m);
+                        try
+                        {
+                            p.PensionValue = ResolveFormula(formula, m);
+                        }
+                        catch (NCalc.EvaluationException)
+                        {
+                            ToolTip tt = new ToolTip();
+                            tt.IsBalloon = true;
+                            tt.UseFading = true;
+                            tt.Show("Công thức không hợp lệ, xin hãy kiểm tra lại.", txtFormula, 60, -50, 2000);
+                            txtFormula.Focus();
+                            return;
+                        }
+                        
                         p.PensionFormula = formula;
                         break;
                     }
                 }
             }
+            this.DialogResult = DialogResult.OK;
             MessageBox.Show("Nhập dữ liệu thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.Close();
         }
 
-        bool ValidateFormula(string formula)
-        {
-            string testString = string.Concat(formula.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries));
-            if (testString.EndsWith("+") || testString.EndsWith("-") || testString.EndsWith("*") || testString.EndsWith(":"))
-            {
-                ToolTip tt = new ToolTip();
-                tt.IsBalloon = true;
-                tt.UseFading = true;
-                tt.Show("Công thức không hợp lệ, xin hãy kiểm tra lại.", txtFormula, 60, -50, 2000);
-                txtFormula.Focus();
-                return false;
-            }
-            char[] operators = { '+', '-', '*', ':' }; 
-            char[] FormulaInChar = testString.ToCharArray();
-            for(int i=0; i < FormulaInChar.Length; i++)
-            {
-                if (operators.Contains<char>(FormulaInChar[i]))
-                {
-                    if (operators.Contains<char>(FormulaInChar[i + 1]))
-                    {
-                        ToolTip tt = new ToolTip();
-                        tt.IsBalloon = true;
-                        tt.UseFading = true;
-                        tt.Show("Công thức không hợp lệ, xin hãy kiểm tra lại.", txtFormula, 60, -50, 2000);
-                        txtFormula.Focus();
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-
         private float ResolveFormula(string formula, MonthlyTeacherPaidItemRecord m)
         {
-            string[] variables = formula.Split(new char[] { '+', '-', '*', ':' });
-            List<char> operators = new List<char>();
-            foreach (char c in formula)
-            {
-                if (c.Equals('+') || c.Equals('-') || c.Equals('*'))
-                {
-                    operators.Add(c);
-                }
-                else if (c.Equals(':'))
-                    operators.Add('/');
-            }
-            string finalFormula = "";
-            for (int i = 0; i < variables.Length; i++)
+            foreach(string s in selectedItems)
             {
                 bool found = false;
-                foreach(Pension p in m.PensionList.pensionList)
+                foreach (Pension p in m.PensionList.pensionList)
                 {
-                    if (p.PensionName.Trim().Equals(variables[i].Trim()))
+                    if (p.PensionName.Trim().Equals(s))
                     {
-                        finalFormula += p.PensionValue;
-                        try
-                        {
-                            finalFormula += operators[i];
-                        }
-                        catch (ArgumentOutOfRangeException) { }
+                        formula = formula.Replace(s, p.PensionValue.ToString());
                         found = true;
                     }
                 }
@@ -157,69 +114,56 @@ namespace FPTPaidItemSummaryToolkit
                     continue;
                 foreach (PaidItem p in m.PaidItemList)
                 {
-                    if (p.Name.Trim().Equals(variables[i].Trim()))
+                    if (p.Name.Trim().Equals(s))
                     {
-                        finalFormula += p.Value; 
-                        try
-                        {
-                            finalFormula += operators[i]; 
-                        }
-                        catch (ArgumentOutOfRangeException) { }
+                        formula = formula.Replace(s, p.Value.ToString());
                         found = true;
                     }
                 }
-                if (found)
-                    continue;
-                if (!found)
-                {
-                    try
-                    {
-                        float value = float.Parse(variables[i]);
-                        finalFormula += value;
-                        try
-                        {
-                            finalFormula += operators[i];
-                        }
-                        catch (ArgumentOutOfRangeException) { }
-                    }
-                    catch (FormatException) { }
-                }
             }
-            NCalc.Expression expression = new Expression(finalFormula);
+            NCalc.Expression expression = new Expression(formula);
             string r = expression.Evaluate().ToString();
-            return float.Parse(r); 
+            return float.Parse(r);
         }
 
         private void btnDivide_Click(object sender, EventArgs e)
         {
-            if (!flag)
+            string shortText = txtFormula.Text.Trim();
+            if (shortText.EndsWith("+") || shortText.EndsWith("-") || shortText.EndsWith("*") || shortText.EndsWith("/"))
+            {
                 return;
-            txtFormula.AppendText(":");
-            flag = false;
+            }
+            txtFormula.AppendText("/");
         }
 
         private void btnMultiply_Click(object sender, EventArgs e)
         {
-            if (!flag)
+            string shortText = txtFormula.Text.Trim();
+            if (shortText.EndsWith("+") || shortText.EndsWith("-") || shortText.EndsWith("*") || shortText.EndsWith("/"))
+            {
                 return;
+            }
             txtFormula.AppendText("*");
-            flag = false;
         }
 
         private void btnMinus_Click(object sender, EventArgs e)
         {
-            if (!flag)
+            string shortText = txtFormula.Text.Trim();
+            if (shortText.EndsWith("+") || shortText.EndsWith("-") || shortText.EndsWith("*") || shortText.EndsWith("/"))
+            {
                 return;
+            }
             txtFormula.AppendText("-");
-            flag = false;
         }
 
         private void btnPlus_Click(object sender, EventArgs e)
         {
-            if (!flag)
+            string shortText = txtFormula.Text.Trim();
+            if (shortText.EndsWith("+") || shortText.EndsWith("-") || shortText.EndsWith("*") || shortText.EndsWith("/"))
+            {
                 return;
+            }
             txtFormula.AppendText("+");
-            flag = false;
         }
 
         private void btnClose_Click(object sender, EventArgs e)
