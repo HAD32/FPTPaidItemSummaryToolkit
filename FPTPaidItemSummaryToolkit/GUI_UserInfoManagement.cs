@@ -66,6 +66,8 @@ namespace FPTPaidItemSummaryToolkit
         {
             if (ValidateLogin())
             {
+                u.Id = txtCode.Text.Trim();
+                u.Email = txtEmail.Text.Trim();
                 DAL_DataSerializer.Instance.BinarySerialize(u, "UserInfo\\User.fs");
                 isSaved = true;
                 MessageBox.Show("Lưu thông tin người dùng thành công", "Thông báo",MessageBoxButtons.OK, MessageBoxIcon.Information);

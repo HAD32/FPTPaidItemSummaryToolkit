@@ -165,6 +165,7 @@
             // 
             // cbbAcademicType
             // 
+            this.cbbAcademicType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbbAcademicType.FormattingEnabled = true;
             this.cbbAcademicType.Items.AddRange(new object[] {
             "Đại học",

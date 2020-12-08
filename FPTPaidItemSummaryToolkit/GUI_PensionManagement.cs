@@ -17,17 +17,6 @@ namespace FPTPaidItemSummaryToolkit
     {
         List<PensionList> plList = new List<PensionList>();
 
-        //enhance drawing performance
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                CreateParams cp = base.CreateParams;
-                cp.ExStyle |= 0x02000000;
-                return cp;
-            }
-        }
-
         public GUI_PensionManagement()
         {
             InitializeComponent();
@@ -80,10 +69,10 @@ namespace FPTPaidItemSummaryToolkit
                 txtPensionListName.Focus();
                 return;
             }
-            penList.pensionListName = txtPensionListName.Text;
+            penList.pensionListName = txtPensionListName.Text.Trim();
             foreach(PensionList p in plList)
             {
-                if (p.pensionListName.Equals(penList.pensionListName))
+                if (p.pensionListName.Trim().Equals(penList.pensionListName))
                 {
                     MessageBox.Show("Dữ liệu đã tồn tại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
@@ -115,11 +104,11 @@ namespace FPTPaidItemSummaryToolkit
                 txtItemName.Focus();
                 return;
             }
-            p.PensionName = txtItemName.Text;
+            p.PensionName = txtItemName.Text.Trim();
             foreach(PensionList pl in plList)
             {
                 PensionList selectedItem = (PensionList)lstPensionList.SelectedItem;
-                if (pl.pensionListName.Equals(selectedItem.pensionListName))
+                if (pl.pensionListName.Trim().Equals(selectedItem.pensionListName))
                 {
                     List<Pension> pensionList = pl.pensionList;
                     if (pensionList is null)
@@ -127,7 +116,7 @@ namespace FPTPaidItemSummaryToolkit
                     else
                         foreach (Pension pen in pl.pensionList)
                         {
-                            if (pen.PensionName.Equals(p.PensionName))
+                            if (pen.PensionName.Trim().Equals(p.PensionName))
                             {
                                 MessageBox.Show("Dữ liệu đã tồn tại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 return;
@@ -195,7 +184,7 @@ namespace FPTPaidItemSummaryToolkit
                         {
                             if (selectedPl.pensionListName.Equals(p.pensionListName))
                             {
-                                p.pensionListName = modForm.newName;
+                                p.pensionListName = modForm.newName.Trim();
                                 MessageBox.Show("Đổi tên thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 break;
                             }
@@ -255,7 +244,7 @@ namespace FPTPaidItemSummaryToolkit
                                 {
                                     if (p.PensionName.Equals(selectedP.PensionName))
                                     {
-                                        p.PensionName = modForm.newName;
+                                        p.PensionName = modForm.newName.Trim();
                                         MessageBox.Show("Đổi tên thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                         break;
                                     }
@@ -270,11 +259,11 @@ namespace FPTPaidItemSummaryToolkit
                     {
                         foreach (PensionList pl in plList)
                         {
-                            if (selectedPl.pensionListName.Equals(pl.pensionListName))
+                            if (selectedPl.pensionListName.Trim().Equals(pl.pensionListName.Trim()))
                             {
                                 foreach (Pension p in pl.pensionList)
                                 {
-                                    if (p.PensionName.Equals(selectedP.PensionName))
+                                    if (p.PensionName.Trim().Equals(selectedP.PensionName.Trim()))
                                     {
                                         pl.pensionList.Remove(p);
                                         MessageBox.Show("Xóa thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);

@@ -173,6 +173,7 @@ namespace FPTPaidItemSummaryToolkit
             DAL_DataSerializer.Instance.BinarySerialize(academicList, "Academic Levels\\AcademicLevel.fs");
             MessageBox.Show("Thêm cơ sở " + txtAddCampus.Text + " thành công.","Thông báo",MessageBoxButtons.OK,MessageBoxIcon.Information);
             Reload();
+            txtAddCampus.Text = "";
         }
 
         int indexItem;

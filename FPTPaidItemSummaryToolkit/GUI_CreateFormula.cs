@@ -14,7 +14,6 @@ namespace FPTPaidItemSummaryToolkit
 {
     public partial class GUI_CreateFormula : Form
     {
-        char[] operators = { '+', '-', '*', '/' };
         public string formula { get; set; }
         public MonthlyPaidItemRecord mpir { get; set; }
         public string inputItem;
@@ -128,41 +127,21 @@ namespace FPTPaidItemSummaryToolkit
 
         private void btnDivide_Click(object sender, EventArgs e)
         {
-            string shortText = txtFormula.Text.Trim();
-            if (shortText.EndsWith("+") || shortText.EndsWith("-") || shortText.EndsWith("*") || shortText.EndsWith("/"))
-            {
-                return;
-            }
             txtFormula.AppendText("/");
         }
 
         private void btnMultiply_Click(object sender, EventArgs e)
         {
-            string shortText = txtFormula.Text.Trim();
-            if (shortText.EndsWith("+") || shortText.EndsWith("-") || shortText.EndsWith("*") || shortText.EndsWith("/"))
-            {
-                return;
-            }
             txtFormula.AppendText("*");
         }
 
         private void btnMinus_Click(object sender, EventArgs e)
         {
-            string shortText = txtFormula.Text.Trim();
-            if (shortText.EndsWith("+") || shortText.EndsWith("-") || shortText.EndsWith("*") || shortText.EndsWith("/"))
-            {
-                return;
-            }
             txtFormula.AppendText("-");
         }
 
         private void btnPlus_Click(object sender, EventArgs e)
         {
-            string shortText = txtFormula.Text.Trim();
-            if (shortText.EndsWith("+") || shortText.EndsWith("-") || shortText.EndsWith("*") || shortText.EndsWith("/"))
-            {
-                return;
-            }
             txtFormula.AppendText("+");
         }
 

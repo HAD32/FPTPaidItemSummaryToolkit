@@ -151,7 +151,7 @@ namespace FPTPaidItemSummaryToolkit
                 int paidItemType = Int32.Parse(cbbPaidItemType.SelectedValue.ToString().Trim());
                 if (!txtName.Text.Trim().Equals(""))
                 {
-                    if (DAL_PaidItem.Instance.Insert(id, txtName.Text, hourRate, unitValue, paidItemType, acalv, u.Id, dtpPublishDate.Value))
+                    if (DAL_PaidItem.Instance.Insert(id, txtName.Text.Trim(), hourRate, unitValue, paidItemType, acalv, u.Id, dtpPublishDate.Value))
                     {
                         MessageBox.Show("Thêm thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -191,8 +191,8 @@ namespace FPTPaidItemSummaryToolkit
                 {
                     unitValue = float.Parse(txtUnit.Text.Trim());
                 }
-                if (DAL_PaidItem.Instance.Update(txtID.Text, txtName.Text, hourRate, unitValue,
-                            Int32.Parse(cbbPaidItemType.SelectedValue.ToString()), cbbAcaLevel.SelectedValue.ToString()))
+                if (DAL_PaidItem.Instance.Update(txtID.Text.Trim(), txtName.Text.Trim(), hourRate, unitValue,
+                            Int32.Parse(cbbPaidItemType.SelectedValue.ToString().Trim()), cbbAcaLevel.SelectedValue.ToString().Trim()))
                 {
                     MessageBox.Show("Sửa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -216,7 +216,7 @@ namespace FPTPaidItemSummaryToolkit
                                                "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result == DialogResult.Yes)
             {
-                if (DAL_PaidItem.Instance.Delete(txtID.Text, cbbAcaLevel.SelectedValue.ToString()))
+                if (DAL_PaidItem.Instance.Delete(txtID.Text.Trim(), cbbAcaLevel.SelectedValue.ToString().Trim()))
                 {
                     MessageBox.Show("Xóa thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
