@@ -18,7 +18,6 @@ namespace FPTPaidItemSummaryToolkit
         public MonthlyPaidItemRecord mpir { get; set; }
         string pensionName;
         int count = 0;
-        List<PensionList> pl = (List<PensionList>)DAL_DataSerializer.Instance.BinaryDeserialize("Pension List\\PensionList.fs");
 
         public GUI_AddMultipleFromExcel(MonthlyPaidItemRecord mpirPassed, string columnName)
         {

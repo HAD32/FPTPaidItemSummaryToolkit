@@ -138,8 +138,17 @@ namespace FPTPaidItemSummaryToolkit
             dt.Columns.Add("Email");
             dt.Columns.Add("HĐLĐ");
             dt.Columns.Add("Bộ môn khác");
-
-            if (plList is object)
+            List<MonthlyTeacherPaidItemRecord> teacherRecords = mtpirList;
+            PensionList PensionList = teacherRecords[0].PensionList;
+            if (PensionList is object)
+            {
+                if(PensionList.pensionList is object)
+                    foreach (Pension pen in PensionList.pensionList)
+                    {
+                        dt.Columns.Add(pen.PensionName);
+                    }
+            }
+            else if (plList is object)
             {
                 foreach (PensionList p in plList)
                 {
@@ -151,11 +160,10 @@ namespace FPTPaidItemSummaryToolkit
                         }
                         break;
                     }
-                    MessageBox.Show(p.pensionListName + " - " + currentMpir.AcadLv.Type);
                 }
             }
-            
-            List <MonthlyTeacherPaidItemRecord> teacherRecords = mtpirList;
+
+
             List<PaidItem> PaidItemList = teacherRecords[0].PaidItemList;
             DataRow r;
             r = dt.NewRow();
@@ -182,9 +190,6 @@ namespace FPTPaidItemSummaryToolkit
             
             foreach (MonthlyTeacherPaidItemRecord record in teacherRecords)
             {
-                float teachingHour = 0;
-                float sum=0;
-                float HLpension = 0;
                 r = dt.NewRow();
                 Staff s = record.StaffInfo;
                 r["ACC"] = s.Account;
@@ -196,16 +201,6 @@ namespace FPTPaidItemSummaryToolkit
                 foreach (PaidItem p in record.PaidItemList)
                 {
                     r[p.Name] = p.Value;
-                    if (p.TypeId == 1 || p.TypeId == 3)
-                        sum += p.Value * p.Rate; //Need to multiply with teacher's own rate
-                    else if (p.TypeId == 2)
-                        sum += p.Value * p.UnitValue;
-                    else
-                        sum -= p.Value * p.UnitValue;
-                    if(p.TypeId == 1)
-                    {
-                        teachingHour += p.Value;
-                    }
                 }
 
                 if(plList is object)
@@ -346,8 +341,8 @@ namespace FPTPaidItemSummaryToolkit
                 {
                     DAL_DataSerializer.Instance.BinarySerialize(mpirList, saveDialog.FileName);
                     MessageBox.Show("Lưu file tổng hợp thành công");
+                    savedLocation = saveDialog.FileName;
                 }
-                savedLocation = saveDialog.FileName;
             }
             else
             {
