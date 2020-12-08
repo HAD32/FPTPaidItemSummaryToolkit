@@ -10,15 +10,15 @@ namespace FPTPaidItemSummaryToolkit
     {
         List<AcademicLevel> academicList = new List<AcademicLevel>();
 
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                CreateParams cp = base.CreateParams;
-                cp.ExStyle |= 0x02000000;
-                return cp;
-            }
-        }
+        //protected override CreateParams CreateParams
+        //{
+        //    get
+        //    {
+        //        CreateParams cp = base.CreateParams;
+        //        cp.ExStyle |= 0x02000000;
+        //        return cp;
+        //    }
+        //}
 
         public GUI_AcademicLevel()
         {
@@ -72,7 +72,6 @@ namespace FPTPaidItemSummaryToolkit
             AcademicLevel acLv = DAL_AcademicLevel.Instance.GetOneAcaLevelByCode(lstAcademicLevels.SelectedValue.ToString(), academicList);
             if (DAL_AcademicLevel.Instance.Update(academicList, txtAcadLevelCode.Text, txtAcadLevelName.Text, cbbAcademicType.SelectedItem.ToString(),txtDescription.Text))
             {
-                MessageBox.Show(cbbAcademicType.SelectedItem.ToString());
                 DAL_DataSerializer.Instance.BinarySerialize(academicList, "Academic Levels\\AcademicLevel.fs");
                 MessageBox.Show("Sửa hệ đào tạo thành công");
             }
@@ -239,5 +238,9 @@ namespace FPTPaidItemSummaryToolkit
             Reload();
         }
 
+        private void cbbAcademicType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

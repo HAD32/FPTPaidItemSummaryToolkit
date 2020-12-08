@@ -19,15 +19,15 @@ namespace FPTPaidItemSummaryToolkit
         List<AcademicLevel> academicList = new List<AcademicLevel>();
         User u;
 
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                CreateParams cp = base.CreateParams;
-                cp.ExStyle |= 0x02000000;
-                return cp;
-            }
-        }
+        //protected override CreateParams CreateParams
+        //{
+        //    get
+        //    {
+        //        CreateParams cp = base.CreateParams;
+        //        cp.ExStyle |= 0x02000000;
+        //        return cp;
+        //    }
+        //}
 
         public GUI_PaidItem(User u)
         {
@@ -260,7 +260,7 @@ namespace FPTPaidItemSummaryToolkit
                 }
                 else if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("3"))
                 {
-                    lblUnit.Text = "Quy đổi giờ giảng:";
+                    lblUnit.Text = "Định mức quy đổi giờ giảng:";
                     txtUnit.Text = dataGridView1.Rows[e.RowIndex].Cells["Định mức giờ giảng"].FormattedValue.ToString();
                 }
                 txtName.ReadOnly = false;
@@ -365,6 +365,24 @@ namespace FPTPaidItemSummaryToolkit
         private void GUI_PaidItem_FormClosing(object sender, FormClosingEventArgs e)
         {
 
+        }
+
+        private void cbbPaidItemType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("1"))
+            {
+                lblUnit.Text = "Định mức giờ giảng:";
+            }
+            else if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("2") || (cbbPaidItemType.SelectedIndex + 1).ToString().Equals("4"))
+            {
+                lblUnit.Text = "Đơn giá:";
+            }
+            else if ((cbbPaidItemType.SelectedIndex + 1).ToString().Equals("3"))
+            {
+                lblUnit.Text = "Định mức quy đổi giờ giảng:";
+            }
+            txtName.Text = "";
+            txtUnit.Text = "";
         }
     }
 }

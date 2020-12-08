@@ -174,6 +174,7 @@
             this.cbbAcademicType.Name = "cbbAcademicType";
             this.cbbAcademicType.Size = new System.Drawing.Size(309, 24);
             this.cbbAcademicType.TabIndex = 51;
+            this.cbbAcademicType.SelectedIndexChanged += new System.EventHandler(this.cbbAcademicType_SelectedIndexChanged);
             // 
             // txtDescription
             // 
@@ -283,7 +284,6 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnExit);
-            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.Name = "GUI_AcademicLevel";

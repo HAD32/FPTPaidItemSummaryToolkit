@@ -32,7 +32,7 @@ namespace FPTPaidItemSummaryToolkit
             if (!txtName.Text.Trim().Equals("") && !txtCode.Text.Trim().Equals(""))
             {
                 List<Campus> cl = new List<Campus>();
-                if (DAL_AcademicLevel.Instance.Insert(academicLevelsList, txtCode.Text, cbbType.SelectedText, txtName.Text, txtDescription.Text, cl))   
+                if (DAL_AcademicLevel.Instance.Insert(academicLevelsList, txtCode.Text, cbbType.SelectedItem.ToString(), txtName.Text, txtDescription.Text, cl))   
                 {
                     MessageBox.Show("Thêm hệ đào tạo thành công!");
                     this.Close();
@@ -47,6 +47,11 @@ namespace FPTPaidItemSummaryToolkit
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void cbbType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

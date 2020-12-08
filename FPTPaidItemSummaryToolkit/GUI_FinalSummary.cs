@@ -18,15 +18,15 @@ namespace FPTPaidItemSummaryToolkit
         List<MonthlyTeacherPaidItemRecord> mtpirFinalList = new List<MonthlyTeacherPaidItemRecord>();
         List<string> accountList = new List<string>();
 
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                CreateParams cp = base.CreateParams;
-                cp.ExStyle |= 0x02000000;
-                return cp;
-            }
-        }
+        //protected override CreateParams CreateParams
+        //{
+        //    get
+        //    {
+        //        CreateParams cp = base.CreateParams;
+        //        cp.ExStyle |= 0x02000000;
+        //        return cp;
+        //    }
+        //}
 
         public GUI_FinalSummary(List<MonthlyPaidItemRecord> mpirList)
         {

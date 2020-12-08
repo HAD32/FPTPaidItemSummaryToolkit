@@ -123,6 +123,7 @@
             this.cbbType.Name = "cbbType";
             this.cbbType.Size = new System.Drawing.Size(250, 21);
             this.cbbType.TabIndex = 26;
+            this.cbbType.SelectedIndexChanged += new System.EventHandler(this.cbbType_SelectedIndexChanged);
             // 
             // label4
             // 
