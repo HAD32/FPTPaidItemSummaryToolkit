@@ -19,7 +19,6 @@ namespace FPTPaidItemSummaryToolkit
         public string inputItem;
         List<string> selectedItems = new List<string>();
         private bool ignoreSelectedIndexChanged;
-
         public GUI_CreateFormula(MonthlyPaidItemRecord mpir, string columnName)
         {
             InitializeComponent();
@@ -51,11 +50,11 @@ namespace FPTPaidItemSummaryToolkit
             string shortText = txtFormula.Text.Trim();
             if (string.IsNullOrWhiteSpace(shortText))
             {
-                txtFormula.AppendText(" " + lstColumn.SelectedItem.ToString().Trim() + " ");
+                txtFormula.AppendText(" " + lstColumn.SelectedItem.ToString().Trim() + "$ ");
             }
             if (shortText.EndsWith("+") || shortText.EndsWith("-") || shortText.EndsWith("*") || shortText.EndsWith("/")|| shortText.EndsWith("("))
             {
-                txtFormula.AppendText(" " + lstColumn.SelectedItem.ToString().Trim() + " ");
+                txtFormula.AppendText(" " + lstColumn.SelectedItem.ToString().Trim() + "$ ");
             }
         }
 
@@ -115,11 +114,28 @@ namespace FPTPaidItemSummaryToolkit
                 {
                     if (p.Name.Trim().Equals(s))
                     {
-                        formula = formula.Replace(s, p.Value.ToString());
+                        float paidItemValue =0;
+                        switch (p.TypeId)
+                        {
+                            case 1:
+                                paidItemValue = p.Value * p.Rate;
+                                break;
+                            case 2:
+                                paidItemValue = p.Value * p.UnitValue;
+                                break;
+                            case 3:
+                                paidItemValue = p.Value * p.UnitValue;
+                                break;
+                            case 4:
+                                paidItemValue = p.Value;
+                                break;
+                        }
+                        formula = formula.Replace(s+'$', paidItemValue.ToString());
                         found = true;
                     }
                 }
             }
+            MessageBox.Show(formula);
             NCalc.Expression expression = new Expression(formula);
             string r = expression.Evaluate().ToString();
             return float.Parse(r);
