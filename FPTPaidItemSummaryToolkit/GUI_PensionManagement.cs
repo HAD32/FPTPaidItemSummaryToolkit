@@ -94,7 +94,6 @@ namespace FPTPaidItemSummaryToolkit
 
         private void btnAddItems_Click(object sender, EventArgs e)
         {
-            Pension p = new Pension();
             if (string.IsNullOrWhiteSpace(txtItemName.Text))
             {
                 errorProvider1.Clear();
@@ -104,34 +103,46 @@ namespace FPTPaidItemSummaryToolkit
                 txtItemName.Focus();
                 return;
             }
-            p.PensionName = txtItemName.Text.Trim();
-            foreach(PensionList pl in plList)
+            string[] pensionRange = txtItemName.Text.Split(new[] {'\n'},StringSplitOptions.RemoveEmptyEntries);
+
+            int count = 0;
+            foreach (string s in pensionRange)
             {
-                PensionList selectedItem = (PensionList)lstPensionList.SelectedItem;
-                if (pl.pensionListName.Trim().Equals(selectedItem.pensionListName))
+                bool check = false;
+                Pension p = new Pension();
+                p.PensionName = s.Trim();
+                foreach (PensionList pl in plList)
                 {
-                    List<Pension> pensionList = pl.pensionList;
-                    if (pensionList is null)
-                        pensionList = new List<Pension>();
-                    else
-                        foreach (Pension pen in pl.pensionList)
-                        {
-                            if (pen.PensionName.Trim().Equals(p.PensionName))
+                    PensionList selectedItem = (PensionList)lstPensionList.SelectedItem;
+                    if (pl.pensionListName.Trim().Equals(selectedItem.pensionListName))
+                    {
+                        List<Pension> pensionList = pl.pensionList;
+                        if (pensionList is null)
+                            pensionList = new List<Pension>();
+                        else
+                            foreach (Pension pen in pl.pensionList)
                             {
-                                MessageBox.Show("Dữ liệu đã tồn tại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                return;
+                                if (pen.PensionName.Trim().Equals(p.PensionName))
+                                {
+                                    check = true;
+                                    break;
+                                }
                             }
+                        if (!check)
+                        {
+                            pensionList.Add(p);
+                            lstItems.Items.Add(p);
+                            count++;
                         }
-                    pensionList.Add(p);
-                    txtItemName.Text = "";
-                    pl.pensionList = pensionList;
+                        txtItemName.Text = "";
+                        pl.pensionList = pensionList;
+                    }
                 }
             }
-            lstItems.Items.Add(p);
+            MessageBox.Show("Đã thêm " + count + "/" + pensionRange.Length + " mục","Thông báo",MessageBoxButtons.OK,MessageBoxIcon.Information);
             DAL_DataSerializer.Instance.BinarySerialize(plList, "Pension List\\PensionList.fs");
             reloadItem();
         }
-
         private void lstPensionList_SelectedIndexChanged(object sender, EventArgs e)
         {
             reloadItem();

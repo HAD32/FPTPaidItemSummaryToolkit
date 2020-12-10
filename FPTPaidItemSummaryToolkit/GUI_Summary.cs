@@ -131,6 +131,17 @@ namespace FPTPaidItemSummaryToolkit
 
         public void ConstructDatatable(List<MonthlyTeacherPaidItemRecord> mtpirList)
         {
+            AcademicLevel academicLevel = (AcademicLevel)cbxAcadLv.SelectedItem;
+            string staffListPath = Environment.CurrentDirectory + "\\Staff List\\" + academicLevel.Code + ".xlsx";
+            DataTable staffInfo = new DataTable();
+            if (File.Exists(staffListPath))
+                staffInfo = DAL_Summary.Instance.GetDataFromStaffList(staffListPath);
+            else
+            {
+                MessageBox.Show("Không tìm thấy file danh sách giảng viên.", "Thông báo",MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             DataTable dt = new DataTable();
             dt.Columns.Add("ACC");
             dt.Columns.Add("Mã NV");
@@ -162,8 +173,6 @@ namespace FPTPaidItemSummaryToolkit
                     }
                 }
             }
-
-
             List<PaidItem> PaidItemList = teacherRecords[0].PaidItemList;
             DataRow r;
             r = dt.NewRow();
@@ -203,31 +212,41 @@ namespace FPTPaidItemSummaryToolkit
                     r[p.Name] = p.Value;
                 }
 
-                if(plList is object)
-                {
-                    if (record.PensionList is object)
-                        foreach (Pension p in record.PensionList.pensionList)
-                        {
-                            r[p.PensionName] = p.PensionValue;
-                        }
-                    else
+                Staff staff = record.StaffInfo;
+                if (record.PensionList is object)
+                    foreach (Pension p in record.PensionList.pensionList)
                     {
-                        record.PensionList = new PensionList();
-                        record.PensionList.pensionList = new List<Pension>();
-                        foreach (PensionList p in plList)
+                        r[p.PensionName] = p.PensionValue;
+                    }
+                else
+                {
+                    record.PensionList = new PensionList();
+                    record.PensionList.pensionList = new List<Pension>();
+                    foreach (PensionList pl in plList)
+                    {
+                        if (pl.pensionListName.Trim().Equals(currentMpir.AcadLv.Type.Trim()))
                         {
-                            if (p.pensionListName.Trim().Equals(currentMpir.AcadLv.Type.Trim()))
+                            foreach (Pension p in pl.pensionList)
                             {
-                                foreach (Pension pe in p.pensionList)
+                                Pension newP = new Pension(p.PensionName, "0");
+                                foreach(DataRow dtrow in staffInfo.Rows)
                                 {
-                                    record.PensionList.pensionList.Add(new Pension(pe.PensionName, 0));
+                                    if (dtrow["Account"].ToString().Trim().Equals(staff.Account.Trim()))
+                                    {
+                                        try
+                                        {
+                                            string ss = dtrow[newP.PensionName].ToString();
+                                            newP.PensionValue = ss;
+                                            r[newP.PensionName] = newP.PensionValue;
+                                        }
+                                        catch (Exception)
+                                        {
+                                            continue;
+                                        }
+                                    }
                                 }
-                                break;
+                                record.PensionList.pensionList.Add(newP);
                             }
-                        }
-                        foreach (Pension pe in record.PensionList.pensionList)
-                        {
-                            r[pe.PensionName] = pe.PensionValue;
                         }
                     }
                 }
@@ -246,6 +265,7 @@ namespace FPTPaidItemSummaryToolkit
             }
             this.FillRecordNo();
         }
+        
 
         private void FillRecordNo()
         {
@@ -306,7 +326,7 @@ namespace FPTPaidItemSummaryToolkit
                             if (obj is object)
                             {
                                 if (!String.IsNullOrWhiteSpace(obj.ToString()))
-                                    p.PensionValue = float.Parse(obj.ToString());
+                                    p.PensionValue = obj.ToString();
                             }
                         }
                     }

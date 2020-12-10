@@ -87,6 +87,7 @@
             // 
             // cbxAcadLv
             // 
+            this.cbxAcadLv.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxAcadLv.FormattingEnabled = true;
             this.cbxAcadLv.Location = new System.Drawing.Point(100, 30);
             this.cbxAcadLv.Name = "cbxAcadLv";
@@ -96,6 +97,7 @@
             // 
             // cbxCampus
             // 
+            this.cbxCampus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxCampus.FormattingEnabled = true;
             this.cbxCampus.Location = new System.Drawing.Point(100, 59);
             this.cbxCampus.Name = "cbxCampus";

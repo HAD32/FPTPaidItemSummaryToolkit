@@ -54,7 +54,7 @@ namespace FPTPaidItemSummaryToolkit
                         {
                             try
                             {
-                                p.PensionValue = float.Parse(separateString[1]);
+                                p.PensionValue = separateString[1];
                                 count++;
                             }
                             catch (Exception)

@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using DTO;
 using DAL;
 using NCalc;
+using System.Text.RegularExpressions;
+
 namespace FPTPaidItemSummaryToolkit
 {
     public partial class GUI_CreateFormula : Form
@@ -27,7 +29,8 @@ namespace FPTPaidItemSummaryToolkit
             inputItem = columnName;
             foreach(Pension p in mpir.mtpirList[0].PensionList.pensionList)
             {
-                selectedItems.Add(p.PensionName.Trim());
+                if(Regex.IsMatch(p.PensionValue.Trim(), @"^\d+$"))
+                    selectedItems.Add(p.PensionName.Trim());
                 if (p.PensionName.Trim().Equals(inputItem.Trim()))
                 {
                     if (p.PensionFormula is object)
@@ -95,7 +98,7 @@ namespace FPTPaidItemSummaryToolkit
             this.Close();
         }
 
-        private float ResolveFormula(string formula, MonthlyTeacherPaidItemRecord m)
+        private string ResolveFormula(string formula, MonthlyTeacherPaidItemRecord m)
         {
             foreach(string s in selectedItems)
             {
@@ -104,7 +107,7 @@ namespace FPTPaidItemSummaryToolkit
                 {
                     if (p.PensionName.Trim().Equals(s))
                     {
-                        formula = formula.Replace(s, p.PensionValue.ToString());
+                        formula = formula.Replace(s+'$', p.PensionValue.ToString());
                         found = true;
                     }
                 }
@@ -138,7 +141,7 @@ namespace FPTPaidItemSummaryToolkit
             MessageBox.Show(formula);
             NCalc.Expression expression = new Expression(formula);
             string r = expression.Evaluate().ToString();
-            return float.Parse(r);
+            return r;
         }
 
         private void btnDivide_Click(object sender, EventArgs e)
