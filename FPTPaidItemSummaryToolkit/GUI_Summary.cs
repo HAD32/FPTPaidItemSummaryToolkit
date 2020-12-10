@@ -163,7 +163,7 @@ namespace FPTPaidItemSummaryToolkit
             {
                 foreach (PensionList p in plList)
                 {
-                    if (p.pensionListName.Trim().Equals(currentMpir.AcadLv.Type.Trim()))
+                    if (p.pensionListName.Trim().Equals(currentMpir.AcadLv.Code.Trim()))
                     {
                         foreach (Pension pen in p.pensionList)
                         {
@@ -222,33 +222,34 @@ namespace FPTPaidItemSummaryToolkit
                 {
                     record.PensionList = new PensionList();
                     record.PensionList.pensionList = new List<Pension>();
-                    foreach (PensionList pl in plList)
-                    {
-                        if (pl.pensionListName.Trim().Equals(currentMpir.AcadLv.Type.Trim()))
+                    if(plList is object)
+                        foreach (PensionList pl in plList)
                         {
-                            foreach (Pension p in pl.pensionList)
+                            if (pl.pensionListName.Trim().Equals(currentMpir.AcadLv.Code.Trim()))
                             {
-                                Pension newP = new Pension(p.PensionName, "0");
-                                foreach(DataRow dtrow in staffInfo.Rows)
+                                foreach (Pension p in pl.pensionList)
                                 {
-                                    if (dtrow["Account"].ToString().Trim().Equals(staff.Account.Trim()))
+                                    Pension newP = new Pension(p.PensionName, "0");
+                                    foreach(DataRow dtrow in staffInfo.Rows)
                                     {
-                                        try
+                                        if (dtrow["Account"].ToString().Trim().Equals(staff.Account.Trim()))
                                         {
-                                            string ss = dtrow[newP.PensionName].ToString();
-                                            newP.PensionValue = ss;
-                                            r[newP.PensionName] = newP.PensionValue;
-                                        }
-                                        catch (Exception)
-                                        {
-                                            continue;
+                                            try
+                                            {
+                                                string ss = dtrow[newP.PensionName].ToString();
+                                                newP.PensionValue = ss;
+                                                r[newP.PensionName] = newP.PensionValue;
+                                            }
+                                            catch (Exception)
+                                            {
+                                                continue;
+                                            }
                                         }
                                     }
+                                    record.PensionList.pensionList.Add(newP);
                                 }
-                                record.PensionList.pensionList.Add(newP);
                             }
                         }
-                    }
                 }
                 dt.Rows.Add(r);
             }
@@ -266,7 +267,6 @@ namespace FPTPaidItemSummaryToolkit
             this.FillRecordNo();
         }
         
-
         private void FillRecordNo()
         {
             dtgDisplay.RowHeadersWidth = 60;
@@ -431,6 +431,7 @@ namespace FPTPaidItemSummaryToolkit
                 cm.ItemClicked += new ToolStripItemClickedEventHandler(ToolTipsFunction);
             }
         }
+
         private void ToolTipsFunction(object sender, ToolStripItemClickedEventArgs e)
         {
             string selectedItem = e.ClickedItem.Text;
@@ -469,6 +470,52 @@ namespace FPTPaidItemSummaryToolkit
             tempSave();
         }
 
-        
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            AcademicLevel AcademicLv = (AcademicLevel)cbxAcadLv.SelectedItem;
+            string campus = cbxCampus.SelectedItem.ToString();
+            DialogResult result = MessageBox.Show("Xuất trang tính hiện tại ra file Excel?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if(result == DialogResult.Yes)
+            {
+                SaveFileDialog saveDialog = new SaveFileDialog();
+                saveDialog.Title = "Xuất ra file Excel";
+                saveDialog.FileName = AcademicLv.Code + "_" + campus + "_Summary_" + DateTime.Now.ToString("ddMMyy");
+                saveDialog.Filter = "Excel files (*.xlsx)|*.xlsx";
+                saveDialog.FilterIndex = 2;
+                if (saveDialog.ShowDialog() == DialogResult.OK)
+                {
+                    Microsoft.Office.Interop.Excel._Application app = new Microsoft.Office.Interop.Excel.Application();
+                    Microsoft.Office.Interop.Excel._Workbook workbook = app.Workbooks.Add(Type.Missing);
+                    Microsoft.Office.Interop.Excel._Worksheet worksheet = null;
+                    app.DisplayAlerts = false;
+                    worksheet = workbook.Sheets["Sheet1"];
+                    worksheet = workbook.ActiveSheet;
+                    worksheet.Name = AcademicLv.Code + "_" + campus;
+                    for (int i = 1; i < dtgDisplay.Columns.Count + 1; i++)
+                    {
+                        worksheet.Cells[1, i] = dtgDisplay.Columns[i - 1].HeaderText;
+                    }
+                    for (int i = 0; i < dtgDisplay.Rows.Count; i++)
+                    {
+                        for (int j = 0; j < dtgDisplay.Columns.Count; j++)
+                        {
+                            worksheet.Cells[i + 2, j + 1] = dtgDisplay.Rows[i].Cells[j].Value.ToString();
+                        }
+                    }
+                    try
+                    {
+                        workbook.SaveAs(saveDialog.FileName, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing,
+                        Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlExclusive, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("File excel đang được sử dụng, xin hãy tắt trước khi ghi đè.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    app.Quit();
+                    MessageBox.Show("Xuất thành file excel thành công.", "Thông báo");
+                }
+            }
+        }
     }
 }

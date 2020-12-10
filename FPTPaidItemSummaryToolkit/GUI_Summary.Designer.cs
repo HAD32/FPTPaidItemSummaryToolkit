@@ -55,6 +55,7 @@
             this.btnSummary = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
+            this.btnExport = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dtgDisplay)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -365,11 +366,24 @@
             this.btnSearch.UseVisualStyleBackColor = false;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
+            // btnExport
+            // 
+            this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnExport.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExport.Location = new System.Drawing.Point(218, 490);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(127, 32);
+            this.btnExport.TabIndex = 22;
+            this.btnExport.Text = "Xuất ra file excel";
+            this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            // 
             // GUI_Summary
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1122, 528);
+            this.Controls.Add(this.btnExport);
             this.Controls.Add(this.btnSummary);
             this.Controls.Add(this.btnLoadFile);
             this.Controls.Add(this.btnRefresh);
@@ -428,5 +442,6 @@
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.Button btnLoadFile;
         private System.Windows.Forms.Button btnSummary;
+        private System.Windows.Forms.Button btnExport;
     }
 }
