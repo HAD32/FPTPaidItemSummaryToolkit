@@ -110,11 +110,11 @@ namespace FPTPaidItemSummaryToolkit
                     cbxAcadLv.SelectedIndex = 0;
                     lblFile.Text = fbDialog.SelectedPath;
                     btnShow.Enabled = true;
-                    btnSearch.Enabled = true;
                     btnSave.Enabled = true;
                     savedLocation = "";
                 }
             }
+            btnSummary.Enabled = true;
         }
 
         private void cbxAcadLv_SelectedIndexChanged(object sender, EventArgs e)
@@ -141,7 +141,6 @@ namespace FPTPaidItemSummaryToolkit
                 MessageBox.Show("Không tìm thấy file danh sách giảng viên.", "Thông báo",MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
             DataTable dt = new DataTable();
             dt.Columns.Add("ACC");
             dt.Columns.Add("Mã NV");
@@ -214,15 +213,17 @@ namespace FPTPaidItemSummaryToolkit
 
                 Staff staff = record.StaffInfo;
                 if (record.PensionList is object)
+                {
                     foreach (Pension p in record.PensionList.pensionList)
                     {
                         r[p.PensionName] = p.PensionValue;
                     }
+                }
                 else
                 {
                     record.PensionList = new PensionList();
                     record.PensionList.pensionList = new List<Pension>();
-                    if(plList is object)
+                    if (plList is object)
                         foreach (PensionList pl in plList)
                         {
                             if (pl.pensionListName.Trim().Equals(currentMpir.AcadLv.Code.Trim()))
@@ -230,9 +231,9 @@ namespace FPTPaidItemSummaryToolkit
                                 foreach (Pension p in pl.pensionList)
                                 {
                                     Pension newP = new Pension(p.PensionName, "0");
-                                    foreach(DataRow dtrow in staffInfo.Rows)
+                                    foreach (DataRow dtrow in staffInfo.Rows)
                                     {
-                                        if (dtrow["Account"].ToString().Trim().Equals(staff.Account.Trim()))
+                                        if (dtrow["Account"].ToString().Trim().ToLower().Equals(staff.Account.Trim().ToLower()))
                                         {
                                             try
                                             {
@@ -252,6 +253,14 @@ namespace FPTPaidItemSummaryToolkit
                         }
                 }
                 dt.Rows.Add(r);
+                try
+                {
+                    record.Sum = float.Parse(r["Tiền lương tháng sau khi cộng/trừ tiền tạm ứng"].ToString());
+                }
+                catch (FormatException)
+                {
+                    record.Sum = 0;
+                }
             }
             dtgDisplay.DataSource = dt;
             dtgDisplay.Columns["ACC"].ReadOnly = true;
@@ -281,12 +290,19 @@ namespace FPTPaidItemSummaryToolkit
             AcademicLevel academic = (AcademicLevel)cbxAcadLv.SelectedItem;
             currentMpir = GetMpir(academic.Code, cbxCampus.SelectedItem.ToString());
             ConstructDatatable(currentMpir.mtpirList);
+            btnExport.Enabled = true;
+            btnSearch.Enabled = true;
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
             List<MonthlyTeacherPaidItemRecord> smtpirList = DAL_Summary.Instance.Search(txtSearch.Text, currentMpir.mtpirList);
-            ConstructDatatable(smtpirList);
+            if(smtpirList.Count>0)
+                ConstructDatatable(smtpirList);
+            else
+            {
+                MessageBox.Show("Không tìm tháy kết quả nào.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -389,7 +405,15 @@ namespace FPTPaidItemSummaryToolkit
             DialogResult result = openDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                mpirList = (List<MonthlyPaidItemRecord>)DAL_DataSerializer.Instance.BinaryDeserialize(openDialog.FileName);
+                try
+                {
+                    mpirList = (List<MonthlyPaidItemRecord>)DAL_DataSerializer.Instance.BinaryDeserialize(openDialog.FileName);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Không đúng file tổng hợp. Xin hãy chọn lại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 if (mpirList.Count > 0)
                 {
                     foreach (MonthlyPaidItemRecord mpir in mpirList)
@@ -409,6 +433,7 @@ namespace FPTPaidItemSummaryToolkit
                 savedLocation = openDialog.FileName;
                 MessageBox.Show("Nhập file tổng hợp thành công.","Thông báo",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
+            btnSummary.Enabled = true;
         }
 
         private void btnSummary_Click(object sender, EventArgs e)

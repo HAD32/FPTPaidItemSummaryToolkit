@@ -38,6 +38,7 @@
             this.btnMinus = new System.Windows.Forms.Button();
             this.btnMultiply = new System.Windows.Forms.Button();
             this.btnDivide = new System.Windows.Forms.Button();
+            this.btnMin = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lstColumn
@@ -154,11 +155,23 @@
             this.btnDivide.UseVisualStyleBackColor = true;
             this.btnDivide.Click += new System.EventHandler(this.btnDivide_Click);
             // 
+            // btnMin
+            // 
+            this.btnMin.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMin.Location = new System.Drawing.Point(440, 331);
+            this.btnMin.Name = "btnMin";
+            this.btnMin.Size = new System.Drawing.Size(75, 37);
+            this.btnMin.TabIndex = 10;
+            this.btnMin.Text = "Min(x,y)";
+            this.btnMin.UseVisualStyleBackColor = true;
+            this.btnMin.Click += new System.EventHandler(this.btnMin_Click);
+            // 
             // GUI_CreateFormula
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(814, 429);
+            this.Controls.Add(this.btnMin);
             this.Controls.Add(this.btnDivide);
             this.Controls.Add(this.btnMultiply);
             this.Controls.Add(this.btnMinus);
@@ -188,5 +201,6 @@
         private System.Windows.Forms.Button btnMinus;
         private System.Windows.Forms.Button btnMultiply;
         private System.Windows.Forms.Button btnDivide;
+        private System.Windows.Forms.Button btnMin;
     }
 }

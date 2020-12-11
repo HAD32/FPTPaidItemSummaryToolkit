@@ -29,8 +29,14 @@ namespace FPTPaidItemSummaryToolkit
             inputItem = columnName;
             foreach(Pension p in mpir.mtpirList[0].PensionList.pensionList)
             {
-                if(Regex.IsMatch(p.PensionValue.Trim(), @"^\d+$"))
+                try
+                {
+                    float k = float.Parse(p.PensionValue.Trim());
                     selectedItems.Add(p.PensionName.Trim());
+                }
+                catch (FormatException){}
+                //if(Regex.IsMatch(p.PensionValue.Trim(), @"^\d+$"))
+                //    selectedItems.Add(p.PensionName.Trim());
                 if (p.PensionName.Trim().Equals(inputItem.Trim()))
                 {
                     if (p.PensionFormula is object)
@@ -55,7 +61,7 @@ namespace FPTPaidItemSummaryToolkit
             {
                 txtFormula.AppendText(" " + lstColumn.SelectedItem.ToString().Trim() + "$ ");
             }
-            if (shortText.EndsWith("+") || shortText.EndsWith("-") || shortText.EndsWith("*") || shortText.EndsWith("/")|| shortText.EndsWith("("))
+            if (shortText.EndsWith("+") || shortText.EndsWith("-") || shortText.EndsWith("*") || shortText.EndsWith("/")|| shortText.EndsWith("(") || shortText.EndsWith(","))
             {
                 txtFormula.AppendText(" " + lstColumn.SelectedItem.ToString().Trim() + "$ ");
             }
@@ -140,6 +146,11 @@ namespace FPTPaidItemSummaryToolkit
             }
             MessageBox.Show(formula);
             NCalc.Expression expression = new Expression(formula);
+            expression.EvaluateFunction += delegate (string name, FunctionArgs args)
+            {
+                if (name == "Min")
+                    args.Result = Math.Min(float.Parse(args.Parameters[0].Evaluate().ToString()), float.Parse(args.Parameters[1].Evaluate().ToString()));
+            };
             string r = expression.Evaluate().ToString();
             return r;
         }
@@ -167,6 +178,11 @@ namespace FPTPaidItemSummaryToolkit
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void btnMin_Click(object sender, EventArgs e)
+        {
+            txtFormula.AppendText("Min(");
         }
     }
 }

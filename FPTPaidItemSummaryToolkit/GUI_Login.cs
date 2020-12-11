@@ -41,20 +41,20 @@ namespace FPTPaidItemSummaryToolkit
             string regexStr = @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*" + "@"
                                    + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$";
             errorProvider1.Clear();
-            if (txtCode.Text.Equals(""))
+            if (txtCode.Text.Trim().Equals(""))
             {
                 errorProvider1.SetError(txtCode, "Không để trống trường này");
                 txtCode.Focus();
                 return false;
             }
 
-            if (txtEmail.Text.Equals(""))
+            if (txtEmail.Text.Trim().Equals(""))
             {
                 errorProvider1.SetError(txtEmail, "Không để trống trường này");
                 txtEmail.Focus();
                 return false;
             }
-            else if (!Regex.IsMatch(txtEmail.Text, regexStr))
+            else if (!Regex.IsMatch(txtEmail.Text.Trim(), regexStr))
             {
                 errorProvider1.SetError(txtEmail, "Không đúng định dạng email.");
                 txtEmail.Focus();
@@ -67,8 +67,8 @@ namespace FPTPaidItemSummaryToolkit
         {
             if(ValidateLogin())
             {
-                u.Id = txtCode.Text;
-                u.Email = txtEmail.Text;
+                u.Id = txtCode.Text.Trim();
+                u.Email = txtEmail.Text.Trim();
                 if (!isSaved)
                 {
                     DialogResult result = MessageBox.Show("Bạn có muốn lưu thông tin người dùng?", "Thông báo", MessageBoxButtons.YesNo);
@@ -101,8 +101,8 @@ namespace FPTPaidItemSummaryToolkit
         {
             if (ValidateLogin())
             {
-                u.Id = txtCode.Text;
-                u.Email = txtEmail.Text;
+                u.Id = txtCode.Text.Trim();
+                u.Email = txtEmail.Text.Trim();
                 try
                 {
                     DAL_DataSerializer.Instance.BinarySerialize(u, "UserInfo\\User.fs");

@@ -37,8 +37,6 @@
             this.lstAcademicLevels = new System.Windows.Forms.ListBox();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.cbbAcademicType = new System.Windows.Forms.ComboBox();
             this.txtDescription = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.txtAcadLevelName = new System.Windows.Forms.TextBox();
@@ -60,7 +58,7 @@
             // 
             this.btnUpdate.Enabled = false;
             this.btnUpdate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUpdate.Location = new System.Drawing.Point(318, 219);
+            this.btnUpdate.Location = new System.Drawing.Point(307, 193);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(82, 26);
             this.btnUpdate.TabIndex = 3;
@@ -72,7 +70,7 @@
             // 
             this.btnDelete.Enabled = false;
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDelete.Location = new System.Drawing.Point(209, 219);
+            this.btnDelete.Location = new System.Drawing.Point(198, 193);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(82, 26);
             this.btnDelete.TabIndex = 2;
@@ -83,7 +81,7 @@
             // btnAdd
             // 
             this.btnAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAdd.Location = new System.Drawing.Point(105, 219);
+            this.btnAdd.Location = new System.Drawing.Point(94, 193);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(82, 26);
             this.btnAdd.TabIndex = 1;
@@ -135,8 +133,6 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.cbbAcademicType);
             this.groupBox1.Controls.Add(this.txtDescription);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.txtAcadLevelName);
@@ -154,31 +150,9 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Mô tả";
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(57, 106);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(60, 16);
-            this.label1.TabIndex = 52;
-            this.label1.Text = "Phân hệ:";
-            // 
-            // cbbAcademicType
-            // 
-            this.cbbAcademicType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbbAcademicType.FormattingEnabled = true;
-            this.cbbAcademicType.Items.AddRange(new object[] {
-            "Đại học",
-            "Trung học ",
-            "Tiểu học"});
-            this.cbbAcademicType.Location = new System.Drawing.Point(123, 103);
-            this.cbbAcademicType.Name = "cbbAcademicType";
-            this.cbbAcademicType.Size = new System.Drawing.Size(309, 24);
-            this.cbbAcademicType.TabIndex = 51;
-            // 
             // txtDescription
             // 
-            this.txtDescription.Location = new System.Drawing.Point(123, 148);
+            this.txtDescription.Location = new System.Drawing.Point(123, 103);
             this.txtDescription.Multiline = true;
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.Size = new System.Drawing.Size(309, 53);
@@ -188,7 +162,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(73, 151);
+            this.label6.Location = new System.Drawing.Point(73, 106);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(44, 16);
             this.label6.TabIndex = 49;
@@ -317,8 +291,6 @@
         private System.Windows.Forms.TextBox txtAcadLevelCode;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox txtDescription;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox cbbAcademicType;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.ListBox lstCampusList;
         private System.Windows.Forms.TextBox txtAddCampus;
