@@ -172,6 +172,7 @@ namespace FPTPaidItemSummaryToolkit
                     }
                 }
             }
+
             List<PaidItem> PaidItemList = teacherRecords[0].PaidItemList;
             DataRow r;
             r = dt.NewRow();
@@ -194,8 +195,8 @@ namespace FPTPaidItemSummaryToolkit
                         break;
                 }
             }
+            dt.Columns.Add("Tổng").SetOrdinal(dt.Columns.Count-1);
             dt.Rows.Add(r);
-            
             foreach (MonthlyTeacherPaidItemRecord record in teacherRecords)
             {
                 r = dt.NewRow();
@@ -206,6 +207,7 @@ namespace FPTPaidItemSummaryToolkit
                 r["Email"] = s.Email;
                 r["HĐLĐ"] = s.Type;
                 r["Bộ môn khác"] = s.Major;
+                r["Tổng"] = record.Sum;
                 foreach (PaidItem p in record.PaidItemList)
                 {
                     r[p.Name] = p.Value;
@@ -255,13 +257,14 @@ namespace FPTPaidItemSummaryToolkit
                 dt.Rows.Add(r);
                 try
                 {
-                    record.Sum = float.Parse(r["Tiền lương tháng sau khi cộng/trừ tiền tạm ứng"].ToString());
+                    record.Sum = float.Parse(r["Tổng"].ToString());
                 }
                 catch (FormatException)
                 {
                     record.Sum = 0;
                 }
             }
+            dtgDisplay.DataSource = null;
             dtgDisplay.DataSource = dt;
             dtgDisplay.Columns["ACC"].ReadOnly = true;
             dtgDisplay.Columns["Mã NV"].ReadOnly = true;

@@ -21,6 +21,7 @@ namespace FPTPaidItemSummaryToolkit
         public string inputItem;
         List<string> selectedItems = new List<string>();
         private bool ignoreSelectedIndexChanged;
+        public string SumFormula;
         public GUI_CreateFormula(MonthlyPaidItemRecord mpir, string columnName)
         {
             InitializeComponent();
@@ -35,8 +36,6 @@ namespace FPTPaidItemSummaryToolkit
                     selectedItems.Add(p.PensionName.Trim());
                 }
                 catch (FormatException){}
-                //if(Regex.IsMatch(p.PensionValue.Trim(), @"^\d+$"))
-                //    selectedItems.Add(p.PensionName.Trim());
                 if (p.PensionName.Trim().Equals(inputItem.Trim()))
                 {
                     if (p.PensionFormula is object)
@@ -93,9 +92,24 @@ namespace FPTPaidItemSummaryToolkit
                             txtFormula.Focus();
                             return;
                         }
-                        
                         p.PensionFormula = formula;
                         break;
+                    }
+                }
+                if (inputItem.Trim().Equals("Tổng"))
+                {
+                    try
+                    {
+                        m.Sum = float.Parse(ResolveFormula(formula, m));
+                    }
+                    catch (NCalc.EvaluationException)
+                    {
+                        ToolTip tt = new ToolTip();
+                        tt.IsBalloon = true;
+                        tt.UseFading = true;
+                        tt.Show("Công thức không hợp lệ, xin hãy kiểm tra lại.", txtFormula, 60, -50, 2000);
+                        txtFormula.Focus();
+                        return;
                     }
                 }
             }
@@ -144,7 +158,6 @@ namespace FPTPaidItemSummaryToolkit
                     }
                 }
             }
-            MessageBox.Show(formula);
             NCalc.Expression expression = new Expression(formula);
             expression.EvaluateFunction += delegate (string name, FunctionArgs args)
             {

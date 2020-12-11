@@ -51,7 +51,6 @@
             this.lstPensionList.Name = "lstPensionList";
             this.lstPensionList.Size = new System.Drawing.Size(251, 277);
             this.lstPensionList.TabIndex = 0;
-            this.lstPensionList.Click += new System.EventHandler(this.lstPensionList_Click);
             this.lstPensionList.SelectedIndexChanged += new System.EventHandler(this.lstPensionList_SelectedIndexChanged);
             // 
             // lstItems
