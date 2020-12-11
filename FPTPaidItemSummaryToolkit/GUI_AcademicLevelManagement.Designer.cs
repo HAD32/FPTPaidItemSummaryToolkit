@@ -1,6 +1,6 @@
 ﻿namespace FPTPaidItemSummaryToolkit
 {
-    partial class GUI_AcademicLevel
+    partial class GUI_AcademicLevelManagement
     {
         /// <summary>
         /// Required designer variable.

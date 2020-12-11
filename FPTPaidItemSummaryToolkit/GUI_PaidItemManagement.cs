@@ -14,7 +14,7 @@ using System.Reflection;
 
 namespace FPTPaidItemSummaryToolkit
 {
-    public partial class GUI_PaidItem : Form
+    public partial class GUI_PaidItemManagement : Form
     {
         List<AcademicLevel> academicList = new List<AcademicLevel>();
         User u;
@@ -29,7 +29,7 @@ namespace FPTPaidItemSummaryToolkit
             }
         }
 
-        public GUI_PaidItem(User u)
+        public GUI_PaidItemManagement(User u)
         {
             InitializeComponent();
             this.u = u;

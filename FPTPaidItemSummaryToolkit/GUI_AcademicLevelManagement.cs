@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace FPTPaidItemSummaryToolkit
 {
-    public partial class GUI_AcademicLevel : Form
+    public partial class GUI_AcademicLevelManagement : Form
     {
         List<AcademicLevel> academicList = new List<AcademicLevel>();
 
@@ -20,7 +20,7 @@ namespace FPTPaidItemSummaryToolkit
             }
         }
 
-        public GUI_AcademicLevel()
+        public GUI_AcademicLevelManagement()
         {
             InitializeComponent();
         }
