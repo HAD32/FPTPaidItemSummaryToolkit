@@ -50,11 +50,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GUI_AcademicLevel.cs">
+    <Compile Include="GUI_AcademicLevelManagement.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI_AcademicLevel.Designer.cs">
-      <DependentUpon>GUI_AcademicLevel.cs</DependentUpon>
+    <Compile Include="GUI_AcademicLevelManagement.Designer.cs">
+      <DependentUpon>GUI_AcademicLevelManagement.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI_AddMultipleFromExcel.cs">
       <SubType>Form</SubType>
@@ -98,11 +98,11 @@
     <Compile Include="GUI_Login.Designer.cs">
       <DependentUpon>GUI_Login.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI_PaidItem.cs">
+    <Compile Include="GUI_PaidItemManagement.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI_PaidItem.Designer.cs">
-      <DependentUpon>GUI_PaidItem.cs</DependentUpon>
+    <Compile Include="GUI_PaidItemManagement.Designer.cs">
+      <DependentUpon>GUI_PaidItemManagement.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI_PensionManagement.cs">
       <SubType>Form</SubType>
@@ -130,8 +130,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="GUI_AcademicLevel.resx">
-      <DependentUpon>GUI_AcademicLevel.cs</DependentUpon>
+    <EmbeddedResource Include="GUI_AcademicLevelManagement.resx">
+      <DependentUpon>GUI_AcademicLevelManagement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI_AddMultipleFromExcel.resx">
       <DependentUpon>GUI_AddMultipleFromExcel.cs</DependentUpon>
@@ -154,8 +154,8 @@
     <EmbeddedResource Include="GUI_Login.resx">
       <DependentUpon>GUI_Login.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI_PaidItem.resx">
-      <DependentUpon>GUI_PaidItem.cs</DependentUpon>
+    <EmbeddedResource Include="GUI_PaidItemManagement.resx">
+      <DependentUpon>GUI_PaidItemManagement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI_PensionManagement.resx">
       <DependentUpon>GUI_PensionManagement.cs</DependentUpon>
@@ -207,6 +207,35 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\searchIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>9</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -32,7 +32,11 @@ namespace FPTPaidItemSummaryToolkit
             if (!txtName.Text.Trim().Equals("") && !txtCode.Text.Trim().Equals(""))
             {
                 List<Campus> cl = new List<Campus>();
+<<<<<<< HEAD
                 if (DAL_AcademicLevel.Instance.Insert(academicLevelsList, txtCode.Text, cbbType.SelectedItem.ToString(), txtName.Text, txtDescription.Text, cl))   
+=======
+                if (DAL_AcademicLevel.Instance.Insert(academicLevelsList, txtCode.Text, txtName.Text, txtDescription.Text, cl))   
+>>>>>>> fee946399c48462110513b1f74d3131016d4314d
                 {
                     MessageBox.Show("Thêm hệ đào tạo thành công!");
                     this.Close();

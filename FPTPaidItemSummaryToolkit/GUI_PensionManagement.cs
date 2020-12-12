@@ -16,6 +16,7 @@ namespace FPTPaidItemSummaryToolkit
     public partial class GUI_PensionManagement : Form
     {
         List<PensionList> plList = new List<PensionList>();
+        List<AcademicLevel> acadList = (List<AcademicLevel>)DAL_DataSerializer.Instance.BinaryDeserialize("Academic Levels\\AcademicLevel.fs");
 
         //enhance drawing performance
         //protected override CreateParams CreateParams
@@ -38,9 +39,40 @@ namespace FPTPaidItemSummaryToolkit
         {
             plList = (List<PensionList>)DAL_DataSerializer.Instance.BinaryDeserialize("Pension List\\PensionList.fs");
             if (plList is null)
+            {
                 plList = new List<PensionList>();
+                foreach(AcademicLevel acad in acadList)
+                {
+                    PensionList pl = new PensionList();
+                    pl.pensionListName = acad.Code;
+                    pl.academicLevel = acad;
+                    pl.pensionList = new List<Pension>();
+                    plList.Add(pl);
+                }
+                lstPensionList.DataSource = plList;
+                lstPensionList.DisplayMember = "pensionListName";
+            }
             else
             {
+                foreach (AcademicLevel acad in acadList)
+                {
+                    bool found = false;
+                    foreach(PensionList pl in plList)
+                    {
+                        if (acad.Code.Trim().Equals(pl.pensionListName.Trim()))
+                        {
+                            found = true;
+                        }
+                    }
+                    if (!found)
+                    {
+                        PensionList pl = new PensionList();
+                        pl.pensionListName = acad.Code;
+                        pl.academicLevel = acad;
+                        pl.pensionList = new List<Pension>();
+                        plList.Add(pl);
+                    } 
+                }
                 lstPensionList.DataSource = plList;
                 lstPensionList.DisplayMember = "pensionListName";
             }
@@ -67,45 +99,10 @@ namespace FPTPaidItemSummaryToolkit
                 dtgDisplay.DataSource = dt;
             }
         }
-
-        private void btnAddPL_Click(object sender, EventArgs e)
-        {
-            PensionList penList = new PensionList();
-            if (string.IsNullOrWhiteSpace(txtPensionListName.Text))
-            {
-                errorProvider1.Clear();
-                errorProvider1.SetIconAlignment(this.txtPensionListName, ErrorIconAlignment.MiddleRight);
-                errorProvider1.SetIconPadding(this.txtPensionListName, -20);
-                errorProvider1.SetError(txtPensionListName, "Không để trống trường này");
-                txtPensionListName.Focus();
-                return;
-            }
-            penList.pensionListName = txtPensionListName.Text.Trim();
-            foreach(PensionList p in plList)
-            {
-                if (p.pensionListName.Trim().Equals(penList.pensionListName))
-                {
-                    MessageBox.Show("Dữ liệu đã tồn tại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-            }
-            plList.Add(penList);
-            txtPensionListName.Text = "";
-            try
-            {
-                DAL_DataSerializer.Instance.BinarySerialize(plList, "Pension List\\PensionList.fs");
-            }
-            catch (Exception)
-            {
-                Directory.CreateDirectory(Path.GetDirectoryName(Application.ExecutablePath) + "\\Pension List");
-                DAL_DataSerializer.Instance.BinarySerialize(plList, "Pension List\\PensionList.fs");
-            }
-            load();
-        }
+    
 
         private void btnAddItems_Click(object sender, EventArgs e)
         {
-            Pension p = new Pension();
             if (string.IsNullOrWhiteSpace(txtItemName.Text))
             {
                 errorProvider1.Clear();
@@ -115,34 +112,54 @@ namespace FPTPaidItemSummaryToolkit
                 txtItemName.Focus();
                 return;
             }
-            p.PensionName = txtItemName.Text.Trim();
-            foreach(PensionList pl in plList)
+            string[] pensionRange = txtItemName.Text.Split(new[] {'\n'},StringSplitOptions.RemoveEmptyEntries);
+
+            int count = 0;
+            foreach (string s in pensionRange)
             {
-                PensionList selectedItem = (PensionList)lstPensionList.SelectedItem;
-                if (pl.pensionListName.Trim().Equals(selectedItem.pensionListName))
+                bool check = false;
+                Pension p = new Pension();
+                p.PensionName = s.Trim();
+                foreach (PensionList pl in plList)
                 {
-                    List<Pension> pensionList = pl.pensionList;
-                    if (pensionList is null)
-                        pensionList = new List<Pension>();
-                    else
-                        foreach (Pension pen in pl.pensionList)
-                        {
-                            if (pen.PensionName.Trim().Equals(p.PensionName))
+                    PensionList selectedItem = (PensionList)lstPensionList.SelectedItem;
+                    if (pl.pensionListName.Trim().Equals(selectedItem.pensionListName.Trim()))
+                    {
+                        List<Pension> pensionList = pl.pensionList;
+                        if (pensionList is null)
+                            pensionList = new List<Pension>();
+                        else
+                            foreach (Pension pen in pl.pensionList)
                             {
-                                MessageBox.Show("Dữ liệu đã tồn tại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                return;
+                                if (pen.PensionName.Trim().Equals(p.PensionName.Trim()))
+                                {
+                                    check = true;
+                                    break;
+                                }
                             }
+                        if (!check)
+                        {
+                            pensionList.Add(p);
+                            lstItems.Items.Add(p);
+                            count++;
                         }
-                    pensionList.Add(p);
-                    txtItemName.Text = "";
-                    pl.pensionList = pensionList;
+                        txtItemName.Text = "";
+                        pl.pensionList = pensionList;
+                    }
                 }
             }
-            lstItems.Items.Add(p);
-            DAL_DataSerializer.Instance.BinarySerialize(plList, "Pension List\\PensionList.fs");
+            MessageBox.Show("Đã thêm " + count + "/" + pensionRange.Length + " mục","Thông báo",MessageBoxButtons.OK,MessageBoxIcon.Information);
+            try
+            {
+                DAL_DataSerializer.Instance.BinarySerialize(plList, "Pension List\\PensionList.fs");
+            }
+            catch (Exception)
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(Application.ExecutablePath) + "\\Pension List");
+                DAL_DataSerializer.Instance.BinarySerialize(plList, "Pension List\\PensionList.fs");
+            }
             reloadItem();
         }
-
         private void lstPensionList_SelectedIndexChanged(object sender, EventArgs e)
         {
             reloadItem();
@@ -160,69 +177,11 @@ namespace FPTPaidItemSummaryToolkit
         }
 
         int indexItem, indexItem2;
-        private void lstPensionList_Click(object sender, EventArgs e)
-        {
-            this.lstPensionList.MouseUp += new System.Windows.Forms.MouseEventHandler(this.List_RightClick);
-        }
         private void lstItems_Click(object sender, EventArgs e)
         {
             this.lstItems.MouseUp += new System.Windows.Forms.MouseEventHandler(this.List_RightClick2);
         }
-        private void List_RightClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                indexItem = this.lstPensionList.IndexFromPoint(e.Location);
-                ContextMenuStrip cm = new ContextMenuStrip();
-                cm.Items.Add("Đổi tên");
-                cm.Items.Add("Xóa");
-                cm.Show(this, this.PointToClient(MousePosition));
-                cm.ItemClicked += new ToolStripItemClickedEventHandler(ModifyList);
-            }
-        }
-        private void ModifyList(object sender, ToolStripItemClickedEventArgs e)
-        {
-            string selectedItem = e.ClickedItem.Text;
-            switch (selectedItem)
-            {
-                case "Đổi tên":
-                    PensionList selectedPl = (PensionList)lstPensionList.Items[indexItem];
-                    GUI_SimpleModifyForm modForm = new GUI_SimpleModifyForm(selectedPl.pensionListName);
-                    DialogResult modResult = modForm.ShowDialog();
-                    if (modResult == DialogResult.OK)
-                    {
-                        foreach (PensionList p in plList)
-                        {
-                            if (selectedPl.pensionListName.Equals(p.pensionListName))
-                            {
-                                p.pensionListName = modForm.newName.Trim();
-                                MessageBox.Show("Đổi tên thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                break;
-                            }
-                        }
-                    }
-                    break;
-                case "Xóa":
-                    DialogResult result = MessageBox.Show("Bạn có muốn xóa mục này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (result == DialogResult.Yes)
-                    {
-                        PensionList deleteItem = (PensionList)lstPensionList.Items[indexItem];
-                        foreach (PensionList pl in plList)
-                        {
-                            if (deleteItem.pensionListName.Equals(pl.pensionListName))
-                            {
-                                plList.Remove(pl);
-                                MessageBox.Show("Xóa thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                break;
-                            }
-                        }
-                    }
-                    break;
-            }
-            DAL_DataSerializer.Instance.BinarySerialize(plList, "Pension List\\PensionList.fs");
-            load();
-            reloadItem();
-        }
+        
         private void List_RightClick2(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -238,8 +197,8 @@ namespace FPTPaidItemSummaryToolkit
         private void ModifyList2(object sender, ToolStripItemClickedEventArgs e)
         {
             string selectedItem = e.ClickedItem.Text;
-            PensionList selectedPl = (PensionList)lstPensionList.Items[indexItem];
-            Pension selectedP = (Pension)lstItems.Items[indexItem2];
+            PensionList selectedPl = (PensionList)lstPensionList.SelectedItem;
+            Pension selectedP = (Pension)lstItems.SelectedItem;
             switch (selectedItem)
             {
                 case "Đổi tên":
@@ -249,7 +208,7 @@ namespace FPTPaidItemSummaryToolkit
                     {
                         foreach (PensionList pl in plList)
                         {
-                            if (selectedPl.pensionListName.Equals(pl.pensionListName))
+                            if (selectedPl.pensionListName.Trim().Equals(pl.pensionListName.Trim()))
                             {
                                 foreach(Pension p in pl.pensionList)
                                 {

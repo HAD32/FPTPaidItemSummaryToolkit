@@ -36,13 +36,11 @@
             this.label3 = new System.Windows.Forms.Label();
             this.txtCode = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.cbbType = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtDescription
             // 
-            this.txtDescription.Location = new System.Drawing.Point(137, 129);
+            this.txtDescription.Location = new System.Drawing.Point(137, 94);
             this.txtDescription.Multiline = true;
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.Size = new System.Drawing.Size(250, 32);
@@ -52,7 +50,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(89, 129);
+            this.label2.Location = new System.Drawing.Point(89, 94);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(38, 15);
             this.label2.TabIndex = 24;
@@ -60,9 +58,9 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(312, 174);
+            this.btnCancel.Location = new System.Drawing.Point(312, 143);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.Size = new System.Drawing.Size(75, 39);
             this.btnCancel.TabIndex = 23;
             this.btnCancel.Text = "Hủy";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -70,9 +68,9 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(209, 174);
+            this.btnSave.Location = new System.Drawing.Point(44, 143);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.Size = new System.Drawing.Size(75, 39);
             this.btnSave.TabIndex = 22;
             this.btnSave.Text = "Lưu";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -112,6 +110,7 @@
             this.label1.TabIndex = 18;
             this.label1.Text = "Mã hệ đào tạo";
             // 
+<<<<<<< HEAD
             // cbbType
             // 
             this.cbbType.FormattingEnabled = true;
@@ -135,13 +134,13 @@
             this.label4.TabIndex = 27;
             this.label4.Text = "Phân hệ";
             // 
+=======
+>>>>>>> fee946399c48462110513b1f74d3131016d4314d
             // GUI_InsertForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(429, 218);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.cbbType);
+            this.ClientSize = new System.Drawing.Size(429, 194);
             this.Controls.Add(this.txtDescription);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnCancel);
@@ -168,7 +167,5 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtCode;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox cbbType;
-        private System.Windows.Forms.Label label4;
     }
 }

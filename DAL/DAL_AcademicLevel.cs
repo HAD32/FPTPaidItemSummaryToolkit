@@ -56,7 +56,7 @@ namespace DAL
             return -1;
         }
 
-        public bool Insert(List<AcademicLevel> list, string code,string type ,string name, string description, List<Campus> campusList)
+        public bool Insert(List<AcademicLevel> list, string code,string name, string description, List<Campus> campusList)
         {
             if (list is object)
             {
@@ -70,7 +70,7 @@ namespace DAL
             {
                 list = new List<AcademicLevel>();
             }
-            list.Add(new AcademicLevel(code, name, type, description, campusList));
+            list.Add(new AcademicLevel(code, name, description, campusList));
             try
             {
                 DAL_DataSerializer.Instance.BinarySerialize(list, "Academic Levels\\AcademicLevel.fs");
@@ -83,7 +83,7 @@ namespace DAL
             return true;
         }
 
-        public bool Update(List<AcademicLevel> list, string code, string name, string type ,string description)
+        public bool Update(List<AcademicLevel> list, string code, string name ,string description)
         {
 
             for (int i = 0; i < list.Count; i++)
@@ -96,7 +96,6 @@ namespace DAL
             list.ElementAt(checkCode(list, code)).Code = code;
             list.ElementAt(checkCode(list, code)).Name = name;
             list.ElementAt(checkCode(list, code)).Description = description;
-            list.ElementAt(checkCode(list, code)).Type = type;
             return true;
         }
 

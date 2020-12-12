@@ -11,17 +11,17 @@ namespace DTO
     {
         public string pensionListName { get; set; }
         public List<Pension> pensionList { get; set; }
-        public List<AcademicLevel> academicLevels { get; set; }
+        public AcademicLevel academicLevel { get; set; }
 
         public PensionList()
         {
         }
 
-        public PensionList(string pensionListName, List<Pension> pensionList, List<AcademicLevel> academicLevels)
+        public PensionList(string pensionListName, List<Pension> pensionList, AcademicLevel academicLevels)
         {
             this.pensionListName = pensionListName;
             this.pensionList = pensionList;
-            this.academicLevels = academicLevels;
+            this.academicLevel = academicLevels;
         }
     }
 }

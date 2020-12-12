@@ -171,7 +171,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtData);
             this.Name = "GUI_AddMultipleFromExcel";
-            this.Text = "GUI_AddMultipleFromExcel";
+            this.Text = "Nhập dữ liệu";
             this.ResumeLayout(false);
             this.PerformLayout();
 

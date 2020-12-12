@@ -10,20 +10,20 @@ namespace DTO
     public class Pension
     {
         public string PensionName { get; set; }
-        public float PensionValue { get; set; }
+        public string PensionValue { get; set; }
         public string PensionFormula { get; set; }
 
         public Pension()
         {
         }
 
-        public Pension(string pensionName, float pensionValue)
+        public Pension(string pensionName, string pensionValue)
         {
             PensionName = pensionName;
             PensionValue = pensionValue;
         }
 
-        public Pension(string pensionName, float pensionValue, string pensionFormula) : this(pensionName, pensionValue)
+        public Pension(string pensionName, string pensionValue, string pensionFormula) : this(pensionName, pensionValue)
         {
             PensionFormula = pensionFormula;
         }

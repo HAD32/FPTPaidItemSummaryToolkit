@@ -49,7 +49,7 @@ namespace FPTPaidItemSummaryToolkit
                     return;
                 }
             }
-            GUI_PaidItem smform = new GUI_PaidItem(u);
+            GUI_PaidItemManagement smform = new GUI_PaidItemManagement(u);
             smform.MdiParent = this;
 
             smform.FormBorderStyle = FormBorderStyle.None;
@@ -68,7 +68,7 @@ namespace FPTPaidItemSummaryToolkit
                     return;
                 }
             }
-            GUI_AcademicLevel guiAcadLevel = new GUI_AcademicLevel();
+            GUI_AcademicLevelManagement guiAcadLevel = new GUI_AcademicLevelManagement();
             guiAcadLevel.MdiParent = this;
             guiAcadLevel.Show();
         }

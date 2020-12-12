@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using DTO;
 using DAL;
 using NCalc;
+using System.Text.RegularExpressions;
+
 namespace FPTPaidItemSummaryToolkit
 {
     public partial class GUI_CreateFormula : Form
@@ -19,7 +21,7 @@ namespace FPTPaidItemSummaryToolkit
         public string inputItem;
         List<string> selectedItems = new List<string>();
         private bool ignoreSelectedIndexChanged;
-
+        public string SumFormula;
         public GUI_CreateFormula(MonthlyPaidItemRecord mpir, string columnName)
         {
             InitializeComponent();
@@ -28,7 +30,12 @@ namespace FPTPaidItemSummaryToolkit
             inputItem = columnName;
             foreach(Pension p in mpir.mtpirList[0].PensionList.pensionList)
             {
-                selectedItems.Add(p.PensionName.Trim());
+                try
+                {
+                    float k = float.Parse(p.PensionValue.Trim());
+                    selectedItems.Add(p.PensionName.Trim());
+                }
+                catch (FormatException){}
                 if (p.PensionName.Trim().Equals(inputItem.Trim()))
                 {
                     if (p.PensionFormula is object)
@@ -51,11 +58,11 @@ namespace FPTPaidItemSummaryToolkit
             string shortText = txtFormula.Text.Trim();
             if (string.IsNullOrWhiteSpace(shortText))
             {
-                txtFormula.AppendText(" " + lstColumn.SelectedItem.ToString().Trim() + " ");
+                txtFormula.AppendText(" " + lstColumn.SelectedItem.ToString().Trim() + "$ ");
             }
-            if (shortText.EndsWith("+") || shortText.EndsWith("-") || shortText.EndsWith("*") || shortText.EndsWith("/")|| shortText.EndsWith("("))
+            if (shortText.EndsWith("+") || shortText.EndsWith("-") || shortText.EndsWith("*") || shortText.EndsWith("/")|| shortText.EndsWith("(") || shortText.EndsWith(","))
             {
-                txtFormula.AppendText(" " + lstColumn.SelectedItem.ToString().Trim() + " ");
+                txtFormula.AppendText(" " + lstColumn.SelectedItem.ToString().Trim() + "$ ");
             }
         }
 
@@ -85,9 +92,24 @@ namespace FPTPaidItemSummaryToolkit
                             txtFormula.Focus();
                             return;
                         }
-                        
                         p.PensionFormula = formula;
                         break;
+                    }
+                }
+                if (inputItem.Trim().Equals("Tổng"))
+                {
+                    try
+                    {
+                        m.Sum = float.Parse(ResolveFormula(formula, m));
+                    }
+                    catch (NCalc.EvaluationException)
+                    {
+                        ToolTip tt = new ToolTip();
+                        tt.IsBalloon = true;
+                        tt.UseFading = true;
+                        tt.Show("Công thức không hợp lệ, xin hãy kiểm tra lại.", txtFormula, 60, -50, 2000);
+                        txtFormula.Focus();
+                        return;
                     }
                 }
             }
@@ -96,7 +118,7 @@ namespace FPTPaidItemSummaryToolkit
             this.Close();
         }
 
-        private float ResolveFormula(string formula, MonthlyTeacherPaidItemRecord m)
+        private string ResolveFormula(string formula, MonthlyTeacherPaidItemRecord m)
         {
             foreach(string s in selectedItems)
             {
@@ -105,7 +127,7 @@ namespace FPTPaidItemSummaryToolkit
                 {
                     if (p.PensionName.Trim().Equals(s))
                     {
-                        formula = formula.Replace(s, p.PensionValue.ToString());
+                        formula = formula.Replace(s+'$', p.PensionValue.ToString());
                         found = true;
                     }
                 }
@@ -115,14 +137,35 @@ namespace FPTPaidItemSummaryToolkit
                 {
                     if (p.Name.Trim().Equals(s))
                     {
-                        formula = formula.Replace(s, p.Value.ToString());
+                        float paidItemValue =0;
+                        switch (p.TypeId)
+                        {
+                            case 1:
+                                paidItemValue = p.Value * p.Rate;
+                                break;
+                            case 2:
+                                paidItemValue = p.Value * p.UnitValue;
+                                break;
+                            case 3:
+                                paidItemValue = p.Value * p.UnitValue;
+                                break;
+                            case 4:
+                                paidItemValue = p.Value;
+                                break;
+                        }
+                        formula = formula.Replace(s+'$', paidItemValue.ToString());
                         found = true;
                     }
                 }
             }
             NCalc.Expression expression = new Expression(formula);
+            expression.EvaluateFunction += delegate (string name, FunctionArgs args)
+            {
+                if (name == "Min")
+                    args.Result = Math.Min(float.Parse(args.Parameters[0].Evaluate().ToString()), float.Parse(args.Parameters[1].Evaluate().ToString()));
+            };
             string r = expression.Evaluate().ToString();
-            return float.Parse(r);
+            return r;
         }
 
         private void btnDivide_Click(object sender, EventArgs e)
@@ -148,6 +191,11 @@ namespace FPTPaidItemSummaryToolkit
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void btnMin_Click(object sender, EventArgs e)
+        {
+            txtFormula.AppendText("Min(");
         }
     }
 }

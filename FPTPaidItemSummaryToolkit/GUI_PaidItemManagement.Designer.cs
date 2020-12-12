@@ -1,6 +1,6 @@
 ﻿namespace FPTPaidItemSummaryToolkit
 {
-    partial class GUI_PaidItem
+    partial class GUI_PaidItemManagement
     {
         /// <summary>
         /// Required designer variable.

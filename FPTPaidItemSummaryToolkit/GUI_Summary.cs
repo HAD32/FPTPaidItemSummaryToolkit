@@ -110,11 +110,11 @@ namespace FPTPaidItemSummaryToolkit
                     cbxAcadLv.SelectedIndex = 0;
                     lblFile.Text = fbDialog.SelectedPath;
                     btnShow.Enabled = true;
-                    btnSearch.Enabled = true;
                     btnSave.Enabled = true;
                     savedLocation = "";
                 }
             }
+            btnSummary.Enabled = true;
         }
 
         private void cbxAcadLv_SelectedIndexChanged(object sender, EventArgs e)
@@ -131,6 +131,16 @@ namespace FPTPaidItemSummaryToolkit
 
         public void ConstructDatatable(List<MonthlyTeacherPaidItemRecord> mtpirList)
         {
+            AcademicLevel academicLevel = (AcademicLevel)cbxAcadLv.SelectedItem;
+            string staffListPath = Environment.CurrentDirectory + "\\Staff List\\" + academicLevel.Code + ".xlsx";
+            DataTable staffInfo = new DataTable();
+            if (File.Exists(staffListPath))
+                staffInfo = DAL_Summary.Instance.GetDataFromStaffList(staffListPath);
+            else
+            {
+                MessageBox.Show("Không tìm thấy file danh sách giảng viên.", "Thông báo",MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             DataTable dt = new DataTable();
             dt.Columns.Add("ACC");
             dt.Columns.Add("Mã NV");
@@ -152,7 +162,7 @@ namespace FPTPaidItemSummaryToolkit
             {
                 foreach (PensionList p in plList)
                 {
-                    if (p.pensionListName.Trim().Equals(currentMpir.AcadLv.Type.Trim()))
+                    if (p.pensionListName.Trim().Equals(currentMpir.AcadLv.Code.Trim()))
                     {
                         foreach (Pension pen in p.pensionList)
                         {
@@ -162,7 +172,6 @@ namespace FPTPaidItemSummaryToolkit
                     }
                 }
             }
-
 
             List<PaidItem> PaidItemList = teacherRecords[0].PaidItemList;
             DataRow r;
@@ -186,8 +195,8 @@ namespace FPTPaidItemSummaryToolkit
                         break;
                 }
             }
+            dt.Columns.Add("Tổng").SetOrdinal(dt.Columns.Count-1);
             dt.Rows.Add(r);
-            
             foreach (MonthlyTeacherPaidItemRecord record in teacherRecords)
             {
                 r = dt.NewRow();
@@ -198,41 +207,64 @@ namespace FPTPaidItemSummaryToolkit
                 r["Email"] = s.Email;
                 r["HĐLĐ"] = s.Type;
                 r["Bộ môn khác"] = s.Major;
+                r["Tổng"] = record.Sum;
                 foreach (PaidItem p in record.PaidItemList)
                 {
                     r[p.Name] = p.Value;
                 }
 
-                if(plList is object)
+                Staff staff = record.StaffInfo;
+                if (record.PensionList is object)
                 {
-                    if (record.PensionList is object)
-                        foreach (Pension p in record.PensionList.pensionList)
-                        {
-                            r[p.PensionName] = p.PensionValue;
-                        }
-                    else
+                    foreach (Pension p in record.PensionList.pensionList)
                     {
-                        record.PensionList = new PensionList();
-                        record.PensionList.pensionList = new List<Pension>();
-                        foreach (PensionList p in plList)
-                        {
-                            if (p.pensionListName.Trim().Equals(currentMpir.AcadLv.Type.Trim()))
-                            {
-                                foreach (Pension pe in p.pensionList)
-                                {
-                                    record.PensionList.pensionList.Add(new Pension(pe.PensionName, 0));
-                                }
-                                break;
-                            }
-                        }
-                        foreach (Pension pe in record.PensionList.pensionList)
-                        {
-                            r[pe.PensionName] = pe.PensionValue;
-                        }
+                        r[p.PensionName] = p.PensionValue;
                     }
                 }
+                else
+                {
+                    record.PensionList = new PensionList();
+                    record.PensionList.pensionList = new List<Pension>();
+                    if (plList is object)
+                        foreach (PensionList pl in plList)
+                        {
+                            if (pl.pensionListName.Trim().Equals(currentMpir.AcadLv.Code.Trim()))
+                            {
+                                foreach (Pension p in pl.pensionList)
+                                {
+                                    Pension newP = new Pension(p.PensionName, "0");
+                                    foreach (DataRow dtrow in staffInfo.Rows)
+                                    {
+                                        if (dtrow["Account"].ToString().Trim().ToLower().Equals(staff.Account.Trim().ToLower()))
+                                        {
+                                            try
+                                            {
+                                                string ss = dtrow[newP.PensionName].ToString();
+                                                newP.PensionValue = ss;
+                                                r[newP.PensionName] = newP.PensionValue;
+                                            }
+                                            catch (Exception)
+                                            {
+                                                continue;
+                                            }
+                                        }
+                                    }
+                                    record.PensionList.pensionList.Add(newP);
+                                }
+                            }
+                        }
+                }
                 dt.Rows.Add(r);
+                try
+                {
+                    record.Sum = float.Parse(r["Tổng"].ToString());
+                }
+                catch (FormatException)
+                {
+                    record.Sum = 0;
+                }
             }
+            dtgDisplay.DataSource = null;
             dtgDisplay.DataSource = dt;
             dtgDisplay.Columns["ACC"].ReadOnly = true;
             dtgDisplay.Columns["Mã NV"].ReadOnly = true;
@@ -246,7 +278,7 @@ namespace FPTPaidItemSummaryToolkit
             }
             this.FillRecordNo();
         }
-
+        
         private void FillRecordNo()
         {
             dtgDisplay.RowHeadersWidth = 60;
@@ -261,12 +293,19 @@ namespace FPTPaidItemSummaryToolkit
             AcademicLevel academic = (AcademicLevel)cbxAcadLv.SelectedItem;
             currentMpir = GetMpir(academic.Code, cbxCampus.SelectedItem.ToString());
             ConstructDatatable(currentMpir.mtpirList);
+            btnExport.Enabled = true;
+            btnSearch.Enabled = true;
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
             List<MonthlyTeacherPaidItemRecord> smtpirList = DAL_Summary.Instance.Search(txtSearch.Text, currentMpir.mtpirList);
-            ConstructDatatable(smtpirList);
+            if(smtpirList.Count>0)
+                ConstructDatatable(smtpirList);
+            else
+            {
+                MessageBox.Show("Không tìm tháy kết quả nào.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -306,7 +345,7 @@ namespace FPTPaidItemSummaryToolkit
                             if (obj is object)
                             {
                                 if (!String.IsNullOrWhiteSpace(obj.ToString()))
-                                    p.PensionValue = float.Parse(obj.ToString());
+                                    p.PensionValue = obj.ToString();
                             }
                         }
                     }
@@ -369,7 +408,15 @@ namespace FPTPaidItemSummaryToolkit
             DialogResult result = openDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                mpirList = (List<MonthlyPaidItemRecord>)DAL_DataSerializer.Instance.BinaryDeserialize(openDialog.FileName);
+                try
+                {
+                    mpirList = (List<MonthlyPaidItemRecord>)DAL_DataSerializer.Instance.BinaryDeserialize(openDialog.FileName);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Không đúng file tổng hợp. Xin hãy chọn lại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 if (mpirList.Count > 0)
                 {
                     foreach (MonthlyPaidItemRecord mpir in mpirList)
@@ -389,6 +436,7 @@ namespace FPTPaidItemSummaryToolkit
                 savedLocation = openDialog.FileName;
                 MessageBox.Show("Nhập file tổng hợp thành công.","Thông báo",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
+            btnSummary.Enabled = true;
         }
 
         private void btnSummary_Click(object sender, EventArgs e)
@@ -411,6 +459,7 @@ namespace FPTPaidItemSummaryToolkit
                 cm.ItemClicked += new ToolStripItemClickedEventHandler(ToolTipsFunction);
             }
         }
+
         private void ToolTipsFunction(object sender, ToolStripItemClickedEventArgs e)
         {
             string selectedItem = e.ClickedItem.Text;
@@ -449,6 +498,52 @@ namespace FPTPaidItemSummaryToolkit
             tempSave();
         }
 
-        
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            AcademicLevel AcademicLv = (AcademicLevel)cbxAcadLv.SelectedItem;
+            string campus = cbxCampus.SelectedItem.ToString();
+            DialogResult result = MessageBox.Show("Xuất trang tính hiện tại ra file Excel?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if(result == DialogResult.Yes)
+            {
+                SaveFileDialog saveDialog = new SaveFileDialog();
+                saveDialog.Title = "Xuất ra file Excel";
+                saveDialog.FileName = AcademicLv.Code + "_" + campus + "_Summary_" + DateTime.Now.ToString("ddMMyy");
+                saveDialog.Filter = "Excel files (*.xlsx)|*.xlsx";
+                saveDialog.FilterIndex = 2;
+                if (saveDialog.ShowDialog() == DialogResult.OK)
+                {
+                    Microsoft.Office.Interop.Excel._Application app = new Microsoft.Office.Interop.Excel.Application();
+                    Microsoft.Office.Interop.Excel._Workbook workbook = app.Workbooks.Add(Type.Missing);
+                    Microsoft.Office.Interop.Excel._Worksheet worksheet = null;
+                    app.DisplayAlerts = false;
+                    worksheet = workbook.Sheets["Sheet1"];
+                    worksheet = workbook.ActiveSheet;
+                    worksheet.Name = AcademicLv.Code + "_" + campus;
+                    for (int i = 1; i < dtgDisplay.Columns.Count + 1; i++)
+                    {
+                        worksheet.Cells[1, i] = dtgDisplay.Columns[i - 1].HeaderText;
+                    }
+                    for (int i = 0; i < dtgDisplay.Rows.Count; i++)
+                    {
+                        for (int j = 0; j < dtgDisplay.Columns.Count; j++)
+                        {
+                            worksheet.Cells[i + 2, j + 1] = dtgDisplay.Rows[i].Cells[j].Value.ToString();
+                        }
+                    }
+                    try
+                    {
+                        workbook.SaveAs(saveDialog.FileName, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing,
+                        Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlExclusive, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("File excel đang được sử dụng, xin hãy tắt trước khi ghi đè.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    app.Quit();
+                    MessageBox.Show("Xuất thành file excel thành công.", "Thông báo");
+                }
+            }
+        }
     }
 }

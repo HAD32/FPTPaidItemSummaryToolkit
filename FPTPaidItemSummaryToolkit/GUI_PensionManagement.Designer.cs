@@ -31,10 +31,8 @@
             this.components = new System.ComponentModel.Container();
             this.lstPensionList = new System.Windows.Forms.ListBox();
             this.lstItems = new System.Windows.Forms.ListBox();
-            this.txtPensionListName = new System.Windows.Forms.TextBox();
             this.txtItemName = new System.Windows.Forms.TextBox();
             this.btnAddItems = new System.Windows.Forms.Button();
-            this.btnAddPL = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.dtgDisplay = new System.Windows.Forms.DataGridView();
@@ -51,9 +49,8 @@
             this.lstPensionList.FormattingEnabled = true;
             this.lstPensionList.Location = new System.Drawing.Point(47, 50);
             this.lstPensionList.Name = "lstPensionList";
-            this.lstPensionList.Size = new System.Drawing.Size(251, 225);
+            this.lstPensionList.Size = new System.Drawing.Size(251, 277);
             this.lstPensionList.TabIndex = 0;
-            this.lstPensionList.Click += new System.EventHandler(this.lstPensionList_Click);
             this.lstPensionList.SelectedIndexChanged += new System.EventHandler(this.lstPensionList_SelectedIndexChanged);
             // 
             // lstItems
@@ -64,14 +61,6 @@
             this.lstItems.Size = new System.Drawing.Size(505, 225);
             this.lstItems.TabIndex = 1;
             this.lstItems.Click += new System.EventHandler(this.lstItems_Click);
-            // 
-            // txtPensionListName
-            // 
-            this.txtPensionListName.Location = new System.Drawing.Point(49, 283);
-            this.txtPensionListName.Multiline = true;
-            this.txtPensionListName.Name = "txtPensionListName";
-            this.txtPensionListName.Size = new System.Drawing.Size(168, 43);
-            this.txtPensionListName.TabIndex = 3;
             // 
             // txtItemName
             // 
@@ -91,17 +80,6 @@
             this.btnAddItems.Text = "Thêm";
             this.btnAddItems.UseVisualStyleBackColor = true;
             this.btnAddItems.Click += new System.EventHandler(this.btnAddItems_Click);
-            // 
-            // btnAddPL
-            // 
-            this.btnAddPL.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAddPL.Location = new System.Drawing.Point(223, 281);
-            this.btnAddPL.Name = "btnAddPL";
-            this.btnAddPL.Size = new System.Drawing.Size(75, 47);
-            this.btnAddPL.TabIndex = 6;
-            this.btnAddPL.Text = "Thêm";
-            this.btnAddPL.UseVisualStyleBackColor = true;
-            this.btnAddPL.Click += new System.EventHandler(this.btnAddPL_Click);
             // 
             // btnSave
             // 
@@ -184,10 +162,8 @@
             this.Controls.Add(this.dtgDisplay);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.btnAddPL);
             this.Controls.Add(this.btnAddItems);
             this.Controls.Add(this.txtItemName);
-            this.Controls.Add(this.txtPensionListName);
             this.Controls.Add(this.lstItems);
             this.Controls.Add(this.lstPensionList);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -205,10 +181,8 @@
 
         private System.Windows.Forms.ListBox lstPensionList;
         private System.Windows.Forms.ListBox lstItems;
-        private System.Windows.Forms.TextBox txtPensionListName;
         private System.Windows.Forms.TextBox txtItemName;
         private System.Windows.Forms.Button btnAddItems;
-        private System.Windows.Forms.Button btnAddPL;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.DataGridView dtgDisplay;

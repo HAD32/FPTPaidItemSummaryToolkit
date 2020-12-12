@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.OleDb;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -102,6 +105,33 @@ namespace DAL
                     return m;
             }
             return null;
+        }
+
+        public DataTable GetDataFromStaffList(string pathName)
+        {
+            List<Staff> sList = new List<Staff>();
+            DataTable dt = new DataTable();
+            string Excel07ConString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties='Excel 8.0;HDR={1}'";
+            string conStr, sheetName;
+            conStr = string.Format(Excel07ConString, pathName, "YES");
+            using (OleDbConnection con = new OleDbConnection(conStr))
+            {
+                using (OleDbCommand cmd = new OleDbCommand())
+                {
+                    cmd.Connection = con;
+                    con.Open();
+                    DataTable dtExcelSchema = con.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
+                    sheetName = dtExcelSchema.Rows[0]["TABLE_NAME"].ToString();
+                    using (OleDbDataAdapter oda = new OleDbDataAdapter())
+                    {
+                        cmd.CommandText = "SELECT * From [" + sheetName + "]";
+                        oda.SelectCommand = cmd;
+                        oda.Fill(dt);
+                    }
+                    con.Close();
+                }
+            }
+            return dt;
         }
     }
 }

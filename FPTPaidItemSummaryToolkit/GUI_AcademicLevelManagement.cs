@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace FPTPaidItemSummaryToolkit
 {
-    public partial class GUI_AcademicLevel : Form
+    public partial class GUI_AcademicLevelManagement : Form
     {
         List<AcademicLevel> academicList = new List<AcademicLevel>();
 
@@ -20,7 +20,7 @@ namespace FPTPaidItemSummaryToolkit
         //    }
         //}
 
-        public GUI_AcademicLevel()
+        public GUI_AcademicLevelManagement()
         {
             InitializeComponent();
         }
@@ -69,31 +69,41 @@ namespace FPTPaidItemSummaryToolkit
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            AcademicLevel acLv = DAL_AcademicLevel.Instance.GetOneAcaLevelByCode(lstAcademicLevels.SelectedValue.ToString(), academicList);
-            if (DAL_AcademicLevel.Instance.Update(academicList, txtAcadLevelCode.Text, txtAcadLevelName.Text, cbbAcademicType.SelectedItem.ToString(),txtDescription.Text))
+            if (lstAcademicLevels.SelectedItem is object)
             {
-                DAL_DataSerializer.Instance.BinarySerialize(academicList, "Academic Levels\\AcademicLevel.fs");
-                MessageBox.Show("Sửa hệ đào tạo thành công");
+                AcademicLevel acLv = DAL_AcademicLevel.Instance.GetOneAcaLevelByCode(lstAcademicLevels.SelectedValue.ToString(), academicList);
+                if (DAL_AcademicLevel.Instance.Update(academicList, txtAcadLevelCode.Text, txtAcadLevelName.Text, txtDescription.Text))
+                {
+                    DAL_DataSerializer.Instance.BinarySerialize(academicList, "Academic Levels\\AcademicLevel.fs");
+                    MessageBox.Show("Sửa hệ đào tạo thành công");
+                }
+                else
+                {
+                    MessageBox.Show("Không sửa được hệ đào tạo");
+                }
+                Reload();
             }
-            else
-            {
-                MessageBox.Show("Không sửa được hệ đào tạo");
-            }
-            Reload();
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            AcademicLevel acLv = DAL_AcademicLevel.Instance.GetOneAcaLevelByCode(lstAcademicLevels.SelectedValue.ToString(), academicList);
-            DialogResult result = MessageBox.Show("Bạn có muốn xóa " + lstAcademicLevels.SelectedValue.ToString() + "?",
-                                                "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (result == DialogResult.Yes)
+            if(lstAcademicLevels.SelectedItem is object)
             {
-                DAL_AcademicLevel.Instance.Delete(academicList, acLv.Code);
+                AcademicLevel acLv = DAL_AcademicLevel.Instance.GetOneAcaLevelByCode(lstAcademicLevels.SelectedValue.ToString(), academicList);
+                DialogResult result = MessageBox.Show("Bạn có muốn xóa " + lstAcademicLevels.SelectedValue.ToString() + "?",
+                                                    "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (result == DialogResult.Yes)
+                {
+                    DAL_AcademicLevel.Instance.Delete(academicList, acLv.Code);
 
+                }
+                DAL_DataSerializer.Instance.BinarySerialize(academicList, "Academic Levels\\AcademicLevel.fs");
+                Reload();
+                txtAcadLevelCode.Text = "";
+                txtAcadLevelName.Text = "";
+                txtDescription.Text = "";
+                lstCampusList.Items.Clear();
             }
-            DAL_DataSerializer.Instance.BinarySerialize(academicList, "Academic Levels\\AcademicLevel.fs");
-            Reload();
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -109,8 +119,6 @@ namespace FPTPaidItemSummaryToolkit
                 txtAcadLevelCode.Text = academic.Code;
                 txtAcadLevelName.Text = academic.Name;
                 txtDescription.Text = academic.Description;
-                if (academic.Type is object)
-                    cbbAcademicType.Text = academic.Type;
                 lstCampusList.Items.Clear();
                 if(academic.CampusList is object)
                 {
@@ -120,13 +128,9 @@ namespace FPTPaidItemSummaryToolkit
                         lstCampusList.DisplayMember = "Name";
                     }
                 }
+                btnUpdate.Enabled = true;
+                btnDelete.Enabled = true;
             }
-            else
-            {
-                return;
-            }
-            btnUpdate.Enabled = true;
-            btnDelete.Enabled = true;
             txtAcadLevelCode.ReadOnly = true;
         }
 
@@ -141,6 +145,8 @@ namespace FPTPaidItemSummaryToolkit
         private void btnAddCampus_Click(object sender, EventArgs e)
         {
             AcademicLevel academic = (AcademicLevel)lstAcademicLevels.SelectedItem;
+            if (academic is null)
+                return;
             if (string.IsNullOrWhiteSpace(txtAddCampus.Text))
             {
                 errorProvider1.Clear();
@@ -237,11 +243,6 @@ namespace FPTPaidItemSummaryToolkit
             }
             DAL_DataSerializer.Instance.BinarySerialize(academicList, "Academic Levels\\AcademicLevel.fs");
             Reload();
-        }
-
-        private void cbbAcademicType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }
