@@ -244,5 +244,10 @@ namespace FPTPaidItemSummaryToolkit
             DAL_DataSerializer.Instance.BinarySerialize(academicList, "Academic Levels\\AcademicLevel.fs");
             Reload();
         }
+
+        private void txtAddCampus_TextChanged(object sender, EventArgs e)
+        {
+            errorProvider1.Clear();
+        }
     }
 }

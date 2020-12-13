@@ -53,7 +53,7 @@ namespace FPTPaidItemSummaryToolkit
                 txtEmail.Focus();
                 return false;
             }
-            else if (!Regex.IsMatch(txtEmail.Text, regexStr))
+            else if (!Regex.IsMatch(txtEmail.Text.Trim(), regexStr))
             {
                 errorProvider1.SetError(txtEmail, "Không đúng định dạng email.");
                 txtEmail.Focus();

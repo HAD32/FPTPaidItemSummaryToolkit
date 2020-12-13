@@ -242,6 +242,7 @@
             this.txtAddCampus.Name = "txtAddCampus";
             this.txtAddCampus.Size = new System.Drawing.Size(160, 20);
             this.txtAddCampus.TabIndex = 49;
+            this.txtAddCampus.TextChanged += new System.EventHandler(this.txtAddCampus_TextChanged);
             // 
             // errorProvider1
             // 

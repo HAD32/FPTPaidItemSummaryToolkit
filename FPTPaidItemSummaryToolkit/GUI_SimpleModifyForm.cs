@@ -21,9 +21,21 @@ namespace FPTPaidItemSummaryToolkit
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            this.newName = txtName.Text;
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            if (txtName.Text.Equals(""))
+            {
+                errorProvider1.Clear();
+                errorProvider1.SetIconAlignment(this.txtName, ErrorIconAlignment.MiddleRight);
+                errorProvider1.SetIconPadding(this.txtName, -20);
+                errorProvider1.SetError(txtName, "Không để trống trường này");
+                txtName.Focus();
+                return;
+            }
+            else
+            {
+                this.newName = txtName.Text;
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
         }
 
         private void btnClose_Click(object sender, EventArgs e)
