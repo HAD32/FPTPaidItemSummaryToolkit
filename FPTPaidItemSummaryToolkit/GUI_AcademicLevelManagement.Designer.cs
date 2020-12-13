@@ -93,7 +93,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(250, 22);
+            this.label2.Location = new System.Drawing.Point(344, 20);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(278, 33);
             this.label2.TabIndex = 35;
@@ -247,7 +247,7 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
-            // GUI_AcademicLevel
+            // GUI_AcademicLevelManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -260,7 +260,7 @@
             this.Controls.Add(this.btnExit);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
-            this.Name = "GUI_AcademicLevel";
+            this.Name = "GUI_AcademicLevelManagement";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Quản lý hệ đào tạo";
             this.Load += new System.EventHandler(this.GUI_AcademicLevel_Load);

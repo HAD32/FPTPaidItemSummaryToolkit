@@ -72,10 +72,7 @@
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.txtName);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-<<<<<<< HEAD
-=======
             this.Name = "GUI_SimpleModifyForm";
->>>>>>> fee946399c48462110513b1f74d3131016d4314d
             this.Text = "Chỉnh sửa";
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -179,6 +179,7 @@ namespace FPTPaidItemSummaryToolkit
         int indexItem, indexItem2;
         private void lstItems_Click(object sender, EventArgs e)
         {
+            this.lstItems.MouseUp -= new System.Windows.Forms.MouseEventHandler(this.List_RightClick2);
             this.lstItems.MouseUp += new System.Windows.Forms.MouseEventHandler(this.List_RightClick2);
         }
         
@@ -194,6 +195,7 @@ namespace FPTPaidItemSummaryToolkit
                 cm.ItemClicked += new ToolStripItemClickedEventHandler(ModifyList2);
             }
         }
+
         private void ModifyList2(object sender, ToolStripItemClickedEventArgs e)
         {
             string selectedItem = e.ClickedItem.Text;

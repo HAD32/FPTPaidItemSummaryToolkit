@@ -90,12 +90,12 @@ namespace FPTPaidItemSummaryToolkit
 
         private void btnLoad_Click(object sender, EventArgs e)
         {
-            cbxAcadLv.Items.Clear();
-            cbxCampus.Items.Clear();
             FolderBrowserDialog fbDialog = new FolderBrowserDialog();
             DialogResult result = fbDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
+                cbxAcadLv.Items.Clear();
+                cbxCampus.Items.Clear();
                 mpirList = GetAllSummaryFile(fbDialog.SelectedPath);
                 if (mpirList.Count > 0)
                 {
@@ -400,14 +400,14 @@ namespace FPTPaidItemSummaryToolkit
 
         private void btnLoadFile_Click(object sender, EventArgs e)
         {
-            cbxAcadLv.Items.Clear();
-            cbxCampus.Items.Clear();
             OpenFileDialog openDialog = new OpenFileDialog();
             openDialog.Title = "Chọn file tổng hợp";
             openDialog.Filter = "Encrypted files (*.fs)|*.fs";
             DialogResult result = openDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
+                cbxAcadLv.Items.Clear();
+                cbxCampus.Items.Clear();
                 try
                 {
                     mpirList = (List<MonthlyPaidItemRecord>)DAL_DataSerializer.Instance.BinaryDeserialize(openDialog.FileName);

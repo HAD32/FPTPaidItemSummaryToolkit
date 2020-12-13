@@ -35,8 +35,8 @@
             this.mniManage = new System.Windows.Forms.ToolStripMenuItem();
             this.managePaidItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnsAcademic = new System.Windows.Forms.ToolStripMenuItem();
-            this.UserInfoManagement = new System.Windows.Forms.ToolStripMenuItem();
             this.mniPension = new System.Windows.Forms.ToolStripMenuItem();
+            this.UserInfoManagement = new System.Windows.Forms.ToolStripMenuItem();
             this.mniHistory = new System.Windows.Forms.ToolStripMenuItem();
             this.mnAll.SuspendLayout();
             this.SuspendLayout();
@@ -64,7 +64,7 @@
             // mniSummary
             // 
             this.mniSummary.Name = "mniSummary";
-            this.mniSummary.Size = new System.Drawing.Size(180, 22);
+            this.mniSummary.Size = new System.Drawing.Size(147, 22);
             this.mniSummary.Text = "Tổng hợp file ";
             this.mniSummary.Click += new System.EventHandler(this.MniSummary_Click);
             // 
@@ -72,7 +72,7 @@
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
             this.closeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.closeToolStripMenuItem.Text = "Đóng";
+            this.closeToolStripMenuItem.Text = "Thoát";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.CloseToolStripMenuItem_Click);
             // 
             // mniManage
@@ -101,19 +101,19 @@
             this.mnsAcademic.Text = "Hệ đào tạo";
             this.mnsAcademic.Click += new System.EventHandler(this.MnsAcademic_Click);
             // 
-            // UserInfoManagement
-            // 
-            this.UserInfoManagement.Name = "UserInfoManagement";
-            this.UserInfoManagement.Size = new System.Drawing.Size(196, 22);
-            this.UserInfoManagement.Text = "Thông tin người dùng  ";
-            this.UserInfoManagement.Click += new System.EventHandler(this.UserInfoManagement_Click);
-            // 
             // mniPension
             // 
             this.mniPension.Name = "mniPension";
             this.mniPension.Size = new System.Drawing.Size(196, 22);
             this.mniPension.Text = "Phụ cấp";
             this.mniPension.Click += new System.EventHandler(this.mniPension_Click);
+            // 
+            // UserInfoManagement
+            // 
+            this.UserInfoManagement.Name = "UserInfoManagement";
+            this.UserInfoManagement.Size = new System.Drawing.Size(196, 22);
+            this.UserInfoManagement.Text = "Thông tin người dùng  ";
+            this.UserInfoManagement.Click += new System.EventHandler(this.UserInfoManagement_Click);
             // 
             // mniHistory
             // 

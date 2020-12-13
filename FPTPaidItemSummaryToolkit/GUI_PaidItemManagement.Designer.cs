@@ -493,7 +493,7 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // GUI_PaidItem
+            // GUI_PaidItemManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -505,7 +505,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label2);
-            this.Name = "GUI_PaidItem";
+            this.Name = "GUI_PaidItemManagement";
             this.Text = "Quản lý định mức thù lao";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GUI_PaidItem_FormClosing);
             this.Load += new System.EventHandler(this.GUI_PaidItem_Load);

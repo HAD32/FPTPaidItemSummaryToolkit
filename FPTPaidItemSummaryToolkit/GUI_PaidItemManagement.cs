@@ -236,9 +236,9 @@ namespace FPTPaidItemSummaryToolkit
         /// <param name="e"></param>
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex == -1) return;
+            if (e.RowIndex == -1 || e.ColumnIndex == -1) return;
             
-            if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+            if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null )
             {
                 dataGridView1.CurrentRow.Selected = true;
 

@@ -110,32 +110,6 @@
             this.label1.TabIndex = 18;
             this.label1.Text = "Mã hệ đào tạo";
             // 
-<<<<<<< HEAD
-            // cbbType
-            // 
-            this.cbbType.FormattingEnabled = true;
-            this.cbbType.Items.AddRange(new object[] {
-            "Đại học",
-            "Trung học",
-            "Tiểu học"});
-            this.cbbType.Location = new System.Drawing.Point(137, 92);
-            this.cbbType.Name = "cbbType";
-            this.cbbType.Size = new System.Drawing.Size(250, 21);
-            this.cbbType.TabIndex = 26;
-            this.cbbType.SelectedIndexChanged += new System.EventHandler(this.cbbType_SelectedIndexChanged);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(74, 93);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 15);
-            this.label4.TabIndex = 27;
-            this.label4.Text = "Phân hệ";
-            // 
-=======
->>>>>>> fee946399c48462110513b1f74d3131016d4314d
             // GUI_InsertForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
