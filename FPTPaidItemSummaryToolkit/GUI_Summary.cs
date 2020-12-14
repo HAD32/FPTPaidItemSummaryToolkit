@@ -101,7 +101,17 @@ namespace FPTPaidItemSummaryToolkit
                 {
                     foreach (MonthlyPaidItemRecord mpir in mpirList)
                     {
-                        if (!cbxAcadLv.Items.Contains(mpir.AcadLv))
+                        bool existed = false;
+                        foreach (Object obj in cbxAcadLv.Items)
+                        {
+                            AcademicLevel a = (AcademicLevel)obj;
+                            if (a.Code.Trim().Equals(mpir.AcadLv.Code.Trim()))
+                            {
+                                existed = true;
+                                break;
+                            }
+                        }
+                        if (!existed)
                         {
                             cbxAcadLv.Items.Add(mpir.AcadLv);
                         }
