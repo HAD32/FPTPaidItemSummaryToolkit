@@ -125,6 +125,7 @@ namespace FPTPaidItemSummaryToolkit
                 }
             }
             btnSummary.Enabled = true;
+            dtgDisplay.DataSource = null;
         }
 
         private void cbxAcadLv_SelectedIndexChanged(object sender, EventArgs e)
@@ -447,6 +448,7 @@ namespace FPTPaidItemSummaryToolkit
                 MessageBox.Show("Nhập file tổng hợp thành công.","Thông báo",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
             btnSummary.Enabled = true;
+            dtgDisplay.DataSource = null;
         }
 
         private void btnSummary_Click(object sender, EventArgs e)
