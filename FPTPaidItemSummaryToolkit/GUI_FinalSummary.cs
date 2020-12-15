@@ -226,7 +226,6 @@ namespace FPTPaidItemSummaryToolkit
                 }
                 filteredList.Add(newMpir);
             }
-            MessageBox.Show(filteredList.Count() + " - " + mpirList.Count());
             return filteredList;
         }
     }
