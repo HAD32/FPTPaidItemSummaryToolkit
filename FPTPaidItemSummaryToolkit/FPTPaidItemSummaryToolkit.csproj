@@ -74,6 +74,12 @@
     <Compile Include="GUI_Container.Designer.cs">
       <DependentUpon>GUI_Container.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI_DetailMonthlyRecord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI_DetailMonthlyRecord.Designer.cs">
+      <DependentUpon>GUI_DetailMonthlyRecord.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI_FinalSummary.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,6 +147,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI_Container.resx">
       <DependentUpon>GUI_Container.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI_DetailMonthlyRecord.resx">
+      <DependentUpon>GUI_DetailMonthlyRecord.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI_FinalSummary.resx">
       <DependentUpon>GUI_FinalSummary.cs</DependentUpon>

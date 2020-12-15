@@ -81,6 +81,7 @@
             this.dtgDisplay.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgDisplay.Location = new System.Drawing.Point(40, 247);
             this.dtgDisplay.Name = "dtgDisplay";
+            this.dtgDisplay.ReadOnly = true;
             this.dtgDisplay.Size = new System.Drawing.Size(1038, 237);
             this.dtgDisplay.TabIndex = 1;
             this.dtgDisplay.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgDisplay_CellEndEdit);

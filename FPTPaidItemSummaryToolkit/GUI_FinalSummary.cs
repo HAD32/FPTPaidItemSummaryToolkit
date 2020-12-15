@@ -36,7 +36,7 @@ namespace FPTPaidItemSummaryToolkit
             ConstructDatatable();
         }
 
-        void ConstructDatatable()
+        public void ConstructDatatable()
         {
             DataTable dt = new DataTable();
             dt.Columns.Add("ACC");
@@ -61,12 +61,6 @@ namespace FPTPaidItemSummaryToolkit
                 dt.Rows.Add(r);
             }
             dtgDisplay.DataSource = dt;
-            dtgDisplay.Columns["ACC"].ReadOnly = true;
-            dtgDisplay.Columns["Mã NV"].ReadOnly = true;
-            dtgDisplay.Columns["Tên NV"].ReadOnly = true;
-            dtgDisplay.Columns["Email"].ReadOnly = true;
-            dtgDisplay.Columns["HĐLĐ"].ReadOnly = true;
-            dtgDisplay.Columns["Bộ môn khác"].ReadOnly = true;
             foreach (DataGridViewColumn column in dtgDisplay.Columns)
             {
                 column.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -153,6 +147,43 @@ namespace FPTPaidItemSummaryToolkit
                     MessageBox.Show("Xuất thành file excel thành công.", "Thông báo");
                 }
             }
+        }
+
+        string selectedStaffAccount;
+
+        private void btnGetDetail_Click(object sender, EventArgs e)
+        {
+            GUI_DetailMonthlyRecord detailForm = new GUI_DetailMonthlyRecord(selectedStaffAccount, getStaffListOfTeachingMpir());
+            detailForm.Show();
+        }
+
+        private void dtgDisplay_CellEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            int index = e.RowIndex;
+            selectedStaffAccount = dtgDisplay.Rows[index].Cells["ACC"].Value.ToString().Trim();
+        }
+
+        private List<MonthlyPaidItemRecord> getStaffListOfTeachingMpir()
+        {
+            List<MonthlyPaidItemRecord> staffDetailMonthlyRecords = new List<MonthlyPaidItemRecord>();
+            foreach (MonthlyPaidItemRecord mpir in mpirList)
+            {
+                MonthlyPaidItemRecord newMpir = new MonthlyPaidItemRecord();
+                foreach (MonthlyTeacherPaidItemRecord mtpir in mpir.mtpirList)
+                {
+                    Staff s = mtpir.StaffInfo;
+                    if (s.Account.Trim().Equals(selectedStaffAccount.Trim()))
+                    {
+                        newMpir.AcadLv = mpir.AcadLv;
+                        newMpir.Campus = mpir.Campus;
+                        newMpir.mtpirList = new List<MonthlyTeacherPaidItemRecord>();
+                        newMpir.mtpirList.Add(mtpir);
+                        staffDetailMonthlyRecords.Add(newMpir);
+                        break;
+                    }
+                }
+            }
+            return staffDetailMonthlyRecords;
         }
     }
 }
