@@ -66,6 +66,10 @@ namespace FPTPaidItemSummaryToolkit
                 column.SortMode = DataGridViewColumnSortMode.NotSortable;
             }
             this.FillRecordNo();
+            for(int i = 0; i < dtgDisplay.Columns.Count; i++){
+                this.dtgDisplay.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            }
+            this.dtgDisplay.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
 
         private void FillRecordNo()

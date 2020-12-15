@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="AcademicLevel.cs" />
     <Compile Include="Campus.cs" />
+    <Compile Include="CheckResult.cs" />
     <Compile Include="MonthlyPaidItemRecord.cs" />
     <Compile Include="MonthlyTeacherPaidItemRecord.cs" />
     <Compile Include="PaidItem.cs" />

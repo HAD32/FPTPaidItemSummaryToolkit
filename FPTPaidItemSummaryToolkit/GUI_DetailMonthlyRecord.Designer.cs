@@ -32,18 +32,21 @@
             this.label1 = new System.Windows.Forms.Label();
             this.lblLecturer = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
+            this.btnExport = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dtgDisplay)).BeginInit();
             this.SuspendLayout();
             // 
             // dtgDisplay
             // 
+            this.dtgDisplay.AllowUserToAddRows = false;
             this.dtgDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dtgDisplay.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgDisplay.Location = new System.Drawing.Point(12, 79);
             this.dtgDisplay.Name = "dtgDisplay";
-            this.dtgDisplay.Size = new System.Drawing.Size(342, 241);
+            this.dtgDisplay.ReadOnly = true;
+            this.dtgDisplay.Size = new System.Drawing.Size(312, 263);
             this.dtgDisplay.TabIndex = 0;
             // 
             // label1
@@ -60,7 +63,8 @@
             // 
             this.lblLecturer.AutoSize = true;
             this.lblLecturer.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLecturer.Location = new System.Drawing.Point(107, 31);
+            this.lblLecturer.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.lblLecturer.Location = new System.Drawing.Point(98, 31);
             this.lblLecturer.Name = "lblLecturer";
             this.lblLecturer.Size = new System.Drawing.Size(46, 17);
             this.lblLecturer.TabIndex = 2;
@@ -70,7 +74,7 @@
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClose.Location = new System.Drawing.Point(279, 332);
+            this.btnClose.Location = new System.Drawing.Point(249, 354);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 36);
             this.btnClose.TabIndex = 3;
@@ -78,17 +82,30 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
+            // btnExport
+            // 
+            this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnExport.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExport.Location = new System.Drawing.Point(15, 354);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(129, 36);
+            this.btnExport.TabIndex = 4;
+            this.btnExport.Text = "Xuất ra file excel";
+            this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            // 
             // GUI_DetailMonthlyRecord
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(380, 380);
+            this.ClientSize = new System.Drawing.Size(350, 402);
+            this.Controls.Add(this.btnExport);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.lblLecturer);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dtgDisplay);
             this.Name = "GUI_DetailMonthlyRecord";
-            this.Text = "GUI_DetailMonthlyRecord";
+            this.Text = "Chi tiết giảng dạy ";
             ((System.ComponentModel.ISupportInitialize)(this.dtgDisplay)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -101,5 +118,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblLecturer;
         private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Button btnExport;
     }
 }

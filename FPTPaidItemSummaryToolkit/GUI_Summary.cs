@@ -288,6 +288,10 @@ namespace FPTPaidItemSummaryToolkit
                 column.SortMode = DataGridViewColumnSortMode.NotSortable;
             }
             this.FillRecordNo();
+            for (int i = 0; i < dtgDisplay.Columns.Count; i++)
+            {
+                this.dtgDisplay.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            }
         }
         
         private void FillRecordNo()
@@ -306,6 +310,7 @@ namespace FPTPaidItemSummaryToolkit
             ConstructDatatable(currentMpir.mtpirList);
             btnExport.Enabled = true;
             btnSearch.Enabled = true;
+            btnFinalCheck.Enabled = true;
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -566,6 +571,13 @@ namespace FPTPaidItemSummaryToolkit
                     MessageBox.Show("Xuất thành file excel thành công.", "Thông báo");
                 }
             }
+        }
+
+        private void btnFinalCheck_Click(object sender, EventArgs e)
+        {
+            GUI_FinalCheck finalCheckForm = new GUI_FinalCheck(currentMpir);
+            finalCheckForm.Show();
+
         }
     }
 }

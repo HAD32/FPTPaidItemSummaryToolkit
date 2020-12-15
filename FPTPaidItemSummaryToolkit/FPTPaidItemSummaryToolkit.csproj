@@ -80,6 +80,12 @@
     <Compile Include="GUI_DetailMonthlyRecord.Designer.cs">
       <DependentUpon>GUI_DetailMonthlyRecord.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI_FinalCheck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI_FinalCheck.Designer.cs">
+      <DependentUpon>GUI_FinalCheck.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI_FinalSummary.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -150,6 +156,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI_DetailMonthlyRecord.resx">
       <DependentUpon>GUI_DetailMonthlyRecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI_FinalCheck.resx">
+      <DependentUpon>GUI_FinalCheck.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI_FinalSummary.resx">
       <DependentUpon>GUI_FinalSummary.cs</DependentUpon>
