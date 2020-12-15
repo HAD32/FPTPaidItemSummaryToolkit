@@ -57,7 +57,9 @@ namespace FPTPaidItemSummaryToolkit
                             float pensionValue = float.Parse(p.PensionValue);
                             if (pensionValue > result.Maximum)
                                 result.Maximum = pensionValue;
-                            if (pensionValue < result.Minimum)
+                            if (result.Minimum == -1)
+                                result.Minimum = pensionValue;
+                            else if (pensionValue < result.Minimum)
                                 result.Minimum = pensionValue;
                         }
                     }
@@ -67,7 +69,9 @@ namespace FPTPaidItemSummaryToolkit
                         {
                             if (p.Value > result.Maximum)
                                 result.Maximum = p.Value;
-                            if (p.Value < result.Minimum)
+                            if (result.Minimum == -1)
+                                result.Minimum = p.Value;
+                            else if (p.Value < result.Minimum)
                                 result.Minimum = p.Value;
                         }
                     }
