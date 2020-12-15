@@ -80,6 +80,12 @@
     <Compile Include="GUI_DetailMonthlyRecord.Designer.cs">
       <DependentUpon>GUI_DetailMonthlyRecord.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI_FillKey.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI_FillKey.Designer.cs">
+      <DependentUpon>GUI_FillKey.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI_FinalCheck.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,6 +128,12 @@
     <Compile Include="GUI_PensionManagement.Designer.cs">
       <DependentUpon>GUI_PensionManagement.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI_SetKey.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI_SetKey.Designer.cs">
+      <DependentUpon>GUI_SetKey.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI_SimpleModifyForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -157,6 +169,9 @@
     <EmbeddedResource Include="GUI_DetailMonthlyRecord.resx">
       <DependentUpon>GUI_DetailMonthlyRecord.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI_FillKey.resx">
+      <DependentUpon>GUI_FillKey.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI_FinalCheck.resx">
       <DependentUpon>GUI_FinalCheck.cs</DependentUpon>
     </EmbeddedResource>
@@ -177,6 +192,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI_PensionManagement.resx">
       <DependentUpon>GUI_PensionManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI_SetKey.resx">
+      <DependentUpon>GUI_SetKey.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI_SimpleModifyForm.resx">
       <DependentUpon>GUI_SimpleModifyForm.cs</DependentUpon>
@@ -254,6 +272,9 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\show-password-icon-19.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

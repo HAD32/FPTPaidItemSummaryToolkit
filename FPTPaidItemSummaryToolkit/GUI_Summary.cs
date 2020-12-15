@@ -46,24 +46,36 @@ namespace FPTPaidItemSummaryToolkit
             List<MonthlyPaidItemRecord> mpirListFromFiles = new List<MonthlyPaidItemRecord>();
             string[] filePaths = Directory.GetFiles(folderPath);
             int successCount = 0;
+            GUI_FillKey fillKeyForm = new GUI_FillKey();
+            DialogResult result = fillKeyForm.ShowDialog();
+            string Key;
+            if (result == DialogResult.OK)
+            {
+                Key = fillKeyForm.Key;
+            }
+            else
+                return null;
             foreach(string path in filePaths)
             {
                 MonthlyPaidItemRecord mpir = new MonthlyPaidItemRecord();
                 try
                 {
                     mpir = (MonthlyPaidItemRecord)DAL_DataSerializer.Instance.BinaryDeserialize(path);
-                    successCount++;
                 }
                 catch (Exception)
                 {
                     continue;
                 }
-                mpirListFromFiles.Add(mpir);
+                if (Key.Equals(mpir.PaidItemFileHeader.Key))
+                {
+                    mpirListFromFiles.Add(mpir);
+                    successCount++;
+                }
             }
             if (successCount == 0)
                 MessageBox.Show("Không có file nào hợp lệ. Xin kiểm tra lại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             else
-                MessageBox.Show("Nhập thành công "+successCount+" trên "+filePaths.Length+" file trong thư mục.","Thông báo",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                MessageBox.Show("Nhập thành công "+successCount+"/"+filePaths.Length+" file trong thư mục.","Thông báo",MessageBoxButtons.OK,MessageBoxIcon.Information);
             return mpirListFromFiles;
         }
 

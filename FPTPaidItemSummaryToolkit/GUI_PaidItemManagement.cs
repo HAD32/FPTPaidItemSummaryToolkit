@@ -327,9 +327,18 @@ namespace FPTPaidItemSummaryToolkit
         /// <param name="e"></param>
         private void btnSave_Click(object sender, EventArgs e)
         {
-            List<Object> list = (List<Object>)DAL_DataSerializer.Instance.BinaryDeserialize("Paid Item Files\\" + cbbAcaLevel.SelectedValue.ToString() + "PaidItem.fs"); ;
+            GUI_SetKey setKeyForm = new GUI_SetKey();
+            string fileKey;
+            DialogResult result = setKeyForm.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                fileKey = setKeyForm.password;
+            }
+            else
+                return;
+            List<Object> list = (List<Object>)DAL_DataSerializer.Instance.BinaryDeserialize("Paid Item Files\\" + cbbAcaLevel.SelectedValue.ToString() + "PaidItem.fs");
             PaidItemHeader paidItemHeader = new PaidItemHeader(lblCreaterName.Text, dtpCreatedDate.Value, lblAcaLevelName.Text, dtpPublishDate.Value,
-                    dtpEffectiveDate.Value, txtRule.Text, txtNote.Text);                
+                    dtpEffectiveDate.Value, txtRule.Text, txtNote.Text, fileKey);                
             list.RemoveAt(0);
             list.Insert(0, paidItemHeader);
             SaveFileDialog saveDialog = new SaveFileDialog();

@@ -16,6 +16,7 @@ namespace DTO
         public DateTime ActiveDate { get; set; }
         public string Rule { get; set; }
         public string Note { get; set; }
+        public string Key { get; set; }
         public PaidItemHeader()
         {
         }
@@ -29,6 +30,11 @@ namespace DTO
             ActiveDate = activeDate;
             Rule = rule;
             Note = note;
+        }
+
+        public PaidItemHeader(string creatorName, DateTime createdDate, string academicLevel, DateTime publishDate, DateTime activeDate, string rule, string note, string key) : this(creatorName, createdDate, academicLevel, publishDate, activeDate, rule, note)
+        {
+            Key = key;
         }
     }
 }
