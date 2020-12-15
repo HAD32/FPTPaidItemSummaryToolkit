@@ -15,8 +15,8 @@ namespace FPTPaidItemSummaryToolkit
     public partial class GUI_FinalSummary : Form
     {
         List<MonthlyPaidItemRecord> mpirList;
-        List<MonthlyTeacherPaidItemRecord> mtpirFinalList = new List<MonthlyTeacherPaidItemRecord>();
-        List<string> accountList = new List<string>();
+        List<MonthlyTeacherPaidItemRecord> mtpirFinalList;
+        List<string> accountList;
 
         //protected override CreateParams CreateParams
         //{
@@ -32,12 +32,13 @@ namespace FPTPaidItemSummaryToolkit
         {
             InitializeComponent();
             this.mpirList = mpirList;
-            MakeFinalList();
+            MakeFinalList(mpirList);
             ConstructDatatable();
         }
 
         public void ConstructDatatable()
         {
+            dtgDisplay.DataSource = null;
             DataTable dt = new DataTable();
             dt.Columns.Add("ACC");
             dt.Columns.Add("Mã NV");
@@ -55,8 +56,6 @@ namespace FPTPaidItemSummaryToolkit
                 r["Mã NV"] = s.Id;
                 r["Tên NV"] = s.Name;
                 r["Email"] = s.Email;
-                r["HĐLĐ"] = s.Type;
-                r["Bộ môn khác"] = s.Major;
                 r["Tổng lương"] = record.Sum;
                 dt.Rows.Add(r);
             }
@@ -75,15 +74,17 @@ namespace FPTPaidItemSummaryToolkit
         private void FillRecordNo()
         {
             dtgDisplay.RowHeadersWidth = 60;
-            for (int i = 1; i < this.dtgDisplay.Rows.Count; i++)
+            for (int i = 0; i < this.dtgDisplay.Rows.Count; i++)
             {
-                this.dtgDisplay.Rows[i].HeaderCell.Value = (i).ToString();
+                this.dtgDisplay.Rows[i].HeaderCell.Value = (i+1).ToString();
             }
         }
 
-        void MakeFinalList()
+        void MakeFinalList(List<MonthlyPaidItemRecord> mpirList)
         {
-            foreach(MonthlyPaidItemRecord mpir in mpirList)
+            mtpirFinalList =  new List<MonthlyTeacherPaidItemRecord>();
+            accountList = new List<string>();
+            foreach (MonthlyPaidItemRecord mpir in mpirList)
             {
                 foreach(MonthlyTeacherPaidItemRecord mtpir in mpir.mtpirList)
                 {
@@ -188,6 +189,45 @@ namespace FPTPaidItemSummaryToolkit
                 }
             }
             return staffDetailMonthlyRecords;
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            string searchText = DAL_Summary.Instance.stringStandardlize(txtSearch.Text);
+            MakeFinalList(Search(mpirList, searchText));
+            ConstructDatatable();
+        }
+
+        private List<MonthlyPaidItemRecord> Search(List<MonthlyPaidItemRecord> mpirList, string searchText)
+        {
+            List<MonthlyPaidItemRecord> filteredList = new List<MonthlyPaidItemRecord>();
+            foreach (MonthlyPaidItemRecord mpir in mpirList)
+            {
+                MonthlyPaidItemRecord newMpir = new MonthlyPaidItemRecord();
+                newMpir.mtpirList = new List<MonthlyTeacherPaidItemRecord>();
+                foreach(MonthlyTeacherPaidItemRecord mtpir in mpir.mtpirList)
+                {
+                    Staff staff = mtpir.StaffInfo;
+                    bool found = false;
+                    if (rdbAccount.Checked)
+                    {
+                        string normalizedAccount = DAL_Summary.Instance.stringStandardlize(staff.Account);
+                        found = normalizedAccount.Contains(searchText);
+                    }
+                    else
+                    {
+                        string normalizedName = DAL_Summary.Instance.stringStandardlize(staff.Name);
+                        found = normalizedName.Contains(searchText);
+                    }
+                    if (found)
+                    {
+                        newMpir.mtpirList.Add(mtpir);
+                    }
+                }
+                filteredList.Add(newMpir);
+            }
+            MessageBox.Show(filteredList.Count() + " - " + mpirList.Count());
+            return filteredList;
         }
     }
 }

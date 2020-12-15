@@ -43,5 +43,10 @@ namespace FPTPaidItemSummaryToolkit
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
+
+        private void txtName_TextChanged(object sender, EventArgs e)
+        {
+            errorProvider1.Clear();
+        }
     }
 }

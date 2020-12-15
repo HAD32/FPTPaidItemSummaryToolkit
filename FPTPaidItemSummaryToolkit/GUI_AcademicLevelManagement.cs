@@ -184,6 +184,7 @@ namespace FPTPaidItemSummaryToolkit
         int indexItem;
         private void lstCampusList_Click(object sender, EventArgs e)
         {
+            this.lstCampusList.MouseUp -= new System.Windows.Forms.MouseEventHandler(this.List_RightClick);
             this.lstCampusList.MouseUp += new System.Windows.Forms.MouseEventHandler(this.List_RightClick);
         }
 

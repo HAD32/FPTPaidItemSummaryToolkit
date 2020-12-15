@@ -45,7 +45,7 @@ namespace DAL
             return (sb.ToString().Normalize(NormalizationForm.FormD));
         }
 
-        string stringStandardlize(string item)
+        public string stringStandardlize(string item)
         {
             item = item.Trim();
             item = Regex.Replace(item, @"\s+", " ");
