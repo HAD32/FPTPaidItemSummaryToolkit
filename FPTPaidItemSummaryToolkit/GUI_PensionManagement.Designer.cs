@@ -69,6 +69,7 @@
             this.txtItemName.Name = "txtItemName";
             this.txtItemName.Size = new System.Drawing.Size(424, 45);
             this.txtItemName.TabIndex = 4;
+            this.txtItemName.TextChanged += new System.EventHandler(this.txtItemName_TextChanged);
             // 
             // btnAddItems
             // 

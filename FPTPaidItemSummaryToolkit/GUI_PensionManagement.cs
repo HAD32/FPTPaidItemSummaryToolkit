@@ -196,6 +196,11 @@ namespace FPTPaidItemSummaryToolkit
             }
         }
 
+        private void txtItemName_TextChanged(object sender, EventArgs e)
+        {
+            errorProvider1.Clear();
+        }
+
         private void ModifyList2(object sender, ToolStripItemClickedEventArgs e)
         {
             string selectedItem = e.ClickedItem.Text;

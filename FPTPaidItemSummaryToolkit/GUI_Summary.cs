@@ -445,6 +445,12 @@ namespace FPTPaidItemSummaryToolkit
                     MessageBox.Show("Không đúng file tổng hợp. Xin hãy chọn lại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+                GUI_FillKey FillKeyForm = new GUI_FillKey(mpirList[0].PaidItemFileHeader.Key);
+                DialogResult KeyResult = FillKeyForm.ShowDialog();
+                if(KeyResult != DialogResult.OK)
+                {
+                    return;
+                }
                 if (mpirList.Count > 0)
                 {
                     foreach (MonthlyPaidItemRecord mpir in mpirList)
@@ -492,7 +498,8 @@ namespace FPTPaidItemSummaryToolkit
                 int columnIndex = dtgDisplay.CurrentCell.ColumnIndex;
                 columnName = dtgDisplay.Columns[columnIndex].Name;
                 ContextMenuStrip cm = new ContextMenuStrip();
-                cm.Items.Add("Nhập dữ liệu");
+                if(!columnName.Equals("Tổng"))
+                    cm.Items.Add("Nhập dữ liệu");
                 cm.Items.Add("Gán công thức");
                 cm.Show(this, this.PointToClient(MousePosition));
                 cm.ItemClicked += new ToolStripItemClickedEventHandler(ToolTipsFunction);

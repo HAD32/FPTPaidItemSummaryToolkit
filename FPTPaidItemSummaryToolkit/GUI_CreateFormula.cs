@@ -162,7 +162,13 @@ namespace FPTPaidItemSummaryToolkit
             expression.EvaluateFunction += delegate (string name, FunctionArgs args)
             {
                 if (name == "Min")
-                    args.Result = Math.Min(float.Parse(args.Parameters[0].Evaluate().ToString()), float.Parse(args.Parameters[1].Evaluate().ToString()));
+                    try
+                    {
+                        args.Result = Math.Min(float.Parse(args.Parameters[0].Evaluate().ToString()), float.Parse(args.Parameters[1].Evaluate().ToString()));
+                    }
+                    catch (Exception) {
+                        return;
+                    }
             };
             string r = expression.Evaluate().ToString();
             return r;

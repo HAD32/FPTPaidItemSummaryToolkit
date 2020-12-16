@@ -73,7 +73,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.dtgDisplay);
             this.Name = "GUI_FinalCheck";
-            this.Text = "GUI_FinalCheck";
+            this.Text = "Tổng hợp kết quả";
             ((System.ComponentModel.ISupportInitialize)(this.dtgDisplay)).EndInit();
             this.ResumeLayout(false);
 
