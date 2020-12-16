@@ -11,6 +11,7 @@ using DTO;
 using DAL;
 using System.Text.RegularExpressions;
 using System.Reflection;
+using System.IO;
 
 namespace FPTPaidItemSummaryToolkit
 {
@@ -392,6 +393,43 @@ namespace FPTPaidItemSummaryToolkit
             }
             txtName.Text = "";
             txtUnit.Text = "";
+        }
+
+        private void btnExportAll_Click(object sender, EventArgs e)
+        {
+            GUI_SetKey setKeyForm = new GUI_SetKey();
+            string fileKey;
+            DialogResult result = setKeyForm.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                fileKey = setKeyForm.password;
+            }
+            else
+                return;
+            string folderPath = Environment.CurrentDirectory + "\\Paid Item Files";
+            string[] filePaths = Directory.GetFiles(folderPath);
+            int count = 0;
+            FolderBrowserDialog fbDialog = new FolderBrowserDialog();
+            DialogResult ChooseFolderResult = fbDialog.ShowDialog();
+            if (ChooseFolderResult == DialogResult.OK)
+            {
+                foreach (string path in filePaths)
+                {
+                    try
+                    {
+                        List<Object> list = (List<Object>)DAL_DataSerializer.Instance.BinaryDeserialize(path);
+                        PaidItemHeader currentPih = (PaidItemHeader)list[0];
+                        PaidItemHeader paidItemHeader = new PaidItemHeader(lblCreaterName.Text, dtpCreatedDate.Value, currentPih.AcademicLevel, dtpPublishDate.Value,
+                            dtpEffectiveDate.Value, txtRule.Text, txtNote.Text, fileKey);
+                        list.RemoveAt(0);
+                        list.Insert(0, paidItemHeader);
+                        DAL_DataSerializer.Instance.BinarySerialize(list, fbDialog.SelectedPath + "\\" + paidItemHeader.AcademicLevel + "PaidItem" + dtpCreatedDate.Value.ToString("ddMMyyyy") + ".fs");
+                        count++;
+                    }
+                    catch (Exception) { }       
+                }
+            }
+            MessageBox.Show("Xuất thành công " + count + " file.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
