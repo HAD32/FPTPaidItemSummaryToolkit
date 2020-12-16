@@ -95,14 +95,13 @@ namespace FPTPaidItemSummaryToolkit
                 if (result == DialogResult.Yes)
                 {
                     DAL_AcademicLevel.Instance.Delete(academicList, acLv.Code);
-
+                    DAL_DataSerializer.Instance.BinarySerialize(academicList, "Academic Levels\\AcademicLevel.fs");
+                    Reload();
+                    txtAcadLevelCode.Text = "";
+                    txtAcadLevelName.Text = "";
+                    txtDescription.Text = "";
+                    lstCampusList.Items.Clear();
                 }
-                DAL_DataSerializer.Instance.BinarySerialize(academicList, "Academic Levels\\AcademicLevel.fs");
-                Reload();
-                txtAcadLevelCode.Text = "";
-                txtAcadLevelName.Text = "";
-                txtDescription.Text = "";
-                lstCampusList.Items.Clear();
             }
         }
 

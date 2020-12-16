@@ -138,6 +138,9 @@ namespace FPTPaidItemSummaryToolkit
             }
             btnSummary.Enabled = true;
             dtgDisplay.DataSource = null;
+            btnFinalCheck.Enabled = false;
+            btnExport.Enabled = false;
+            btnSearch.Enabled = false;
         }
 
         private void cbxAcadLv_SelectedIndexChanged(object sender, EventArgs e)
@@ -482,6 +485,9 @@ namespace FPTPaidItemSummaryToolkit
             }
             btnSummary.Enabled = true;
             dtgDisplay.DataSource = null;
+            btnFinalCheck.Enabled = false;
+            btnExport.Enabled = false;
+            btnSearch.Enabled = false;
         }
 
         private void btnSummary_Click(object sender, EventArgs e)
@@ -498,6 +504,8 @@ namespace FPTPaidItemSummaryToolkit
                 int columnIndex = dtgDisplay.CurrentCell.ColumnIndex;
                 columnName = dtgDisplay.Columns[columnIndex].Name;
                 ContextMenuStrip cm = new ContextMenuStrip();
+                if (columnIndex < 6)
+                    return;
                 if(!columnName.Equals("Tổng"))
                     cm.Items.Add("Nhập dữ liệu");
                 cm.Items.Add("Gán công thức");
@@ -595,7 +603,7 @@ namespace FPTPaidItemSummaryToolkit
         private void btnFinalCheck_Click(object sender, EventArgs e)
         {
             GUI_FinalCheck finalCheckForm = new GUI_FinalCheck(currentMpir);
-            finalCheckForm.Show();
+            finalCheckForm.ShowDialog();
 
         }
     }

@@ -44,8 +44,6 @@ namespace FPTPaidItemSummaryToolkit
             dt.Columns.Add("Mã NV");
             dt.Columns.Add("Tên NV");
             dt.Columns.Add("Email");
-            dt.Columns.Add("HĐLĐ");
-            dt.Columns.Add("Bộ môn khác");
             dt.Columns.Add("Tổng lương");
             DataRow r;
             foreach(MonthlyTeacherPaidItemRecord record in mtpirFinalList)
