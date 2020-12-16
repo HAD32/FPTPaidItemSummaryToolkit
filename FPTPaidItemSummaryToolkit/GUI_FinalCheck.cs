@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DTO;
-
+using DAL;
 namespace FPTPaidItemSummaryToolkit
 {
     public partial class GUI_FinalCheck : Form
@@ -27,8 +27,8 @@ namespace FPTPaidItemSummaryToolkit
             dt.Columns.Add("Hạng mục");
             dt.Columns.Add("Lớn nhất (MAX)");
             dt.Columns.Add("Nhỏ nhất (MIN)");
-            List<CheckResult> summary = SummaryResult(mpir);
-            foreach(CheckResult check in summary)
+            List<CheckResult> summary = DAL_FinalCheck.Instance.SummaryResult(mpir);
+            foreach (CheckResult check in summary)
             {
                 DataRow row = dt.NewRow();
                 row["Hạng mục"] = check.Name;
@@ -43,63 +43,7 @@ namespace FPTPaidItemSummaryToolkit
             this.dtgDisplay.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
 
-        private List<CheckResult> SummaryResult(MonthlyPaidItemRecord mpir)
-        {
-            List<CheckResult> CheckList = generateCheckList();
-            foreach(MonthlyTeacherPaidItemRecord mtpir in mpir.mtpirList)
-            {
-                foreach(CheckResult result in CheckList)
-                {
-                    foreach(Pension p in mtpir.PensionList.pensionList)
-                    {
-                        if (result.Name.Trim().Equals(p.PensionName.Trim()))
-                        {
-                            float pensionValue = float.Parse(p.PensionValue);
-                            if (pensionValue > result.Maximum)
-                                result.Maximum = pensionValue;
-                            if (result.Minimum == -1)
-                                result.Minimum = pensionValue;
-                            else if (pensionValue < result.Minimum)
-                                result.Minimum = pensionValue;
-                        }
-                    }
-                    foreach(PaidItem p in mtpir.PaidItemList)
-                    {
-                        if (result.Name.Trim().Equals(p.Name.Trim()))
-                        {
-                            if (p.Value > result.Maximum)
-                                result.Maximum = p.Value;
-                            if (result.Minimum == -1)
-                                result.Minimum = p.Value;
-                            else if (p.Value < result.Minimum)
-                                result.Minimum = p.Value;
-                        }
-                    }
-                }
-            }
-            return CheckList;
-        }
-
-        private List<CheckResult> generateCheckList()
-        {
-            List<CheckResult> checkList = new List<CheckResult>();
-            foreach (Pension p in mpir.mtpirList[0].PensionList.pensionList)
-            {
-                CheckResult check = new CheckResult(p.PensionName, -1, -1);
-                try
-                {
-                    float testString = float.Parse(p.PensionValue);
-                    checkList.Add(check);
-                }
-                catch (Exception) { }
-            }
-            foreach (PaidItem p in mpir.mtpirList[0].PaidItemList)
-            {
-                CheckResult check = new CheckResult(p.Name, -1, -1);
-                checkList.Add(check);
-            }
-            return checkList;
-        }
+        
 
         private void btnExport_Click(object sender, EventArgs e)
         {
