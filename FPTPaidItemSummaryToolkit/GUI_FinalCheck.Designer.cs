@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.dtgDisplay = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnClose = new System.Windows.Forms.Button();
             this.btnExport = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dtgDisplay)).BeginInit();
             this.SuspendLayout();
@@ -44,14 +44,15 @@
             this.dtgDisplay.Size = new System.Drawing.Size(857, 346);
             this.dtgDisplay.TabIndex = 0;
             // 
-            // button1
+            // btnClose
             // 
-            this.button1.Location = new System.Drawing.Point(775, 403);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(94, 33);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Đóng";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnClose.Location = new System.Drawing.Point(775, 403);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(94, 33);
+            this.btnClose.TabIndex = 1;
+            this.btnClose.Text = "Đóng";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // btnExport
             // 
@@ -70,7 +71,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(881, 448);
             this.Controls.Add(this.btnExport);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnClose);
             this.Controls.Add(this.dtgDisplay);
             this.Name = "GUI_FinalCheck";
             this.Text = "Tổng hợp kết quả";
@@ -82,7 +83,7 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dtgDisplay;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnExport;
     }
 }

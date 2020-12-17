@@ -506,6 +506,7 @@ namespace FPTPaidItemSummaryToolkit
                 ContextMenuStrip cm = new ContextMenuStrip();
                 if (columnIndex < 6)
                     return;
+                cm.Items.Add("Sửa");
                 if(!columnName.Equals("Tổng"))
                     cm.Items.Add("Nhập dữ liệu");
                 cm.Items.Add("Gán công thức");
@@ -519,12 +520,29 @@ namespace FPTPaidItemSummaryToolkit
             string selectedItem = e.ClickedItem.Text;
             switch (selectedItem)
             {
+                case "Sửa":
+                    ModifyCell();
+                    break;
                 case "Nhập dữ liệu":
                     InsertMultipleFromExcel();
                     break;
                 case "Gán công thức":
                     CalculateByFormula(currentMpir);
                     break;
+            }
+        }
+
+        private void ModifyCell()
+        {
+            if (dtgDisplay.CurrentCell.Value is null)
+                dtgDisplay.CurrentCell.Value = "";
+            GUI_SimpleModifyForm modifyForm = new GUI_SimpleModifyForm(dtgDisplay.CurrentCell.Value.ToString(), true);
+            DialogResult result = modifyForm.ShowDialog();
+            if(result == DialogResult.OK)
+            {
+                dtgDisplay.CurrentCell.Value = modifyForm.newName;
+                tempSave();
+                ConstructDatatable(currentMpir.mtpirList);
             }
         }
 
