@@ -20,17 +20,16 @@ namespace FPTPaidItemSummaryToolkit
         User u;
         List<PensionList> plList = (List<PensionList>)DAL_DataSerializer.Instance.BinaryDeserialize("Pension List\\PensionList.fs");
         string savedLocation = "";
-
-        //enhance drawing performance
-        //protected override CreateParams CreateParams
-        //{
-        //    get
-        //    {
-        //        CreateParams cp = base.CreateParams;
-        //        cp.ExStyle |= 0x02000000;
-        //        return cp;
-        //    }
-        //}
+        
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;
+                return cp;
+            }
+        }
 
         public GUI_Summary(User u)
         {
@@ -158,10 +157,10 @@ namespace FPTPaidItemSummaryToolkit
         public void ConstructDatatable(List<MonthlyTeacherPaidItemRecord> mtpirList)
         {
             AcademicLevel academicLevel = (AcademicLevel)cbxAcadLv.SelectedItem;
-            string staffListPath = Environment.CurrentDirectory + "\\Staff List\\" + academicLevel.Code + ".xlsx";
-            DataTable staffInfo = new DataTable();
-            if (File.Exists(staffListPath))
-                staffInfo = DAL_Summary.Instance.GetDataFromStaffList(staffListPath);
+            string lecturerListPath = Environment.CurrentDirectory + "\\Lecturer List\\" + academicLevel.Code + ".xlsx";
+            DataTable lecturerInfo = new DataTable();
+            if (File.Exists(lecturerListPath))
+                lecturerInfo = DAL_Summary.Instance.GetDataFromStaffList(lecturerListPath);
             else
             {
                 MessageBox.Show("Không tìm thấy file danh sách giảng viên.", "Thông báo",MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -226,7 +225,7 @@ namespace FPTPaidItemSummaryToolkit
             foreach (MonthlyTeacherPaidItemRecord record in teacherRecords)
             {
                 r = dt.NewRow();
-                Staff s = record.StaffInfo;
+                Lecturer s = record.LecturerInfo;
                 r["ACC"] = s.Account;
                 r["Mã NV"] = s.Id;
                 r["Tên NV"] = s.Name;
@@ -239,7 +238,7 @@ namespace FPTPaidItemSummaryToolkit
                     r[p.Name] = p.Value;
                 }
 
-                Staff staff = record.StaffInfo;
+                Lecturer lecturer = record.LecturerInfo;
                 if (record.PensionList is object)
                 {
                     foreach (Pension p in record.PensionList.pensionList)
@@ -259,9 +258,9 @@ namespace FPTPaidItemSummaryToolkit
                                 foreach (Pension p in pl.pensionList)
                                 {
                                     Pension newP = new Pension(p.PensionName, "0");
-                                    foreach (DataRow dtrow in staffInfo.Rows)
+                                    foreach (DataRow dtrow in lecturerInfo.Rows)
                                     {
-                                        if (dtrow["Account"].ToString().Trim().ToLower().Equals(staff.Account.Trim().ToLower()))
+                                        if (dtrow["Account"].ToString().Trim().ToLower().Equals(lecturer.Account.Trim().ToLower()))
                                         {
                                             try
                                             {
@@ -492,8 +491,8 @@ namespace FPTPaidItemSummaryToolkit
 
         private void btnSummary_Click(object sender, EventArgs e)
         {
-            GUI_FinalSummary fSumForm = new GUI_FinalSummary(mpirList);
-            fSumForm.ShowDialog();
+            GUI_SelectMpirForFinalSummary fSelectMpirForm = new GUI_SelectMpirForFinalSummary(mpirList);
+            fSelectMpirForm.ShowDialog();
         }
 
         string columnName;
@@ -524,7 +523,7 @@ namespace FPTPaidItemSummaryToolkit
                     ModifyCell();
                     break;
                 case "Nhập dữ liệu":
-                    InsertMultipleFromExcel();
+                    InsertMultiple();
                     break;
                 case "Gán công thức":
                     CalculateByFormula(currentMpir);
@@ -546,16 +545,16 @@ namespace FPTPaidItemSummaryToolkit
             }
         }
 
-        private void InsertMultipleFromExcel()
+        private void InsertMultiple()
         {
-            GUI_AddMultipleFromExcel ExcelImportForm = new GUI_AddMultipleFromExcel(currentMpir, columnName);
+            GUI_AddMultiple ExcelImportForm = new GUI_AddMultiple(currentMpir, columnName);
             DialogResult result = ExcelImportForm.ShowDialog();
             if (result == DialogResult.Cancel)
             {
                 this.currentMpir = ExcelImportForm.mpir;
                 ConstructDatatable(currentMpir.mtpirList);
+                tempSave();
             }
-            tempSave();
         }
 
         private void CalculateByFormula(MonthlyPaidItemRecord mpir)
@@ -566,8 +565,8 @@ namespace FPTPaidItemSummaryToolkit
             {
                 this.currentMpir = CalculateForm.mpir;
                 ConstructDatatable(currentMpir.mtpirList);
+                tempSave();
             }
-            tempSave();
         }
 
         private void btnExport_Click(object sender, EventArgs e)
@@ -622,7 +621,6 @@ namespace FPTPaidItemSummaryToolkit
         {
             GUI_FinalCheck finalCheckForm = new GUI_FinalCheck(currentMpir);
             finalCheckForm.ShowDialog();
-
         }
     }
 }

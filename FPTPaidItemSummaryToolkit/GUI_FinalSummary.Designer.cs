@@ -38,6 +38,7 @@
             this.btnSearch = new System.Windows.Forms.Button();
             this.rdbAccount = new System.Windows.Forms.RadioButton();
             this.rdbName = new System.Windows.Forms.RadioButton();
+            this.btnMail = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dtgDisplay)).BeginInit();
             this.SuspendLayout();
             // 
@@ -153,11 +154,24 @@
             this.rdbName.Text = "Họ và tên";
             this.rdbName.UseVisualStyleBackColor = true;
             // 
+            // btnMail
+            // 
+            this.btnMail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnMail.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMail.Location = new System.Drawing.Point(246, 449);
+            this.btnMail.Name = "btnMail";
+            this.btnMail.Size = new System.Drawing.Size(138, 41);
+            this.btnMail.TabIndex = 10;
+            this.btnMail.Text = "Gửi mail xác nhận";
+            this.btnMail.UseVisualStyleBackColor = true;
+            this.btnMail.Click += new System.EventHandler(this.btnMail_Click);
+            // 
             // GUI_FinalSummary
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1032, 507);
+            this.Controls.Add(this.btnMail);
             this.Controls.Add(this.rdbName);
             this.Controls.Add(this.rdbAccount);
             this.Controls.Add(this.btnSearch);
@@ -189,5 +203,6 @@
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.RadioButton rdbAccount;
         private System.Windows.Forms.RadioButton rdbName;
+        private System.Windows.Forms.Button btnMail;
     }
 }

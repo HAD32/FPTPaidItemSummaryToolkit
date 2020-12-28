@@ -18,15 +18,15 @@ namespace FPTPaidItemSummaryToolkit
         List<MonthlyTeacherPaidItemRecord> mtpirFinalList;
         List<string> accountList;
 
-        //protected override CreateParams CreateParams
-        //{
-        //    get
-        //    {
-        //        CreateParams cp = base.CreateParams;
-        //        cp.ExStyle |= 0x02000000;
-        //        return cp;
-        //    }
-        //}
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;
+                return cp;
+            }
+        }
 
         public GUI_FinalSummary(List<MonthlyPaidItemRecord> mpirList)
         {
@@ -49,7 +49,7 @@ namespace FPTPaidItemSummaryToolkit
             foreach(MonthlyTeacherPaidItemRecord record in mtpirFinalList)
             {
                 r = dt.NewRow();
-                Staff s = record.StaffInfo;
+                Lecturer s = record.LecturerInfo;
                 r["ACC"] = s.Account;
                 r["Mã NV"] = s.Id;
                 r["Tên NV"] = s.Name;
@@ -86,7 +86,7 @@ namespace FPTPaidItemSummaryToolkit
             {
                 foreach(MonthlyTeacherPaidItemRecord mtpir in mpir.mtpirList)
                 {
-                    Staff s = mtpir.StaffInfo;
+                    Lecturer s = mtpir.LecturerInfo;
                     if (!accountList.Contains(s.Account))
                     {
                         accountList.Add(s.Account);
@@ -174,7 +174,7 @@ namespace FPTPaidItemSummaryToolkit
                 MonthlyPaidItemRecord newMpir = new MonthlyPaidItemRecord();
                 foreach (MonthlyTeacherPaidItemRecord mtpir in mpir.mtpirList)
                 {
-                    Staff s = mtpir.StaffInfo;
+                    Lecturer s = mtpir.LecturerInfo;
                     if (s.Account.Trim().Equals(selectedStaffAccount.Trim()))
                     {
                         newMpir.AcadLv = mpir.AcadLv;
@@ -205,7 +205,7 @@ namespace FPTPaidItemSummaryToolkit
                 newMpir.mtpirList = new List<MonthlyTeacherPaidItemRecord>();
                 foreach(MonthlyTeacherPaidItemRecord mtpir in mpir.mtpirList)
                 {
-                    Staff staff = mtpir.StaffInfo;
+                    Lecturer staff = mtpir.LecturerInfo;
                     bool found = false;
                     if (rdbAccount.Checked)
                     {
@@ -225,6 +225,12 @@ namespace FPTPaidItemSummaryToolkit
                 filteredList.Add(newMpir);
             }
             return filteredList;
+        }
+
+        private void btnMail_Click(object sender, EventArgs e)
+        {
+            GUI_MailSelection mailForm = new GUI_MailSelection(mpirList);
+            mailForm.ShowDialog();
         }
     }
 }

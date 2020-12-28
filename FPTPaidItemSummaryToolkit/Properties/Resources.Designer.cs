@@ -61,6 +61,25 @@ namespace FPTPaidItemSummaryToolkit.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;!DOCTYPE html&gt;
+        ///
+        ///&lt;html lang=&quot;en&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+        ///&lt;head&gt;
+        ///    &lt;meta charset=&quot;utf-8&quot; /&gt;
+        ///    &lt;title&gt;&lt;/title&gt;
+        ///&lt;/head&gt;
+        ///&lt;body&gt;
+        ///    &lt;p&gt;Dear Mr/Ms: {StaffName}&lt;/p&gt;
+        ///    &lt;p&gt;Please, check and confirm your teaching records in &lt;span style=&quot;color: red&quot;&gt;{ConfirmMonth} (from {FromDate} to {ToDate})&lt;/span&gt; in your e-mail. If you have any problems or any clarification, you would contact Mrs.AnhNTT ({AcadDepartAddress}) (Academic Department) to get further more information.&lt;/p&gt;
+        ///    &lt;p&gt;* Mọi thắc [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string EmailTemplate {
+            get {
+                return ResourceManager.GetString("EmailTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap refresh {

@@ -13,13 +13,13 @@ using System.Text.RegularExpressions;
 
 namespace FPTPaidItemSummaryToolkit
 {
-    public partial class GUI_AddMultipleFromExcel : Form
+    public partial class GUI_AddMultiple : Form
     {
         public MonthlyPaidItemRecord mpir { get; set; }
         string pensionName;
         int count = 0;
 
-        public GUI_AddMultipleFromExcel(MonthlyPaidItemRecord mpirPassed, string columnName)
+        public GUI_AddMultiple(MonthlyPaidItemRecord mpirPassed, string columnName)
         {
             InitializeComponent();
             this.mpir = mpirPassed;
@@ -77,7 +77,7 @@ namespace FPTPaidItemSummaryToolkit
             List<MonthlyTeacherPaidItemRecord> mtpirList = m.mtpirList;
             foreach (MonthlyTeacherPaidItemRecord mtpir in mtpirList)
             {
-                Staff s = mtpir.StaffInfo;
+                Lecturer s = mtpir.LecturerInfo;
                 if (s.Account.Equals(account))
                     return mtpir;
             }

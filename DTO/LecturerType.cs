@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace DTO
 {
-    public class StaffType
+    public class LecturerType
     {
         private string Id { get; set; }
         private string Name { get; set; }
 
-        public StaffType()
+        public LecturerType()
         {
         }
 
-        public StaffType(string id, string name)
+        public LecturerType(string id, string name)
         {
             Id = id;
             Name = name;

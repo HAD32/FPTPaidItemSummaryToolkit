@@ -13,7 +13,7 @@ namespace DAL
     {
         private static DAL_PaidItem instance;
 
-        public static DAL_PaidItem Instance
+        public static DAL_PaidItem Instance 
         {
             get
             {

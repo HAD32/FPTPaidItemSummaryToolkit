@@ -22,6 +22,7 @@ namespace FPTPaidItemSummaryToolkit
         List<string> selectedItems = new List<string>();
         private bool ignoreSelectedIndexChanged;
         public string SumFormula;
+
         public GUI_CreateFormula(MonthlyPaidItemRecord mpir, string columnName)
         {
             InitializeComponent();

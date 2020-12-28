@@ -33,11 +33,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BCrypt">
+      <HintPath>..\..\..\..\bcrypt.net-0.1\bin\BCrypt.dll</HintPath>
+    </Reference>
+    <Reference Include="MailKit, Version=2.9.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\MailKit.dll</HintPath>
+    </Reference>
+    <Reference Include="MimeKit, Version=2.9.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\MimeKit.dll</HintPath>
+    </Reference>
     <Reference Include="NCalc, Version=1.3.8.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\NCalc.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -56,11 +68,11 @@
     <Compile Include="GUI_AcademicLevelManagement.Designer.cs">
       <DependentUpon>GUI_AcademicLevelManagement.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI_AddMultipleFromExcel.cs">
+    <Compile Include="GUI_AddMultiple.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI_AddMultipleFromExcel.Designer.cs">
-      <DependentUpon>GUI_AddMultipleFromExcel.cs</DependentUpon>
+    <Compile Include="GUI_AddMultiple.Designer.cs">
+      <DependentUpon>GUI_AddMultiple.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI_CreateFormula.cs">
       <SubType>Form</SubType>
@@ -116,6 +128,12 @@
     <Compile Include="GUI_Login.Designer.cs">
       <DependentUpon>GUI_Login.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI_MailSelection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI_MailSelection.Designer.cs">
+      <DependentUpon>GUI_MailSelection.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI_PaidItemManagement.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -127,6 +145,12 @@
     </Compile>
     <Compile Include="GUI_PensionManagement.Designer.cs">
       <DependentUpon>GUI_PensionManagement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI_SelectMpirForFinalSummary.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI_SelectMpirForFinalSummary.Designer.cs">
+      <DependentUpon>GUI_SelectMpirForFinalSummary.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI_SetKey.cs">
       <SubType>Form</SubType>
@@ -146,6 +170,12 @@
     <Compile Include="GUI_Summary.Designer.cs">
       <DependentUpon>GUI_Summary.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI_SupportAndDeadline.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI_SupportAndDeadline.Designer.cs">
+      <DependentUpon>GUI_SupportAndDeadline.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI_UserInfoManagement.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -157,8 +187,8 @@
     <EmbeddedResource Include="GUI_AcademicLevelManagement.resx">
       <DependentUpon>GUI_AcademicLevelManagement.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI_AddMultipleFromExcel.resx">
-      <DependentUpon>GUI_AddMultipleFromExcel.cs</DependentUpon>
+    <EmbeddedResource Include="GUI_AddMultiple.resx">
+      <DependentUpon>GUI_AddMultiple.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI_CreateFormula.resx">
       <DependentUpon>GUI_CreateFormula.cs</DependentUpon>
@@ -187,11 +217,17 @@
     <EmbeddedResource Include="GUI_Login.resx">
       <DependentUpon>GUI_Login.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI_MailSelection.resx">
+      <DependentUpon>GUI_MailSelection.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI_PaidItemManagement.resx">
       <DependentUpon>GUI_PaidItemManagement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI_PensionManagement.resx">
       <DependentUpon>GUI_PensionManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI_SelectMpirForFinalSummary.resx">
+      <DependentUpon>GUI_SelectMpirForFinalSummary.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI_SetKey.resx">
       <DependentUpon>GUI_SetKey.cs</DependentUpon>
@@ -201,6 +237,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI_Summary.resx">
       <DependentUpon>GUI_Summary.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI_SupportAndDeadline.resx">
+      <DependentUpon>GUI_SupportAndDeadline.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI_UserInfoManagement.resx">
       <DependentUpon>GUI_UserInfoManagement.cs</DependentUpon>
@@ -275,6 +314,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\show-password-icon-19.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EmailTemplate.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

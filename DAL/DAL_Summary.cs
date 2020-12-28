@@ -44,7 +44,7 @@ namespace DAL
             sb = sb.Replace('đ', 'd');
             return (sb.ToString().Normalize(NormalizationForm.FormD));
         }
-
+        
         public string stringStandardlize(string item)
         {
             item = item.Trim();
@@ -60,7 +60,7 @@ namespace DAL
 
             foreach (MonthlyTeacherPaidItemRecord m in mtpirList)
             {
-                Staff s = m.StaffInfo;
+                Lecturer s = m.LecturerInfo;
                 if (stringStandardlize(s.Name).Contains(stringStandardlize(searchItem)))
                 {
                     smtpir.Add(m);
@@ -73,8 +73,8 @@ namespace DAL
         {
             for (int i = 0; i < mtpirList.Count; i++)
             {
-                Staff s = mtpirList[i].StaffInfo;
-                Staff s2 = mtpir.StaffInfo;
+                Lecturer s = mtpirList[i].LecturerInfo;
+                Lecturer s2 = mtpir.LecturerInfo;
                 if (s.Id.Equals(s2.Id))
                     return i;
             }
@@ -100,7 +100,7 @@ namespace DAL
         {
             foreach (MonthlyTeacherPaidItemRecord m in mtpirList)
             {
-                Staff s = m.StaffInfo;
+                Lecturer s = m.LecturerInfo;
                 if (s.Account.Equals(Account))
                     return m;
             }
@@ -109,7 +109,7 @@ namespace DAL
 
         public DataTable GetDataFromStaffList(string pathName)
         {
-            List<Staff> sList = new List<Staff>();
+            List<Lecturer> sList = new List<Lecturer>();
             DataTable dt = new DataTable();
             string Excel07ConString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties='Excel 8.0;HDR={1}'";
             string conStr, sheetName;

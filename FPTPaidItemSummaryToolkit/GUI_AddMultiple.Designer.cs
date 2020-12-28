@@ -1,6 +1,6 @@
 ﻿namespace FPTPaidItemSummaryToolkit
 {
-    partial class GUI_AddMultipleFromExcel
+    partial class GUI_AddMultiple
     {
         /// <summary>
         /// Required designer variable.

@@ -10,7 +10,7 @@ namespace DTO
     public class MonthlyTeacherPaidItemRecord
     {
         public string Id { get; set; }
-        public Staff StaffInfo { get; set; }
+        public Lecturer LecturerInfo { get; set; }
         public List<PaidItem> PaidItemList { get; set; }
         public PensionList PensionList { get; set; }
         public string Note { get; set; }
@@ -19,10 +19,10 @@ namespace DTO
         {
         }
 
-        public MonthlyTeacherPaidItemRecord(string id, Staff staffInfo, List<PaidItem> paidItemList, PensionList pList, string note, float sum)
+        public MonthlyTeacherPaidItemRecord(string id, Lecturer lecturerInfo, List<PaidItem> paidItemList, PensionList pList, string note, float sum)
         {
             Id = id;
-            StaffInfo = staffInfo;
+            LecturerInfo = lecturerInfo;
             PaidItemList = paidItemList;
             this.PensionList = pList;
             Note = note;

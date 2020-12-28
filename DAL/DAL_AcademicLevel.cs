@@ -92,7 +92,6 @@ namespace DAL
                     break;
 
             }
-
             list.ElementAt(checkCode(list, code)).Code = code;
             list.ElementAt(checkCode(list, code)).Name = name;
             list.ElementAt(checkCode(list, code)).Description = description;

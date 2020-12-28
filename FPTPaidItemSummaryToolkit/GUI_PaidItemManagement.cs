@@ -20,15 +20,15 @@ namespace FPTPaidItemSummaryToolkit
         List<AcademicLevel> academicList = new List<AcademicLevel>();
         User u;
 
-        //protected override CreateParams CreateParams
-        //{
-        //    get
-        //    {
-        //        CreateParams cp = base.CreateParams;
-        //        cp.ExStyle |= 0x02000000;
-        //        return cp;
-        //    }
-        //}
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;
+                return cp;
+            }
+        }
 
         public GUI_PaidItemManagement(User u)
         {
@@ -58,7 +58,6 @@ namespace FPTPaidItemSummaryToolkit
             cbbAcaLevel.DisplayMember = "Name";
             cbbAcaLevel.DataSource = academicList;
             load();
-            
         }
 
         //load function
@@ -69,7 +68,8 @@ namespace FPTPaidItemSummaryToolkit
         {
             try
             {
-                PaidItemHeader head = DAL_PaidItem.Instance.GetPaidItemsHeader();
+                List<Object> sampleList = (List<Object>)DAL_DataSerializer.Instance.BinaryDeserialize("Paid Item Files\\" + cbbAcaLevel.SelectedValue.ToString() + "PaidItem.fs");
+                PaidItemHeader head = (PaidItemHeader)sampleList[0];
                 lblAcaLevelName.Text = head.AcademicLevel;
                 dtpEffectiveDate.Text = head.ActiveDate.ToString();
                 dtpPublishDate.Text = head.PublishDate.ToString();
@@ -339,20 +339,21 @@ namespace FPTPaidItemSummaryToolkit
                 return;
             List<Object> list = (List<Object>)DAL_DataSerializer.Instance.BinaryDeserialize("Paid Item Files\\" + cbbAcaLevel.SelectedValue.ToString() + "PaidItem.fs");
             PaidItemHeader paidItemHeader = new PaidItemHeader(lblCreaterName.Text, dtpCreatedDate.Value, lblAcaLevelName.Text, dtpPublishDate.Value,
-                    dtpEffectiveDate.Value, txtRule.Text, txtNote.Text, fileKey);                
+                    dtpEffectiveDate.Value, txtRule.Text, txtNote.Text, fileKey);
             list.RemoveAt(0);
             list.Insert(0, paidItemHeader);
-            SaveFileDialog saveDialog = new SaveFileDialog();
-            saveDialog.Title = "Save files";
-            saveDialog.FileName = lblAcaLevelName.Text + "PaidItem" + dtpCreatedDate.Value.ToString("ddMMyyyy");
-            saveDialog.Filter = "Encrypted files (*.fs)|*.fs";
-            saveDialog.FilterIndex = 2;
-            if (saveDialog.ShowDialog() == DialogResult.OK)
-            {
-                DAL_DataSerializer.Instance.BinarySerialize(list, saveDialog.FileName);
+            //SaveFileDialog saveDialog = new SaveFileDialog();
+            //saveDialog.Title = "Save files";
+            //saveDialog.FileName = lblAcaLevelName.Text + "PaidItem" + dtpCreatedDate.Value.ToString("ddMMyyyy");
+            //saveDialog.Filter = "Encrypted files (*.fs)|*.fs";
+            //saveDialog.FilterIndex = 2;
+            //if (saveDialog.ShowDialog() == DialogResult.OK)
+            //{
+            //DAL_DataSerializer.Instance.BinarySerialize(list, saveDialog.FileName);
+            DAL_DataSerializer.Instance.BinarySerialize(list, "Paid Item Files\\" + cbbAcaLevel.SelectedValue.ToString() + "PaidItem.fs");
                 load();
                 MessageBox.Show("Lưu thành công.", "Thông báo");
-            }
+            //}
         }
 
         /// <summary>

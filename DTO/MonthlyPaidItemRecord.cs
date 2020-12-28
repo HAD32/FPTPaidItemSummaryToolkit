@@ -14,7 +14,7 @@ namespace DTO
         public User CreatorInfo { get; set; }
         public AcademicLevel AcadLv { get; set; }
         public string Campus { get; set; }
-        public string StaffFileLocation { get; set; }
+        public string LecturerFileLocation { get; set; }
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
         public DateTime LastModifiedDate { get; set; }
@@ -25,14 +25,14 @@ namespace DTO
         {
         }
 
-        public MonthlyPaidItemRecord(string name, User creatorInfo, AcademicLevel acadLv, string campus, string staffFileLocation, 
+        public MonthlyPaidItemRecord(string name, User creatorInfo, AcademicLevel acadLv, string campus, string lecturerFileLocation, 
             DateTime fromDate, DateTime toDate, DateTime lastModifiedDate, PaidItemHeader paidItemFileHeader, List<MonthlyTeacherPaidItemRecord> mtpirList)
         {
             Name = name;
             CreatorInfo = creatorInfo;
             AcadLv = acadLv;
             Campus = campus;
-            StaffFileLocation = staffFileLocation;
+            LecturerFileLocation = lecturerFileLocation;
             FromDate = fromDate;
             ToDate = toDate;
             LastModifiedDate = lastModifiedDate;

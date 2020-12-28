@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace DTO
 {
     [Serializable]
-    public class Staff
+    public class Lecturer
     {
         public string Account { get; set; }
         public string Id { get; set; }
@@ -18,11 +18,11 @@ namespace DTO
         public string Contact { get; set; }
         public string HighestAcademicLevel { get; set; }
 
-        public Staff()
+        public Lecturer()
         {
         }
 
-        public Staff(string account, string id, string name, string typeId, string email, string major, string contact, string highestAcademicLevel)
+        public Lecturer(string account, string id, string name, string typeId, string email, string major, string contact, string highestAcademicLevel)
         {
             Account = account;
             Id = id;
