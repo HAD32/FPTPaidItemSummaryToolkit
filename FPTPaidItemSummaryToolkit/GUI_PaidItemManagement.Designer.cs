@@ -68,6 +68,7 @@
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.btnSave = new System.Windows.Forms.Button();
             this.btnExportAll = new System.Windows.Forms.Button();
+            this.btnExport = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -373,6 +374,7 @@
             this.dataGridView1.Size = new System.Drawing.Size(1257, 292);
             this.dataGridView1.TabIndex = 31;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // groupBox1
             // 
@@ -499,7 +501,7 @@
             // 
             this.btnExportAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnExportAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExportAll.Location = new System.Drawing.Point(106, 580);
+            this.btnExportAll.Location = new System.Drawing.Point(237, 580);
             this.btnExportAll.Name = "btnExportAll";
             this.btnExportAll.Size = new System.Drawing.Size(100, 32);
             this.btnExportAll.TabIndex = 32;
@@ -507,11 +509,24 @@
             this.btnExportAll.UseVisualStyleBackColor = true;
             this.btnExportAll.Click += new System.EventHandler(this.btnExportAll_Click);
             // 
+            // btnExport
+            // 
+            this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnExport.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExport.Location = new System.Drawing.Point(110, 580);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(122, 32);
+            this.btnExport.TabIndex = 33;
+            this.btnExport.Text = "Xuất file hiện tại";
+            this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            // 
             // GUI_PaidItemManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1290, 621);
+            this.Controls.Add(this.btnExport);
             this.Controls.Add(this.btnExportAll);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.groupBox2);
@@ -522,7 +537,6 @@
             this.Controls.Add(this.label2);
             this.Name = "GUI_PaidItemManagement";
             this.Text = "Quản lý định mức thù lao";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GUI_PaidItem_FormClosing);
             this.Load += new System.EventHandler(this.GUI_PaidItem_Load);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
@@ -573,5 +587,6 @@
         private System.Windows.Forms.TextBox txtUnit;
         private System.Windows.Forms.Label lblUnit;
         private System.Windows.Forms.Button btnExportAll;
+        private System.Windows.Forms.Button btnExport;
     }
 }

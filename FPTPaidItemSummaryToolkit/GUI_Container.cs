@@ -43,7 +43,7 @@ namespace FPTPaidItemSummaryToolkit
             Form guiContainer = GUI_Container.ActiveForm;
             foreach (Form f in guiContainer.MdiChildren)
             {
-                if (f.Name == "GUI_PaidItem")
+                if (f.Name == "GUI_PaidItemManagement")
                 {
                     f.Activate();
                     return;
@@ -62,7 +62,7 @@ namespace FPTPaidItemSummaryToolkit
             Form guiContainer = GUI_Container.ActiveForm;
             foreach (Form f in guiContainer.MdiChildren)
             {
-                if (f.Name == "GUI_AcademicLevel")
+                if (f.Name == "GUI_AcademicLevelManagement")
                 {
                     f.Activate();
                     return;

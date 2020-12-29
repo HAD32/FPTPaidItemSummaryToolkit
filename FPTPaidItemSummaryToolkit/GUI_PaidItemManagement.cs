@@ -66,6 +66,9 @@ namespace FPTPaidItemSummaryToolkit
         /// </summary>
         void loadHeader()
         {
+            txtNote.Text = "";
+            txtRule.Text = "";
+            lblCreaterName.Text = "";
             try
             {
                 List<Object> sampleList = (List<Object>)DAL_DataSerializer.Instance.BinaryDeserialize("Paid Item Files\\" + cbbAcaLevel.SelectedValue.ToString() + "PaidItem.fs");
@@ -124,6 +127,11 @@ namespace FPTPaidItemSummaryToolkit
         private void btnAdd_Click(object sender, EventArgs e)
         {
             errorProvider1.Clear();
+            if (cbbPaidItemType.SelectedIndex == 4)
+            {
+                MessageBox.Show("Xin hãy chọn loại định mức.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             if (!IsNumber(txtUnit.Text.Trim()))
             {
                 errorProvider1.SetError(txtUnit, "Chỉ được phép điền số. Vui lòng nhập lại");
@@ -152,7 +160,7 @@ namespace FPTPaidItemSummaryToolkit
                 int paidItemType = Int32.Parse(cbbPaidItemType.SelectedValue.ToString().Trim());
                 if (!txtName.Text.Trim().Equals(""))
                 {
-                    if (DAL_PaidItem.Instance.Insert(id, txtName.Text.Trim(), hourRate, unitValue, paidItemType, acalv, u.Id, dtpPublishDate.Value))
+                    if (DAL_PaidItem.Instance.Insert(id, txtName.Text.Trim(), hourRate, unitValue, paidItemType, acalv, u.Id, dtpPublishDate.Value, txtRule.Text))
                     {
                         MessageBox.Show("Thêm thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -328,32 +336,16 @@ namespace FPTPaidItemSummaryToolkit
         /// <param name="e"></param>
         private void btnSave_Click(object sender, EventArgs e)
         {
-            GUI_SetKey setKeyForm = new GUI_SetKey();
-            string fileKey;
-            DialogResult result = setKeyForm.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                fileKey = setKeyForm.password;
-            }
-            else
-                return;
             List<Object> list = (List<Object>)DAL_DataSerializer.Instance.BinaryDeserialize("Paid Item Files\\" + cbbAcaLevel.SelectedValue.ToString() + "PaidItem.fs");
+            if (list is null)
+                return;
             PaidItemHeader paidItemHeader = new PaidItemHeader(lblCreaterName.Text, dtpCreatedDate.Value, lblAcaLevelName.Text, dtpPublishDate.Value,
-                    dtpEffectiveDate.Value, txtRule.Text, txtNote.Text, fileKey);
+                    dtpEffectiveDate.Value, txtRule.Text, txtNote.Text, "");
             list.RemoveAt(0);
             list.Insert(0, paidItemHeader);
-            //SaveFileDialog saveDialog = new SaveFileDialog();
-            //saveDialog.Title = "Save files";
-            //saveDialog.FileName = lblAcaLevelName.Text + "PaidItem" + dtpCreatedDate.Value.ToString("ddMMyyyy");
-            //saveDialog.Filter = "Encrypted files (*.fs)|*.fs";
-            //saveDialog.FilterIndex = 2;
-            //if (saveDialog.ShowDialog() == DialogResult.OK)
-            //{
-            //DAL_DataSerializer.Instance.BinarySerialize(list, saveDialog.FileName);
             DAL_DataSerializer.Instance.BinarySerialize(list, "Paid Item Files\\" + cbbAcaLevel.SelectedValue.ToString() + "PaidItem.fs");
                 load();
                 MessageBox.Show("Lưu thành công.", "Thông báo");
-            //}
         }
 
         /// <summary>
@@ -392,8 +384,6 @@ namespace FPTPaidItemSummaryToolkit
             {
                 lblUnit.Text = "Định mức quy đổi giờ giảng:";
             }
-            txtName.Text = "";
-            txtUnit.Text = "";
         }
 
         private void btnExportAll_Click(object sender, EventArgs e)
@@ -431,6 +421,40 @@ namespace FPTPaidItemSummaryToolkit
                 }
             }
             MessageBox.Show("Xuất thành công " + count + " file.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            GUI_SetKey setKeyForm = new GUI_SetKey();
+            string fileKey;
+            DialogResult result = setKeyForm.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                fileKey = setKeyForm.password;
+            }
+            else
+                return;
+            List<Object> list = (List<Object>)DAL_DataSerializer.Instance.BinaryDeserialize("Paid Item Files\\" + cbbAcaLevel.SelectedValue.ToString() + "PaidItem.fs");
+            PaidItemHeader paidItemHeader = new PaidItemHeader(lblCreaterName.Text, dtpCreatedDate.Value, lblAcaLevelName.Text, dtpPublishDate.Value,
+                    dtpEffectiveDate.Value, txtRule.Text, txtNote.Text, fileKey);
+            list.RemoveAt(0);
+            list.Insert(0, paidItemHeader);
+            SaveFileDialog saveDialog = new SaveFileDialog();
+            saveDialog.Title = "Save files";
+            saveDialog.FileName = lblAcaLevelName.Text + "PaidItem" + dtpCreatedDate.Value.ToString("ddMMyyyy");
+            saveDialog.Filter = "Encrypted files (*.fs)|*.fs";
+            saveDialog.FilterIndex = 2;
+            if (saveDialog.ShowDialog() == DialogResult.OK)
+            {
+                DAL_DataSerializer.Instance.BinarySerialize(list, saveDialog.FileName);
+                load();
+                MessageBox.Show("Lưu thành công.", "Thông báo");
+            }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

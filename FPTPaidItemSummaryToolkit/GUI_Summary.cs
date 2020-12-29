@@ -108,6 +108,8 @@ namespace FPTPaidItemSummaryToolkit
                 cbxAcadLv.Items.Clear();
                 cbxCampus.Items.Clear();
                 mpirList = GetAllSummaryFile(fbDialog.SelectedPath);
+                if (mpirList is null)
+                    return;
                 if (mpirList.Count > 0)
                 {
                     foreach (MonthlyPaidItemRecord mpir in mpirList)
@@ -319,6 +321,8 @@ namespace FPTPaidItemSummaryToolkit
 
         private void btnShow_Click(object sender, EventArgs e)
         {
+            if (cbxAcadLv.Items.Count == 0)
+                return;
             AcademicLevel academic = (AcademicLevel)cbxAcadLv.SelectedItem;
             currentMpir = GetMpir(academic.Code, cbxCampus.SelectedItem.ToString());
             ConstructDatatable(currentMpir.mtpirList);

@@ -77,10 +77,6 @@ namespace DAL
                             }
                         }
                     }
-                    else
-                    {
-                        dt.Rows.Add("");
-                    }
                 }
                 else
                 {
@@ -125,10 +121,6 @@ namespace DAL
                                 dt.Rows.Add(row);
                             }
                         }
-                    }
-                    else
-                    {
-                        dt.Rows.Add("");
                     }
                 }
                 
@@ -236,7 +228,7 @@ namespace DAL
         }
 
         //Insert, Delete, Update
-        public bool Insert(string id, string name, float rate, float unitValue, int typeId, string acaLevelCode, string creatorCode, DateTime publishDate)
+        public bool Insert(string id, string name, float rate, float unitValue, int typeId, string acaLevelCode, string creatorCode, DateTime publishDate, string rule)
         {
             List<Object> testList = new List<object>();
             if(!File.Exists(Environment.CurrentDirectory + "\\Paid Item Files"))
@@ -244,7 +236,7 @@ namespace DAL
             testList = (List<Object>)DAL_DataSerializer.Instance.BinaryDeserialize("Paid Item Files\\" + acaLevelCode + "PaidItem.fs");
             if (testList is null)
                 testList = new List<object>();
-            PaidItemHeader pih = new PaidItemHeader(creatorCode, DateTime.Now, acaLevelCode, publishDate, DateTime.Now, "ABC/31T", "");
+            PaidItemHeader pih = new PaidItemHeader(creatorCode, DateTime.Now, acaLevelCode, publishDate, DateTime.Now, rule, "");
             try
             {
                 testList.RemoveAt(0);
